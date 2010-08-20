@@ -83,7 +83,7 @@
 	#loadlib('cache');
 	#loadlib('login');
 	#loadlib('email');
-	#loadlib('unicode');
+	loadlib('utf8');
 	#loadlib('args');
 	#loadlib('calendar');
 	#loadlib('users');
