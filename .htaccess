@@ -1,5 +1,15 @@
+
+FileETag none
+
+php_value magic_quotes_gpc 0
+php_value register_globals 0
+php_value magic_quotes_runtime 0
+php_value track_errors 1
+php_value last_modified off
+
 DirectoryIndex index.php
 
 ErrorDocument 404 /404.php
+ErrorDocument 403 /403.php
 
 RewriteEngine on
