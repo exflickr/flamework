@@ -1103,6 +1103,7 @@ class Smarty
      */
     function display($resource_name, $cache_id = null, $compile_id = null)
     {
+        $GLOBALS[timings][smarty_start_output] = microtime_ms();
         $this->fetch($resource_name, $cache_id, $compile_id, true);
     }
 

@@ -14,7 +14,8 @@
 	putenv('TZ=PST8PDT');
 	error_reporting(E_ALL ^ E_NOTICE);
 
-	$GLOBALS[debug][execution_start] = microtime_ms();
+	$GLOBALS[timings] = array();
+	$GLOBALS[timings][execution_start] = microtime_ms();
 
 	mb_internal_encoding('UTF-8');
 
