@@ -1108,6 +1108,18 @@ class Smarty
     }
 
     /**
+     * ensures a template has been compiled (added by Cal)
+     *
+     * @param string $resource_name
+     * @param string $cache_id
+     * @param string $compile_id
+     */
+    function compile_only($resource_name, $cache_id = null, $compile_id = null)
+    {
+        $this->fetch($resource_name, $cache_id, $compile_id, false, false);
+    }
+
+    /**
      * executes & returns or displays the template results
      *
      * @param string $resource_name
@@ -1115,7 +1127,7 @@ class Smarty
      * @param string $compile_id
      * @param boolean $display
      */
-    function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false)
+    function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false, $execute = false)
     {
         static $_cache_info = array();
         
@@ -1261,13 +1273,17 @@ class Smarty
             if ($this->_is_compiled($resource_name, $_smarty_compile_path)
                     || $this->_compile_resource($resource_name, $_smarty_compile_path))
             {
-                include($_smarty_compile_path);
+                if ($execute){
+                    include($_smarty_compile_path);
+                }
             }
             $_smarty_results = ob_get_contents();
             ob_end_clean();
 
-            foreach ((array)$this->_plugins['outputfilter'] as $_output_filter) {
-                $_smarty_results = call_user_func_array($_output_filter[0], array($_smarty_results, &$this));
+            if ($execute){
+                foreach ((array)$this->_plugins['outputfilter'] as $_output_filter) {
+                    $_smarty_results = call_user_func_array($_output_filter[0], array($_smarty_results, &$this));
+                }
             }
         }
 
