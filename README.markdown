@@ -1,7 +1,7 @@
 Flamework
 =========
 
-Flamework is a semi-fictional framework that powers Flickr.com.
+Flamework is the semi-fictional framework that powers Flickr.com.
 It's less of an actual framework and more of a design philosophy.
 None of the code in this project is actually taken from Flickr,
 but is rather a reconstruction of the way we built things there and
