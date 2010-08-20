@@ -3,7 +3,7 @@
 	# $Id$
 	#
 
-	define('SMARTY_DIR', INCLUDE_DIR.'/smarty-2.6.19/');
+	define('SMARTY_DIR', INCLUDE_DIR.'/smarty_2.6.26/');
 
 	require(SMARTY_DIR . 'Smarty.class.php');
 
