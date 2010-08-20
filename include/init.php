@@ -43,7 +43,7 @@
 		if ($GLOBALS[loaded_libs][$name]) return;
 		$GLOBALS[loaded_libs][$name] = 1;
 
-		include_once(INCLUDE_DIR."/lib_$name.php");
+		include(INCLUDE_DIR."/lib_$name.php");
 	}
 
 	function loadpear($name){
@@ -51,7 +51,7 @@
 		if ($GLOBALS[loaded_libs]['PEAR:'.$name]) return;
 		$GLOBALS[loaded_libs]['PEAR:'.$name] = 1;
 
-		include_once(INCLUDE_DIR."/pear/$name.php");
+		include(INCLUDE_DIR."/pear/$name.php");
 	}
 
 
