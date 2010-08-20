@@ -1127,7 +1127,7 @@ class Smarty
      * @param string $compile_id
      * @param boolean $display
      */
-    function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false, $execute = false)
+    function fetch($resource_name, $cache_id = null, $compile_id = null, $display = false, $execute = true)
     {
         static $_cache_info = array();
         
