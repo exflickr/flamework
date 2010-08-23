@@ -1425,10 +1425,23 @@ class Smarty
      * @param string $compile_path
      * @return boolean
      */
+
     function _compile_resource($resource_name, $compile_path)
     {
-        log_notice("smarty", "Compiling $resource_name");
+        $start = microtime_ms();
+        $ret = $this->_compile_resource_real($resource_name, $compile_path);
+        $end = microtime_ms();
 
+        $GLOBALS[timings][smarty_comp_count]++;
+        $GLOBALS[timings][smarty_comp_time] += $end-$start;
+
+        log_notice("smarty", "Compiling $resource_name", $end-$start);
+
+        return $ret;
+    }
+
+    function _compile_resource_real($resource_name, $compile_path)
+    {
         $_params = array('resource_name' => $resource_name);
         if (!$this->_fetch_resource_info($_params)) {
             return false;
