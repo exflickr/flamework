@@ -17,9 +17,14 @@
 	#################################################################
 
 	#
-	# these are just shortcuts to the real functions which allow
-	# us to skip passing the cluster name. these are the only function
-	# we should call from outside the module.
+	# These are just shortcuts to the real functions which allow
+	# us to skip passing the cluster name. these are the only functions
+	# we should call from outside the library.
+	#
+	# In this example we have 2 cluster - one monolith called 'main' and
+	# one partitioned/sharded cluster called 'users' When making calls
+	# to the sharded cluster, we need to pass the shard number as the first
+	# argument.
 	#
 
 	function db_insert($tbl, $hash){		return _db_insert($tbl, $hash, 'main'); }
@@ -70,18 +75,33 @@
 			log_fatal("no such cluster: ".$cluster);
 		}
 
+
+		#
+		# try to connect
+		#
+
 		$start = microtime_ms();
 
 		$GLOBALS[db_conns][$cluster_key] = @mysql_connect($host, $user, $pass, 1);
 
-		if (!$GLOBALS[db_conns][$cluster_key] || $_GET[no_db]){
-
-			log_fatal("connection to database cluster '$cluster_key' failed");
+		if ($GLOBALS[db_conns][$cluster_key]){
+			@mysql_select_db($name, $GLOBALS[db_conns][$cluster_key]);
 		}
 
-		@mysql_select_db($name, $GLOBALS[db_conns][$cluster_key]);
-
 		$end = microtime_ms();
+
+
+		#
+		# log
+		#
+
+		log_notice('db', "DB-$cluster_key: Connect", $end-$start);
+
+		if (!$GLOBALS[db_conns][$cluster_key] || $_GET[no_db]){
+
+			log_fatal("Connection to database cluster '$cluster_key' failed");
+		}
+
 
 		$GLOBALS[db_timings][conns_count]++;
 		$GLOBALS[db_timings][conns_time] += $end-$start;
@@ -104,7 +124,7 @@
 		$GLOBALS[db_timings][queries_count]++;
 		$GLOBALS[db_timings][queries_time] += $end-$start;
 
-		log_query("DB-$cluster_key", $sql, $end-$start);
+		log_notice('db', "DB-$cluster_key: $sql", $end-$start);
 
 		if (!$result){
 			$error_msg	= mysql_error($GLOBALS[db_conns][$cluster_key]);
@@ -199,7 +219,6 @@
 		$GLOBALS[db_timings][rows_count] += $count;
 		$GLOBALS[db_timings][rows_time] += $end-$start;
 
-
 		return $out;
 	}
 
@@ -231,7 +250,7 @@
 
 
 		#
-		# Generate limit values
+		# generate limit values
 		#
 
 		$start = ($page - 1) * $per_page;
@@ -249,7 +268,7 @@
 
 
 		#
-		# Build sql
+		# build sql
 		#
 
 		$sql .= " LIMIT $start, $limit";
