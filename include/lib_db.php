@@ -5,14 +5,12 @@
 
 	$GLOBALS[db_conns] = array();
 
-	$GLOBALS[db_timings] = array(
-		'conns_count'	=> 0,
-		'conns_time'	=> 0,
-		'queries_count'	=> 0,
-		'queries_time'	=> 0,
-		'rows_count'	=> 0,
-		'rows_time'	=> 0,
-	);
+	$GLOBALS[timings][db_conns_count]	= 0;
+	$GLOBALS[timings][db_conns_time]	= 0;
+	$GLOBALS[timings][db_queries_count]	= 0;
+	$GLOBALS[timings][db_queries_time]	= 0;
+	$GLOBALS[timings][db_rows_count]	= 0;
+	$GLOBALS[timings][db_rows_time]		= 0;
 
 	#################################################################
 
@@ -103,8 +101,8 @@
 		}
 
 
-		$GLOBALS[db_timings][conns_count]++;
-		$GLOBALS[db_timings][conns_time] += $end-$start;
+		$GLOBALS[timings][db_conns_count]++;
+		$GLOBALS[timings][db_conns_time] += $end-$start;
 	}
 
 	#################################################################
@@ -121,8 +119,8 @@
 		$result = @mysql_query($sql, $GLOBALS[db_conns][$cluster_key]);
 		$end = microtime_ms();
 
-		$GLOBALS[db_timings][queries_count]++;
-		$GLOBALS[db_timings][queries_time] += $end-$start;
+		$GLOBALS[timings][db_queries_count]++;
+		$GLOBALS[timings][db_queries_time] += $end-$start;
 
 		log_notice('db', "DB-$cluster_key: $sql", $end-$start);
 
@@ -216,8 +214,8 @@
 			$count++;
 		}
 		$end = microtime_ms();
-		$GLOBALS[db_timings][rows_count] += $count;
-		$GLOBALS[db_timings][rows_time] += $end-$start;
+		$GLOBALS[timings][db_rows_count] += $count;
+		$GLOBALS[timings][db_rows_time] += $end-$start;
 
 		return $out;
 	}
