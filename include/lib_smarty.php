@@ -18,4 +18,48 @@
 	$GLOBALS[smarty]->force_compile = $GLOBALS[cfg][smarty_compile];
 
 	$GLOBALS[smarty]->assign_by_ref('cfg', $GLOBALS[cfg]);
+
+
+	#######################################################################################
+
+	function smarty_timings(){
+
+		$GLOBALS[timings][smarty_timings_out] = microtime_ms();
+
+		echo "<table class=\"debugtimings\" border=\"1\" align=\"center\">\n";
+		echo "<tr>\n";
+		echo "<th>Item</th>";
+		echo "<th>Count</th>";
+		echo "<th>Time</th>";
+		echo "</tr>\n";
+
+		$map = array(
+			'db_conns'	=> 'DB Connections',
+			'db_queries'	=> 'DB Queries',
+			'db_rows'	=> 'DB Rows Returned',
+			'smarty_comp'	=> 'Templates Compiled',
+		);
+
+		foreach ($map as $k => $v){
+			$c = intval($GLOBALS[timings]["{$k}_count"]);
+			$t = intval($GLOBALS[timings]["{$k}_time"]);
+			echo "<tr><td>$v</td><td>$c</td><td>$t ms</td></tr>\n";
+		}
+
+		$map2 = array(
+			array("Startup &amp; Libraries", $GLOBALS[timings][init_end] - $GLOBALS[timings][execution_start]),
+			array("Page Execution", $GLOBALS[timings][smarty_start_output] - $GLOBALS[timings][init_end]),
+			array("Smarty Output", $GLOBALS[timings][smarty_timings_out] - $GLOBALS[timings][smarty_start_output]),
+		);
+
+		foreach ($map2 as $a){
+			echo "<tr><td colspan=\"2\">$a[0]</td><td>$a[1] ms</td></tr>\n";
+		}
+
+		echo "</table>";
+	}
+
+	$GLOBALS[smarty]->register_function('timings', 'smarty_timings');
+
+	#######################################################################################
 ?>

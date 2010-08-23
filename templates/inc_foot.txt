@@ -1,3 +1,9 @@
 
+{if $smarty.get.debug}
+<div style="padding: 2em;">
+	{timings}
+</div>
+{/if}
+
 </body>
 </html>
