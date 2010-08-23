@@ -3,9 +3,9 @@
 
 	$GLOBALS[cfg][db_main] = array(
 		'host'	=> 'localhost',
-		'user'	=> 'www-rw',
-		'pass'	=> 'PASSWORD',
-		'name'	=> 'NAME',
+		'user'	=> 'root',
+		'pass'	=> 'root',
+		'name'	=> 'flamework',
 	);
 
 	$GLOBALS[cfg][db_users] = array(
@@ -13,8 +13,8 @@
 			1 => 'localhost',
 			2 => 'localhost',
 		),
-		'user' => 'www-rw',
-		'pass' => 'PASSWORD',
+		'user' => 'root',
+		'pass' => 'root',
 		'name' => array(
 			1 => 'user1',
 			2 => 'user2',
