@@ -130,4 +130,11 @@
 		list($usec, $sec) = explode(" ", microtime());
 		return intval(1000 * ((float)$usec + (float)$sec));
 	}
+
+
+	#
+	# this timer stores the end of core library loading
+	#
+
+	$GLOBALS[timings][init_end] = microtime_ms();
 ?>
