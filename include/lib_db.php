@@ -12,6 +12,10 @@
 	$GLOBALS[timings][db_rows_count]	= 0;
 	$GLOBALS[timings][db_rows_time]		= 0;
 
+	$GLOBALS[timing_keys][db_conns]		= 'DB Connections';
+	$GLOBALS[timing_keys][db_queries]	= 'DB Queries';
+	$GLOBALS[timing_keys][db_rows]		= 'DB Rows Returned';
+
 	#################################################################
 
 	#

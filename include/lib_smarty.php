@@ -33,14 +33,10 @@
 		echo "<th>Time</th>";
 		echo "</tr>\n";
 
-		$map = array(
-			'db_conns'	=> 'DB Connections',
-			'db_queries'	=> 'DB Queries',
-			'db_rows'	=> 'DB Rows Returned',
-			'smarty_comp'	=> 'Templates Compiled',
-		);
+		# we add this one last so it goes at the bottom of the list
+		$GLOBALS[timing_keys][smarty_comp] = 'Templates Compiled';
 
-		foreach ($map as $k => $v){
+		foreach ($GLOBALS[timing_keys] as $k => $v){
 			$c = intval($GLOBALS[timings]["{$k}_count"]);
 			$t = intval($GLOBALS[timings]["{$k}_time"]);
 			echo "<tr><td>$v</td><td>$c</td><td>$t ms</td></tr>\n";

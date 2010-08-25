@@ -16,6 +16,7 @@
 
 	$GLOBALS[timings] = array();
 	$GLOBALS[timings][execution_start] = microtime_ms();
+	$GLOBALS[timing_keys] = array();
 
 	mb_internal_encoding('UTF-8');
 
