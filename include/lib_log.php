@@ -6,6 +6,7 @@
 	$GLOBALS[log_colors] = array(
 		'db'		=> '#eef',
 		'smarty'	=> '#efe',
+		'http'		=> '#ffe',
 	);
 
 	function log_fatal($msg){
