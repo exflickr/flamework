@@ -46,6 +46,7 @@
 			array("Startup &amp; Libraries", $GLOBALS[timings][init_end] - $GLOBALS[timings][execution_start]),
 			array("Page Execution", $GLOBALS[timings][smarty_start_output] - $GLOBALS[timings][init_end]),
 			array("Smarty Output", $GLOBALS[timings][smarty_timings_out] - $GLOBALS[timings][smarty_start_output]),
+			array("<b>Total</b>", $GLOBALS[timings][smarty_timings_out] - $GLOBALS[timings][execution_start]),
 		);
 
 		foreach ($map2 as $a){
