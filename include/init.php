@@ -88,6 +88,7 @@
 	#loadlib('calendar');
 	#loadlib('users');
 	#loadlib('versions');
+	loadlib('http');
 
 
 

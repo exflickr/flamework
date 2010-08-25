@@ -25,6 +25,7 @@
 	$GLOBALS[cfg][abs_root_url]		= 'http://www.ourapp.com/';
 	$GLOBALS[cfg][safe_abs_root_url]	= $GLOBALS[cfg][abs_root_url];
 
-
 	$GLOBALS[cfg][smarty_compile] = 1;
+
+	$GLOBALS[cfg][http_timeout] = 3;
 ?>
