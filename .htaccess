@@ -1,3 +1,14 @@
+#
+# Hey! Everything in here is better suited to httpd.conf, since
+# we get a performance boost if we can turn off AllowOverride and
+# not have to stat the webroot for every request. On the other
+# hand, this measn we never have to touch apache once it's up.
+# Flexibility over performance.
+#
+# In an ideal world, you'd stick it in here on dev and your build
+# system would bundle the changes into (a file incldued in) httpd.conf
+# for your production deployment. Yeah. Do that.
+#
 
 FileETag none
 
