@@ -1,4 +1,4 @@
-<?
+<?php
 	$GLOBALS[cfg] = array();
 
 	$GLOBALS[cfg][db_main] = array(
