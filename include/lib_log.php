@@ -29,7 +29,7 @@
 
 		echo "$msg";
 		if ($time > -1){
-			echo" ($time ms)";
+			echo " ($time ms)";
 		}
 
 		echo "</div>\n";
