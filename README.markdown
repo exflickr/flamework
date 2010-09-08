@@ -14,4 +14,6 @@ Installation
 Copy everything to a web server running Apache with <code>mod_php</code>.
 Enable <code>AllowOverrides all</code> for the root.
 Edit <code>include/config.php</code>.
+Ensure that the <code>templates_c</code> directory can be written to by
+your webserver.
 That might be it.
