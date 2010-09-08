@@ -10,17 +10,29 @@
 # for your production deployment. Yeah. Do that.
 #
 
+# ETags are a bad idea if you have multiple web servers. We'll do
+# more explicit caching with Expires headers anyway.
 FileETag none
 
+# The base set of sensible PHP options. You could put these in your
+# php.ini file too, but having them in your Apache config puts
+# everything in one place. Magic quotes off because they are stupid.
+# Register globals off for the same reason. Track errors is so that
+# we can at least get at the error messages we hide using @func().
+# last_modified is a bad idea if we have any dynamic content. Short
+# tags make for a few saved bytes of cruft and are fine unless you're
+# running another XML preprocessor over your code (wtf?).
 php_value magic_quotes_gpc 0
 php_value register_globals 0
 php_value magic_quotes_runtime 0
 php_value track_errors 1
 php_value last_modified off
+php_value short_tags on
 
+# Some basic pointers to php files
 DirectoryIndex index.php
-
 ErrorDocument 404 /404.php
 ErrorDocument 403 /403.php
 
+# Get mod_rewrite fired up
 RewriteEngine on
