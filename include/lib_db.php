@@ -19,6 +19,17 @@
 	#################################################################
 
 	#
+	# connect to the main cluster immediately so that we can show a
+	# downtime notice it's it's not available? you might not want to
+	# so this - depends on whether you can ever stand the main cluster
+	# being down.
+	#
+
+	if ($GLOBALS['cfg']['db_main']['auto_connect']){
+		_db_connect('main');
+	}
+
+	#
 	# These are just shortcuts to the real functions which allow
 	# us to skip passing the cluster name. these are the only functions
 	# we should call from outside the library.
@@ -46,16 +57,6 @@
 
 	function db_write($sql){		return _db_write($sql, 'main'); }
 	function db_write_users($k, $sql){	return _db_write($sql, 'main', $k); }
-
-
-	#
-	# we connect to the main cluster immediately so that we can show
-	# a downtime notice it's it's not available. you might not want to
-	# so this - depends on whether you can ever stand the main cluster
-	# being down.
-	#
-
-	_db_connect('main');
 
 	#################################################################
 
@@ -107,6 +108,8 @@
 
 		$GLOBALS[timings][db_conns_count]++;
 		$GLOBALS[timings][db_conns_time] += $end-$start;
+
+		return true;
 	}
 
 	#################################################################

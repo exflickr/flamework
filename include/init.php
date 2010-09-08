@@ -35,24 +35,28 @@
 	# function's private scope.
 	#
 
-	$GLOBALS[loaded_libs] = array();
+	$GLOBALS['loaded_libs'] = array();
 
-	define('INCLUDE_DIR', dirname(__FILE__));
+	define('FLAMEWORK_INCLUDE_DIR', dirname(__FILE__));
 
 	function loadlib($name){
 
-		if ($GLOBALS[loaded_libs][$name]) return;
-		$GLOBALS[loaded_libs][$name] = 1;
+		if ($GLOBALS['loaded_libs'][$name]) return;
+		$GLOBALS['loaded_libs'][$name] = 1;
 
-		include(INCLUDE_DIR."/lib_$name.php");
+		# see also: http://www.php.net/manual/en/ini.core.php#ini.include-path
+
+		include("lib_{$name}.php");
 	}
 
 	function loadpear($name){
 
-		if ($GLOBALS[loaded_libs]['PEAR:'.$name]) return;
-		$GLOBALS[loaded_libs]['PEAR:'.$name] = 1;
+		if ($GLOBALS['loaded_libs']['PEAR:'.$name]) return;
+		$GLOBALS['loaded_libs']['PEAR:'.$name] = 1;
 
-		include(INCLUDE_DIR."/pear/$name.php");
+		# see also: http://www.php.net/manual/en/ini.core.php#ini.include-path
+
+		include("pear/{$name}.php");
 	}
 
 
@@ -60,9 +64,9 @@
 	# load config
 	#
 
-	include(INCLUDE_DIR."/config.php");
-
-
+	if (! $GLOBALS['cfg']['flamework_skip_init']){
+		include(FLAMEWORK_INCLUDE_DIR."/config.php");
+	}
 
 	#
 	# figure out some global flags

@@ -6,6 +6,7 @@
 		'user'	=> 'root',
 		'pass'	=> 'root',
 		'name'	=> 'flamework',
+		'auto_connect' => 0,
 	);
 
 	$GLOBALS[cfg][db_users] = array(
