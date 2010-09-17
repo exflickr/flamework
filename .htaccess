@@ -17,6 +17,7 @@ php_value register_globals 0
 php_value magic_quotes_runtime 0
 php_value track_errors 1
 php_value last_modified off
+php_flag short_open_tags on
 
 DirectoryIndex index.php
 
