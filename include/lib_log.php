@@ -3,18 +3,35 @@
 	# $Id$
 	#
 
+
+	#
+	# the log module is designed to be as flexible as possible. the application can log message at
+	# multiple levels: fatal, error & notice. these messages can have an attached type (e.g. 'db'),
+	# but this is only used for notices right now. for each level, we can define zero or more
+	# handlers, including html/display and writing to the error log.
+	#
+	# right now the html display only shows notice messages when 'debug=1' is specified as a URL
+	# flag and always shows errors/fatals. it should ideally also check for admin auth/SSO, so that
+	# regular users don't see notices at all. another approach is to remove the html handlers and
+	# then add them back in during init for admin authed users. for fatal errors, you will probably
+	# want to add a handler which displays an error page to your users.
+	#
+	# you will also want to disable html handlers when outputing things that aren't webpages, like
+	# api results.
+	#
+
+	$GLOBALS[log_handlers] = array(
+		'notice'	=> array('html'),
+		'error'		=> array('html', 'error_log'),
+		'fatal'		=> array('html', 'error_log'),
+	);
+
 	$GLOBALS[log_html_colors] = array(
 		'db'		=> '#eef,#000',
 		'smarty'	=> '#efe,#000',
 		'http'		=> '#ffe,#000',
 		'_error'	=> '#fcc,#000',
 		'_fatal'	=> '#800,#fff',
-	);
-
-	$GLOBALS[log_handlers] = array(
-		'notice'	=> array('html'),
-		'error'		=> array('html', 'error_log'),
-		'fatal'		=> array('html', 'error_log'),
 	);
 
 
@@ -28,6 +45,7 @@
 		_log_dispatch('fatal', $msg);
 		exit;
 	}
+
 
 	function log_error($msg){
 		_log_dispatch('error', $msg);
@@ -50,10 +68,11 @@
 		}
 	}
 
+
 	###################################################################################################################
 
 	#
-	# log handlers
+	# print messages to the error log
 	#
 
 	function _log_handler_error_log($level, $msg, $more = array()){
@@ -68,8 +87,15 @@
 		error_log("[$level] $msg ($page)");
 	}
 
+
+	#
+	# display messages in the browser
+	#
+
 	function _log_handler_html($level, $msg, $more = array()){
-		if (!$_GET[debug]) return;
+
+		# only shows notices if we asked to see them
+		if ($level == 'notice' && !$_GET[debug]) return;
 
 		$type = $more[type] ? $more[type] : '';
 
