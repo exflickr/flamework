@@ -4,14 +4,17 @@
 	#
 
 	$GLOBALS[log_html_colors] = array(
-		'db'		=> '#eef',
-		'smarty'	=> '#efe',
-		'http'		=> '#ffe',
+		'db'		=> '#eef,#000',
+		'smarty'	=> '#efe,#000',
+		'http'		=> '#ffe,#000',
+		'_error'	=> '#fcc,#000',
+		'_fatal'	=> '#800,#fff',
 	);
 
 	$GLOBALS[log_handlers] = array(
 		'notice'	=> array('html'),
-		'error'		=> array('error_log'),
+		'error'		=> array('html', 'error_log'),
+		'fatal'		=> array('html', 'error_log'),
 	);
 
 
@@ -22,7 +25,8 @@
 	#
 
 	function log_fatal($msg){
-		die("FATAL ERROR: ".$msg);
+		_log_dispatch('fatal', $msg);
+		exit;
 	}
 
 	function log_error($msg){
@@ -69,9 +73,13 @@
 
 		$type = $more[type] ? $more[type] : '';
 
-		$color = $GLOBALS[log_html_colors][$type] ? $GLOBALS[log_html_colors][$type] : '#eee';
+		$colors = $GLOBALS[log_html_colors]['_'.$level];
+		if (!$colors) $colors = $GLOBALS[log_html_colors][$type];
+		if (!$colors) $colors = '#eee,#000';
 
-		echo "<div style=\"background-color: $color; margin: 1px 1px 0 1px; border: 1px solid #000; padding: 4px; text-align: left\">";
+		list($bgcolor, $color) = explode(',', $colors);
+
+		echo "<div style=\"background-color: $bgcolor; color: $color; margin: 1px 1px 0 1px; border: 1px solid #000; padding: 4px; text-align: left; font-family: sans-serif;\">";
 
 		if ($type) echo "[$type] ";
 
@@ -80,7 +88,6 @@
 		if ($more[time] > -1) echo " ($more[time] ms)";
 
 		echo "</div>\n";
-
 	}
 
 	###################################################################################################################
