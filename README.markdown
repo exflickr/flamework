@@ -7,7 +7,7 @@ None of the code in this project is actually taken from Flickr,
 but is rather a reconstruction of the way we built things there and
 the way we continue to build things now.
 
-<b>This library is a work in progress</a>. While it basically works,
+<b>This library is a work in progress</b>. While it basically works,
 it's lacking lots of the bits it really needs. As we pull these parts
 from other projects (and I've built most parts 10 times over by now),
 it'll start to take better shape. If you have stuff you want to add,
