@@ -17,6 +17,15 @@
 
 
 	#
+	# this is so we can test the HTTP library
+	#
+
+	if ($_GET[http_test]){
+		$ret = http_get("http://google.com");
+	}
+
+
+	#
 	# output
 	#
 
