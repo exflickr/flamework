@@ -6,13 +6,11 @@
 	#
 	# some startup tasks which come before anything else:
 	#  * set up the timezone
-	#  * turn off notices
 	#  * record the time
 	#  * set the mbstring encoding
 	#
 
 	putenv('TZ=PST8PDT');
-	error_reporting(E_ALL ^ E_NOTICE);
 
 	$GLOBALS['timings'] = array();
 	$GLOBALS['timings']['execution_start'] = microtime_ms();

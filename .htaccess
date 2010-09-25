@@ -29,6 +29,11 @@ php_value track_errors 1
 php_value last_modified off
 php_value short_tags on
 
+# this sets all current and future error flags on, except for E_NOTICE
+# which can go fuck itself. we have sxome separate code for checking the
+# one notice we do care about.
+php_value error_reporting 2147483639
+
 # Some basic pointers to php files
 DirectoryIndex index.php
 ErrorDocument 404 /404.php
