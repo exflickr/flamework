@@ -20,13 +20,13 @@
 	# api results.
 	#
 
-	$GLOBALS[log_handlers] = array(
+	$GLOBALS['log_handlers'] = array(
 		'notice'	=> array('html'),
 		'error'		=> array('html', 'error_log'),
 		'fatal'		=> array('html', 'error_log'),
 	);
 
-	$GLOBALS[log_html_colors] = array(
+	$GLOBALS['log_html_colors'] = array(
 		'db'		=> '#eef,#000',
 		'smarty'	=> '#efe,#000',
 		'http'		=> '#ffe,#000',
@@ -53,15 +53,15 @@
 
 
 	function log_notice($type, $msg, $time=-1){
-		_log_dispatch('notice', $msg, array(type => $type, time => $time));
+		_log_dispatch('notice', $msg, array('type' => $type, 'time' => $time));
 	}
 
 
 	function _log_dispatch($level, $msg, $more = array()){
 
-		if ($GLOBALS[log_handlers][$level]){
+		if ($GLOBALS['log_handlers'][$level]){
 
-			foreach ($GLOBALS[log_handlers][$level] as $handler){
+			foreach ($GLOBALS['log_handlers'][$level] as $handler){
 
 				call_user_func("_log_handler_$handler", $level, $msg, $more);
 			}
@@ -76,9 +76,9 @@
 	#
 
 	function _log_handler_error_log($level, $msg, $more = array()){
-		$page = $GLOBALS[HTTP_SERVER_VARS][REQUEST_URI];
+		$page = $GLOBALS['HTTP_SERVER_VARS']['REQUEST_URI'];
 
-		if ($more[type]){
+		if ($more['type']){
 			$msg = "[$more[type]] $msg";
 		}
 
@@ -95,12 +95,12 @@
 	function _log_handler_html($level, $msg, $more = array()){
 
 		# only shows notices if we asked to see them
-		if ($level == 'notice' && !$_GET[debug]) return;
+		if ($level == 'notice' && !$_GET['debug']) return;
 
-		$type = $more[type] ? $more[type] : '';
+		$type = $more['type'] ? $more['type'] : '';
 
-		$colors = $GLOBALS[log_html_colors]['_'.$level];
-		if (!$colors) $colors = $GLOBALS[log_html_colors][$type];
+		$colors = $GLOBALS['log_html_colors']['_'.$level];
+		if (!$colors) $colors = $GLOBALS['log_html_colors'][$type];
 		if (!$colors) $colors = '#eee,#000';
 
 		list($bgcolor, $color) = explode(',', $colors);
@@ -111,7 +111,7 @@
 
 		echo HtmlSpecialChars($msg);
 
-		if ($more[time] > -1) echo " ($more[time] ms)";
+		if ($more['time'] > -1) echo " ($more[time] ms)";
 
 		echo "</div>\n";
 	}

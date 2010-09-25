@@ -3,18 +3,18 @@
 	# $Id$
 	#
 
-	$GLOBALS[db_conns] = array();
+	$GLOBALS['db_conns'] = array();
 
-	$GLOBALS[timings][db_conns_count]	= 0;
-	$GLOBALS[timings][db_conns_time]	= 0;
-	$GLOBALS[timings][db_queries_count]	= 0;
-	$GLOBALS[timings][db_queries_time]	= 0;
-	$GLOBALS[timings][db_rows_count]	= 0;
-	$GLOBALS[timings][db_rows_time]		= 0;
+	$GLOBALS['timings']['db_conns_count']	= 0;
+	$GLOBALS['timings']['db_conns_time']	= 0;
+	$GLOBALS['timings']['db_queries_count']	= 0;
+	$GLOBALS['timings']['db_queries_time']	= 0;
+	$GLOBALS['timings']['db_rows_count']	= 0;
+	$GLOBALS['timings']['db_rows_time']		= 0;
 
-	$GLOBALS[timing_keys][db_conns]		= 'DB Connections';
-	$GLOBALS[timing_keys][db_queries]	= 'DB Queries';
-	$GLOBALS[timing_keys][db_rows]		= 'DB Rows Returned';
+	$GLOBALS['timing_keys']['db_conns']		= 'DB Connections';
+	$GLOBALS['timing_keys']['db_queries']	= 'DB Queries';
+	$GLOBALS['timing_keys']['db_rows']		= 'DB Rows Returned';
 
 	#################################################################
 
@@ -63,10 +63,10 @@
 
 		$cluster_key = $k ? "{$cluster}-{$k}" : $cluster;
 
-		$host = $GLOBALS[cfg]["db_{$cluster}"]["host"];
-		$user = $GLOBALS[cfg]["db_{$cluster}"]["user"];
-		$pass = $GLOBALS[cfg]["db_{$cluster}"]["pass"];
-		$name = $GLOBALS[cfg]["db_{$cluster}"]["name"];
+		$host = $GLOBALS['cfg']["db_{$cluster}"]["host"];
+		$user = $GLOBALS['cfg']["db_{$cluster}"]["user"];
+		$pass = $GLOBALS['cfg']["db_{$cluster}"]["pass"];
+		$name = $GLOBALS['cfg']["db_{$cluster}"]["name"];
 
 		if ($k){
 			$host = $host[$k];
@@ -84,10 +84,10 @@
 
 		$start = microtime_ms();
 
-		$GLOBALS[db_conns][$cluster_key] = @mysql_connect($host, $user, $pass, 1);
+		$GLOBALS['db_conns'][$cluster_key] = @mysql_connect($host, $user, $pass, 1);
 
-		if ($GLOBALS[db_conns][$cluster_key]){
-			@mysql_select_db($name, $GLOBALS[db_conns][$cluster_key]);
+		if ($GLOBALS['db_conns'][$cluster_key]){
+			@mysql_select_db($name, $GLOBALS['db_conns'][$cluster_key]);
 		}
 
 		$end = microtime_ms();
@@ -99,14 +99,14 @@
 
 		log_notice('db', "DB-$cluster_key: Connect", $end-$start);
 
-		if (!$GLOBALS[db_conns][$cluster_key] || $_GET[no_db]){
+		if (!$GLOBALS['db_conns'][$cluster_key] || $_GET['no_db']){
 
 			log_fatal("Connection to database cluster '$cluster_key' failed");
 		}
 
 
-		$GLOBALS[timings][db_conns_count]++;
-		$GLOBALS[timings][db_conns_time] += $end-$start;
+		$GLOBALS['timings']['db_conns_count']++;
+		$GLOBALS['timings']['db_conns_time'] += $end-$start;
 	}
 
 	#################################################################
@@ -115,22 +115,22 @@
 
 		$cluster_key = $k ? "{$cluster}-{$k}" : $cluster;
 
-		if (!$GLOBALS[db_conns][$cluster_key]){
+		if (!$GLOBALS['db_conns'][$cluster_key]){
 			_db_connect($cluster, $k);
 		}
 
 		$start = microtime_ms();
-		$result = @mysql_query($sql, $GLOBALS[db_conns][$cluster_key]);
+		$result = @mysql_query($sql, $GLOBALS['db_conns'][$cluster_key]);
 		$end = microtime_ms();
 
-		$GLOBALS[timings][db_queries_count]++;
-		$GLOBALS[timings][db_queries_time] += $end-$start;
+		$GLOBALS['timings']['db_queries_count']++;
+		$GLOBALS['timings']['db_queries_time'] += $end-$start;
 
 		log_notice('db', "DB-$cluster_key: $sql", $end-$start);
 
 		if (!$result){
-			$error_msg	= mysql_error($GLOBALS[db_conns][$cluster_key]);
-			$error_code	= mysql_errno($GLOBALS[db_conns][$cluster_key]);
+			$error_msg	= mysql_error($GLOBALS['db_conns'][$cluster_key]);
+			$error_code	= mysql_errno($GLOBALS['db_conns'][$cluster_key]);
 
 			log_error("DB-$cluster_key: $error_code ".HtmlSpecialChars($error_msg));
 
@@ -204,22 +204,22 @@
 
 		$ret = _db_query($sql, $cluster, $k);
 
-		if (!$ret[ok]) return $ret;
+		if (!$ret['ok']) return $ret;
 
 		$out = $ret;
-		$out[ok] = 1;
-		$out[rows] = array();
-		unset($out[result]);
+		$out['ok'] = 1;
+		$out['rows'] = array();
+		unset($out['result']);
 
 		$start = microtime_ms();
 		$count = 0;
-		while ($row = mysql_fetch_array($ret[result], MYSQL_ASSOC)){
-			$out[rows][] = $row;
+		while ($row = mysql_fetch_array($ret['result'], MYSQL_ASSOC)){
+			$out['rows'][] = $row;
 			$count++;
 		}
 		$end = microtime_ms();
-		$GLOBALS[timings][db_rows_count] += $count;
-		$GLOBALS[timings][db_rows_time] += $end-$start;
+		$GLOBALS['timings']['db_rows_count'] += $count;
+		$GLOBALS['timings']['db_rows_time'] += $end-$start;
 
 		return $out;
 	}
@@ -295,23 +295,23 @@
 
 		$ret = _db_query($sql, $cluster, $k);
 
-		if (!$ret[ok]) return $ret;
+		if (!$ret['ok']) return $ret;
 
 		return array(
 			'ok'		=> 1,
-			'affected_rows'	=> mysql_affected_rows($GLOBALS[db_conns][$cluster_key]),
-			'insert_id'	=> mysql_insert_id($GLOBALS[db_conns][$cluster_key]),
+			'affected_rows'	=> mysql_affected_rows($GLOBALS['db_conns'][$cluster_key]),
+			'insert_id'	=> mysql_insert_id($GLOBALS['db_conns'][$cluster_key]),
 		);
 	}
 
 	#################################################################
 
 	function db_single($ret){
-		return $ret[ok] && count($ret[rows]) ? $ret[rows][0] : FALSE;
+		return $ret['ok'] && count($ret['rows']) ? $ret['rows'][0] : FALSE;
 	}
 
 	function db_list($ret){
-		return $ret[ok] && count($ret[rows]) ? array_values($ret[rows][0]) : FALSE;
+		return $ret['ok'] && count($ret['rows']) ? array_values($ret['rows'][0]) : FALSE;
 	}
 
 	#################################################################
@@ -325,7 +325,7 @@
 
 	function db_shards($cluster){
 
-		return array_keys($GLOBALS[cfg]["db_{$cluster}"][host]);
+		return array_keys($GLOBALS['cfg']["db_{$cluster}"]['host']);
 	}
 
 	#################################################################
