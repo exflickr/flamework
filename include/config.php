@@ -26,6 +26,7 @@
 	$GLOBALS['cfg']['safe_abs_root_url']	= $GLOBALS['cfg']['abs_root_url'];
 
 	$GLOBALS['cfg']['smarty_compile'] = 1;
+	$GLOBALS['cfg']['check_notices'] = 1;
 
 	$GLOBALS['cfg']['http_timeout'] = 3;
 ?>
