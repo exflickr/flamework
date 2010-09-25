@@ -61,6 +61,24 @@
 	include(INCLUDE_DIR."/config.php");
 
 
+	#
+	# install an error handler to check for dubious notices?
+	# we do this because we only care about one of the notices
+	# that gets generated. we only want to run this code in
+	# devel environments. we also want to run it before any
+	# libraries get loaded so that we get to check their syntax.
+	#
+
+	if ($cfg['check_notices']){
+		set_error_handler('handle_error_notices', E_NOTICE);
+		error_reporting(E_ALL | E_STRICT);
+	}
+
+	function handle_error_notices($errno, $errstr){
+		if (preg_match('!^Use of undefined constant!', $errstr)) return false;
+		return true;
+	}
+
 
 	#
 	# figure out some global flags
