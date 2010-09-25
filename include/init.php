@@ -104,7 +104,7 @@
 	# disable precaching
 	#
 
-	if (StrToLower($HTTP_SERVER_VARS['HTTP_X_MOZ']) == 'prefetch'){
+	if (StrToLower($_SERVER['HTTP_X_MOZ']) == 'prefetch'){
 
 		if (!$allow_precache){
 
