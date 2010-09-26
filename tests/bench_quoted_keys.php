@@ -1,4 +1,4 @@
-<?
+<?php
 	#
 	# This test checks the hypothesis (by http://github.com/mihasya) that quoting
 	# key names in hash accesses is a significant performance improvement. The
@@ -12,6 +12,7 @@
 	#	Machine		PHP	Non-Quoted	Quoted
 	#	Cal's PC	5.2.9	426ms		 49ms
 	#	EC2 small	5.2.6	691ms		113ms
+	#	Jacques PC	5.3.0	58,498ms	35ms
 	#
 	# So for a ton of assignments, it can make a significant difference. However,
 	# you'll be saving 400ms 280,000 referenced keys, or 1ms per ~700 keys, so this
