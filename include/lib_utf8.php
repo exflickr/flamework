@@ -7,7 +7,7 @@
 
 		header("Content-Type: $mimetype; charset=utf-8");
 
-		if ($GLOBALS[no_cache]){
+		if ($GLOBALS['no_cache']){
 
 			# Date in the past
 			header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -23,7 +23,7 @@
 			header("Pragma: no-cache");
 		}else{
 
-			if ($GLOBALS[cfg][user][id]){
+			if ($GLOBALS['cfg']['user']['id']){
 
 				  header("Cache-Control: private");
 			}
@@ -32,13 +32,13 @@
 
 	function utf8_headers_smarty_comp($tag_attrs, &$compiler){
 		$_params = $compiler->_parse_attrs($tag_attrs);
-		if ($_params[mimetype]){
+		if ($_params['mimetype']){
 			return "utf8_headers($_params[mimetype]);";
 		}else{
 			return "utf8_headers();";
 		}
 	}
 
-	$GLOBALS[smarty]->register_compiler_function('utf8_headers', 'utf8_headers_smarty_comp');
+	$GLOBALS['smarty']->register_compiler_function('utf8_headers', 'utf8_headers_smarty_comp');
 
 ?>

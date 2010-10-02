@@ -14,9 +14,9 @@
 	putenv('TZ=PST8PDT');
 	error_reporting(E_ALL ^ E_NOTICE);
 
-	$GLOBALS[timings] = array();
-	$GLOBALS[timings][execution_start] = microtime_ms();
-	$GLOBALS[timing_keys] = array();
+	$GLOBALS['timings'] = array();
+	$GLOBALS['timings']['execution_start'] = microtime_ms();
+	$GLOBALS['timing_keys'] = array();
 
 	mb_internal_encoding('UTF-8');
 
@@ -35,22 +35,22 @@
 	# function's private scope.
 	#
 
-	$GLOBALS[loaded_libs] = array();
+	$GLOBALS['loaded_libs'] = array();
 
 	define('INCLUDE_DIR', dirname(__FILE__));
 
 	function loadlib($name){
 
-		if ($GLOBALS[loaded_libs][$name]) return;
-		$GLOBALS[loaded_libs][$name] = 1;
+		if ($GLOBALS['loaded_libs'][$name]) return;
+		$GLOBALS['loaded_libs'][$name] = 1;
 
 		include(INCLUDE_DIR."/lib_$name.php");
 	}
 
 	function loadpear($name){
 
-		if ($GLOBALS[loaded_libs]['PEAR:'.$name]) return;
-		$GLOBALS[loaded_libs]['PEAR:'.$name] = 1;
+		if ($GLOBALS['loaded_libs']['PEAR:'.$name]) return;
+		$GLOBALS['loaded_libs']['PEAR:'.$name] = 1;
 
 		include(INCLUDE_DIR."/pear/$name.php");
 	}
@@ -68,8 +68,8 @@
 	# figure out some global flags
 	#
 
-	$this_is_apache		= strlen($_SERVER[REQUEST_URI]) ? 1 : 0;
-	$this_is_shell		= $_SERVER[SHELL] ? 1 : 0;
+	$this_is_apache		= strlen($_SERVER['REQUEST_URI']) ? 1 : 0;
+	$this_is_shell		= $_SERVER['SHELL'] ? 1 : 0;
 	$this_is_webpage	= $this_is_apache && !$this_is_api ? 1 : 0;
 
 
@@ -138,5 +138,5 @@
 	# this timer stores the end of core library loading
 	#
 
-	$GLOBALS[timings][init_end] = microtime_ms();
+	$GLOBALS['timings']['init_end'] = microtime_ms();
 ?>

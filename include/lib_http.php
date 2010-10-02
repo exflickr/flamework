@@ -3,9 +3,9 @@
 	# $Id$
 	#
 
-	$GLOBALS[timings][http_count]	= 0;
-	$GLOBALS[timings][http_time]	= 0;
-	$GLOBALS[timing_keys]['http'] = 'HTTP Requests';
+	$GLOBALS['timings']['http_count']	= 0;
+	$GLOBALS['timings']['http_time']	= 0;
+	$GLOBALS['timing_keys']['http'] = 'HTTP Requests';
 
 	########################################################################
 
@@ -33,8 +33,8 @@
 
 		log_notice("http", "GET $url", $end-$start);
 
-		$GLOBALS[timings][http_count]++;
-		$GLOBALS[timings][http_time] += $end-$start;
+		$GLOBALS['timings']['http_count']++;
+		$GLOBALS['timings']['http_time'] += $end-$start;
 
 	        if ($info['http_code'] != "200"){
 

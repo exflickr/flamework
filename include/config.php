@@ -1,14 +1,14 @@
 <?
-	$GLOBALS[cfg] = array();
+	$GLOBALS['cfg'] = array();
 
-	$GLOBALS[cfg][db_main] = array(
+	$GLOBALS['cfg']['db_main'] = array(
 		'host'	=> 'localhost',
 		'user'	=> 'root',
 		'pass'	=> 'root',
 		'name'	=> 'flamework',
 	);
 
-	$GLOBALS[cfg][db_users] = array(
+	$GLOBALS['cfg']['db_users'] = array(
 		'host' => array(
 			1 => 'localhost',
 			2 => 'localhost',
@@ -22,10 +22,10 @@
 	);
 
 
-	$GLOBALS[cfg][abs_root_url]		= 'http://www.ourapp.com/';
-	$GLOBALS[cfg][safe_abs_root_url]	= $GLOBALS[cfg][abs_root_url];
+	$GLOBALS['cfg']['abs_root_url']		= 'http://www.ourapp.com/';
+	$GLOBALS['cfg']['safe_abs_root_url']	= $GLOBALS['cfg']['abs_root_url'];
 
-	$GLOBALS[cfg][smarty_compile] = 1;
+	$GLOBALS['cfg']['smarty_compile'] = 1;
 
-	$GLOBALS[cfg][http_timeout] = 3;
+	$GLOBALS['cfg']['http_timeout'] = 3;
 ?>
