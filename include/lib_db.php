@@ -85,6 +85,7 @@
 
 		$start = microtime_ms();
 
+
 		$GLOBALS[db_conns][$cluster_key] = @mysql_connect($host, $user, $pass, 1);
 
 		if ($GLOBALS[db_conns][$cluster_key]){
@@ -343,5 +344,4 @@
 	}
 
 	#################################################################
-
 ?>
