@@ -6,37 +6,37 @@
 
 	loadlib('users_email');
 
-	function users_create_user(&$acct){
+	function users_create_user(&$user){
 
-		foreach ($acct as $k => $v){
-			$acct[$k] = db_quote($v);
+		foreach ($user as $k => $v){
+			$user[$k] = db_quote($v);
 		}
 
 		$enc_pass = login_encrypt_password($password);
 
-		$acct['password'] = db_quote($enc_pass);
-		$acct['created'] = time();
+		$user['password'] = db_quote($enc_pass);
+		$user['created'] = time();
 
-		$rsp = db_insert('Users', $acct);
+		$rsp = db_insert('Users', $user);
 			
 		if (! $rsp['ok']){
 			return null;
 		}
 		
-		$acct['user_id'] = $rsp['insert_id'];
+		$user['user_id'] = $rsp['insert_id'];
 
 		# do something with $conf_code here...
 
 		$is_primary = 1;
-		$conf_code = users_email_add_address($acct, $email, $is_primary);
+		$conf_code = users_email_add_address($user, $email, $is_primary);
 
-		$acct['conf_code'] = $conf_code;
-		return $acct;
+		$user['conf_code'] = $conf_code;
+		return $user;
 	}
 
-	function users_delete_user(&$acct){
+	function users_delete_user(&$user){
 
-		$enc_id = db_quote($acct['user_id']);
+		$enc_id = db_quote($user['user_id']);
 
 		# UsersEmail
 
@@ -77,20 +77,20 @@
 
 	function users_get_by_login($email, $password){
 
-		$acct = users_get_by_email($email);
+		$user = users_get_by_email($email);
 
-		if (! $acct){
+		if (! $user){
 			return null;
 		}
 
-		if ($acct['deleted']){
+		if ($user['deleted']){
 			return null;
 		}
 
-		if ($acct['password'] != login_encrypt_password($password)){
+		if ($user['password'] != login_encrypt_password($password)){
 			return null;
 		}
 
-		return $acct;
+		return $user;
 	}
 ?>
