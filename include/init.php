@@ -103,6 +103,7 @@
 	loadlib('smarty');	# smarty comes next, since other libs register smarty modules
 	#loadlib('error');
 	loadlib('db');
+	loadlib('sanitize');
 	#loadlib('cache');
 	loadlib('login');
 	#loadlib('email');
