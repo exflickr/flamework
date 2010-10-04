@@ -332,4 +332,16 @@
 	}
 
 	#################################################################
+
+	function db_quote($str, $dbconn=null){
+
+		if (! $dbconn){
+			return mysql_real_escape_string($str);
+		}
+
+		return mysql_real_escape_string($str, $dbconn);
+	}
+
+	#################################################################
+
 ?>

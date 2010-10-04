@@ -41,24 +41,42 @@
 
 	function loadlib($name){
 
-		if ($GLOBALS['loaded_libs'][$name]) return;
+		if ($GLOBALS['loaded_libs'][$name]){
+			return;
+		}
+
 		$GLOBALS['loaded_libs'][$name] = 1;
 
-		# see also: http://www.php.net/manual/en/ini.core.php#ini.include-path
+		$fq_name = _loadlib_enpathify("lib_{$name}.php");
 
-		include("lib_{$name}.php");
+		include($fq_name);
 	}
 
 	function loadpear($name){
 
-		if ($GLOBALS['loaded_libs']['PEAR:'.$name]) return;
+		if ($GLOBALS['loaded_libs']['PEAR:'.$name]){
+			return;
+		}
+
 		$GLOBALS['loaded_libs']['PEAR:'.$name] = 1;
+
+		$fq_name = _loadlib_enpathify("pear/{$name}.php");
+
+		include($fq_name);
+	}
+
+	function _loadlib_enpathify($lib){
 
 		# see also: http://www.php.net/manual/en/ini.core.php#ini.include-path
 
-		include("pear/{$name}.php");
-	}
+		$inc_path = ini_get('include_path');
 
+		if (preg_match("/\/flamework\//", $inc_path)){
+			return $lib;
+		}
+
+		return FLAMEWORK_INCLUDE_DIR . $lib;		
+	}
 
 	#
 	# load config
@@ -86,12 +104,12 @@
 	#loadlib('error');
 	loadlib('db');
 	#loadlib('cache');
-	#loadlib('login');
+	loadlib('login');
 	#loadlib('email');
 	loadlib('utf8');
 	#loadlib('args');
 	#loadlib('calendar');
-	#loadlib('users');
+	loadlib('users');
 	#loadlib('versions');
 	loadlib('http');
 
