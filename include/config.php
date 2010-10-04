@@ -1,4 +1,5 @@
 <?
+<<<<<<< HEAD
 
 	#
 	# $Id$
@@ -10,6 +11,10 @@
 	# Things you'll certainly need to tweak
 	#
 
+=======
+	$GLOBALS['cfg'] = array();
+
+>>>>>>> 7f3ca545bc4a9243e7b3c8849b4c8f1138928c38
 	$GLOBALS['cfg']['db_main'] = array(
 		'host'	=> 'localhost',
 		'user'	=> 'root',
@@ -34,6 +39,7 @@
 
 	$GLOBALS['cfg']['abs_root_url']		= 'http://www.ourapp.com/';
 	$GLOBALS['cfg']['safe_abs_root_url']	= $GLOBALS['cfg']['abs_root_url'];
+<<<<<<< HEAD
 
 	$GLOBALS['cfg']['smarty_template_dir'] = dirname(__FILE__) . '/../templates/';
 	$GLOBALS['cfg']['smarty_compile_dir'] = dirname(__FILE__) . '/../templates_c/';
@@ -60,3 +66,11 @@
 	$GLOBALS['cfg']['http_timeout'] = 3;
 
 ?>
+=======
+
+	$GLOBALS['cfg']['smarty_compile'] = 1;
+	$GLOBALS['cfg']['check_notices'] = 1;
+
+	$GLOBALS['cfg']['http_timeout'] = 3;
+?>
+>>>>>>> 7f3ca545bc4a9243e7b3c8849b4c8f1138928c38
