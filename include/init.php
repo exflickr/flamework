@@ -6,17 +6,15 @@
 	#
 	# some startup tasks which come before anything else:
 	#  * set up the timezone
-	#  * turn off notices
 	#  * record the time
 	#  * set the mbstring encoding
 	#
 
 	putenv('TZ=PST8PDT');
-	error_reporting(E_ALL ^ E_NOTICE);
 
-	$GLOBALS[timings] = array();
-	$GLOBALS[timings][execution_start] = microtime_ms();
-	$GLOBALS[timing_keys] = array();
+	$GLOBALS['timings'] = array();
+	$GLOBALS['timings']['execution_start'] = microtime_ms();
+	$GLOBALS['timing_keys'] = array();
 
 	mb_internal_encoding('UTF-8');
 
@@ -41,14 +39,9 @@
 
 	function loadlib($name){
 
-		if ($GLOBALS['loaded_libs'][$name]){
-			return;
-		}
-
 		$GLOBALS['loaded_libs'][$name] = 1;
 
 		$fq_name = _loadlib_enpathify("lib_{$name}.php");
-
 		include($fq_name);
 	}
 
@@ -61,7 +54,6 @@
 		$GLOBALS['loaded_libs']['PEAR:'.$name] = 1;
 
 		$fq_name = _loadlib_enpathify("pear/{$name}.php");
-
 		include($fq_name);
 	}
 
@@ -87,11 +79,29 @@
 	}
 
 	#
+	# install an error handler to check for dubious notices?
+	# we do this because we only care about one of the notices
+	# that gets generated. we only want to run this code in
+	# devel environments. we also want to run it before any
+	# libraries get loaded so that we get to check their syntax.
+	#
+
+	if ($cfg['check_notices']){
+		set_error_handler('handle_error_notices', E_NOTICE);
+		error_reporting(E_ALL | E_STRICT);
+	}
+
+	function handle_error_notices($errno, $errstr){
+		if (preg_match('!^Use of undefined constant!', $errstr)) return false;
+		return true;
+	}
+
+	#
 	# figure out some global flags
 	#
 
-	$this_is_apache		= strlen($_SERVER[REQUEST_URI]) ? 1 : 0;
-	$this_is_shell		= $_SERVER[SHELL] ? 1 : 0;
+	$this_is_apache		= strlen($_SERVER['REQUEST_URI']) ? 1 : 0;
+	$this_is_shell		= $_SERVER['SHELL'] ? 1 : 0;
 	$this_is_webpage	= $this_is_apache && !$this_is_api ? 1 : 0;
 
 
@@ -103,7 +113,6 @@
 	loadlib('smarty');	# smarty comes next, since other libs register smarty modules
 	#loadlib('error');
 	loadlib('db');
-	loadlib('sanitize');
 	#loadlib('cache');
 	loadlib('login');
 	#loadlib('email');
@@ -127,7 +136,7 @@
 	# disable precaching
 	#
 
-	if (StrToLower($HTTP_SERVER_VARS['HTTP_X_MOZ']) == 'prefetch'){
+	if (StrToLower($_SERVER['HTTP_X_MOZ']) == 'prefetch'){
 
 		if (!$allow_precache){
 
@@ -161,5 +170,5 @@
 	# this timer stores the end of core library loading
 	#
 
-	$GLOBALS[timings][init_end] = microtime_ms();
+	$GLOBALS['timings']['init_end'] = microtime_ms();
 ?>

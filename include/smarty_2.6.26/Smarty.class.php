@@ -1103,7 +1103,7 @@ class Smarty
      */
     function display($resource_name, $cache_id = null, $compile_id = null)
     {
-        $GLOBALS[timings][smarty_start_output] = microtime_ms();
+        $GLOBALS['timings']['smarty_start_output'] = microtime_ms();
         $this->fetch($resource_name, $cache_id, $compile_id, true);
     }
 
@@ -1432,8 +1432,8 @@ class Smarty
         $ret = $this->_compile_resource_real($resource_name, $compile_path);
         $end = microtime_ms();
 
-        $GLOBALS[timings][smarty_comp_count]++;
-        $GLOBALS[timings][smarty_comp_time] += $end-$start;
+        $GLOBALS['timings']['smarty_comp_count']++;
+        $GLOBALS['timings']['smarty_comp_time'] += $end-$start;
 
         log_notice("smarty", "Compiling $resource_name", $end-$start);
 

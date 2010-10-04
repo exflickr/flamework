@@ -1,5 +1,9 @@
 <?php
 
+	#
+	# $Id$
+	#
+
 	function login_check_loggedin($force_signin=1, $redir='/'){
 
 		If (($GLOBALS['cfg']['user']) && ($GLOBALS['cfg']['user_ok'])){
