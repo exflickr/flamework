@@ -85,6 +85,7 @@
 
 		$start = microtime_ms();
 
+
 		$GLOBALS[db_conns][$cluster_key] = @mysql_connect($host, $user, $pass, 1);
 
 		if ($GLOBALS[db_conns][$cluster_key]){
@@ -329,6 +330,17 @@
 	function db_shards($cluster){
 
 		return array_keys($GLOBALS[cfg]["db_{$cluster}"][host]);
+	}
+
+	#################################################################
+
+	function db_quote($str, $dbconn=null){
+
+		if (! $dbconn){
+			return mysql_real_escape_string($str);
+		}
+
+		return mysql_real_escape_string($str, $dbconn);
 	}
 
 	#################################################################
