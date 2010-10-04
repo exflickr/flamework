@@ -85,13 +85,14 @@
 	loadlib('smarty');	# smarty comes next, since other libs register smarty modules
 	#loadlib('error');
 	loadlib('db');
+	loadlib('sanitize');
 	#loadlib('cache');
-	#loadlib('login');
+	loadlib('login');
 	#loadlib('email');
 	loadlib('utf8');
 	#loadlib('args');
 	#loadlib('calendar');
-	#loadlib('users');
+	loadlib('users');
 	#loadlib('versions');
 	loadlib('http');
 

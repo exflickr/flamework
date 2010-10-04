@@ -2,7 +2,7 @@
 
 	function login_check_loggedin($force_signin=1, $redir='/'){
 
-		if (($GLOBALS['cfg']['user']) && ($GLOBALS['cfg']['user_ok'])){
+		If (($GLOBALS['cfg']['user']) && ($GLOBALS['cfg']['user_ok'])){
 			return 1;
 		}
 
@@ -20,20 +20,20 @@
 			return login_not_loggedin($force_signin, $redir);
 		}
 
-		$acct = accounts_get_by_id($user_id, $password);
+		$user = users_get_by_id($user_id, $password);
 
-		if (! $acct){
+		if (! $user){
 			return login_not_loggedin($force_signin, $redir);
 		}
 
-		if ($acct['deleted']){
-			login_do_logout($acct);
+		if ($user['deleted']){
+			login_do_logout($user);
 		}
 
-		accounts_email_load($acct);
+		users_email_load($user);
 
 		$GLOBALS['cfg']['user_ok'] = 1;
-		$GLOBALS['cfg']['user'] = $acct;
+		$GLOBALS['cfg']['user'] = $user;
 
 		return 1;
 	}
@@ -42,7 +42,7 @@
 		
 		if ($force_signin){
 			$redir = urlencode($redir);
-			redirect("/account/signin?redir={$redir}");
+			header("location: /signin?redir={$redir}");
 			exit();
 		}
 
@@ -61,7 +61,7 @@
 		}
 
 		$redir = urlencode($redir);
-		redirect("/account/cookiemonster?redir={$redir}");
+		header("location: /cookiemonster?redir={$redir}");
 
 		exit();
 	}
