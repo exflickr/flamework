@@ -85,12 +85,7 @@
 
 		$start = microtime_ms();
 
-<<<<<<< HEAD
-
-		$GLOBALS[db_conns][$cluster_key] = @mysql_connect($host, $user, $pass, 1);
-=======
 		$GLOBALS['db_conns'][$cluster_key] = @mysql_connect($host, $user, $pass, 1);
->>>>>>> 7f3ca545bc4a9243e7b3c8849b4c8f1138928c38
 
 		if ($GLOBALS['db_conns'][$cluster_key]){
 			@mysql_select_db($name, $GLOBALS['db_conns'][$cluster_key]);
@@ -110,16 +105,10 @@
 			log_fatal("Connection to database cluster '$cluster_key' failed");
 		}
 
-
-<<<<<<< HEAD
-		$GLOBALS[timings][db_conns_count]++;
-		$GLOBALS[timings][db_conns_time] += $end-$start;
-
-		return true;
-=======
 		$GLOBALS['timings']['db_conns_count']++;
 		$GLOBALS['timings']['db_conns_time'] += $end-$start;
->>>>>>> 7f3ca545bc4a9243e7b3c8849b4c8f1138928c38
+
+		return true;	
 	}
 
 	#################################################################

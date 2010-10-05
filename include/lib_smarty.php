@@ -11,17 +11,10 @@
 
 	$GLOBALS['smarty'] = new Smarty();
 
-<<<<<<< HEAD
-	$GLOBALS[smarty]->template_dir = $GLOBALS['cfg']['smarty_template_dir'];
-	$GLOBALS[smarty]->compile_dir  = $GLOBALS['cfg']['smarty_compile_dir'];
-	$GLOBALS[smarty]->compile_check = $GLOBALS['cfg']['smarty_compile'];
-	$GLOBALS[smarty]->force_compile = $GLOBALS['cfg']['smarty_compile'];
-=======
-	$GLOBALS['smarty']->template_dir = INCLUDE_DIR.'/../templates/';
-	$GLOBALS['smarty']->compile_dir  = INCLUDE_DIR.'/../templates_c/';
-	$GLOBALS['smarty']->compile_check = $GLOBALS['cfg']['smarty_compile'];;
-	$GLOBALS['smarty']->force_compile = $GLOBALS['cfg']['smarty_compile'];;
->>>>>>> 7f3ca545bc4a9243e7b3c8849b4c8f1138928c38
+	$GLOBALS['smarty']->template_dir = $GLOBALS['cfg']['smarty_template_dir'];
+	$GLOBALS['smarty']->compile_dir  = $GLOBALS['cfg']['smarty_compile_dir'];
+	$GLOBALS['smarty']->compile_check = $GLOBALS['cfg']['smarty_compile'];
+	$GLOBALS['smarty']->force_compile = $GLOBALS['cfg']['smarty_compile'];
 
 	$GLOBALS['smarty']->assign_by_ref('cfg', $GLOBALS['cfg']);
 
