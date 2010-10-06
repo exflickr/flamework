@@ -44,10 +44,11 @@
 	$GLOBALS['cfg']['smarty_compile_dir'] = dirname(__FILE__) . '/../templates_c/';
 
 
-	# No, seriously. Change this...
+	# No, seriously. Change these...
 
 	$GLOBALS['cfg']['crypto_cookie_secret'] = '';
 	$GLOBALS['cfg']['crypto_password_secret'] = '';
+	$GLOBALS['cfg']['crypto_crumb_secret'] = '';
 
 	#
 	# Things you may need to tweak
@@ -55,6 +56,8 @@
 
 	$GLOBALS['cfg']['auth_cookie_domain'] = parse_url($GLOBALS['cfg']['abs_root_url'], 1);
 	$GLOBALS['cfg']['auth_cookie_name'] = 'a';
+
+	$GLOBALS['cfg']['crumb_ttl_default'] = 300;	# seconds
 
 	#
 	# Things you can probably not worry about
