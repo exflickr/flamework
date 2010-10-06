@@ -4,7 +4,11 @@
 	# $Id$
 	#
 
+	#################################################################
+
 	loadlib('users_email');
+
+	#################################################################
 
 	function users_create_user(&$user){
 
@@ -12,7 +16,7 @@
 			$user[$k] = db_quote($v);
 		}
 
-		$enc_pass = login_encrypt_password($password);
+		$enc_pass = login_encrypt_password($password, $GLOBALS['cfg']['crypto_password_secret']);
 
 		$user['password'] = db_quote($enc_pass);
 		$user['created'] = time();
@@ -28,11 +32,13 @@
 		# do something with $conf_code here...
 
 		$is_primary = 1;
-		$conf_code = users_email_add_address($user, $email, $is_primary);
+		$conf_code = users_email_add_address($user, $user['email'], $is_primary);
 
 		$user['conf_code'] = $conf_code;
 		return $user;
 	}
+
+	#################################################################
 
 	function users_delete_user(&$user){
 
@@ -57,6 +63,8 @@
 		return 1;
 	}
 
+	#################################################################
+
 	function users_get_by_id($id){
 
 		$enc_id = db_quote($id);
@@ -66,6 +74,8 @@
 		return db_single($rsp);
 	}
 
+	#################################################################
+
 	function users_get_by_email($email){
 
 		$enc_email = db_quote($email);
@@ -74,6 +84,8 @@
 		$rsp = db_fetch($sql);
 		return db_single($rsp);
 	}
+
+	#################################################################
 
 	function users_get_by_login($email, $password){
 
@@ -93,4 +105,7 @@
 
 		return $user;
 	}
+
+	#################################################################
+
 ?>

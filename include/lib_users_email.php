@@ -1,15 +1,22 @@
 <?php
 
+	#
+	# $Id$
+	#
+
+	#################################################################
+
 	loadlib('random');
+
+	#################################################################
 
 	function users_email_add_address(&$user, $email, $primary=0){
 
-		loadlib("string");
-		$conf_code = random_string(64);
+		$conf_code = random_string(16);
 
 		$insert = array(
 			'user_id' => $user['id'],
-			'address' => $email,
+			'email' => $email,
 			'conf_code' => $conf_code,
 			'is_primary' => $primary,
 			'created' => time(),
@@ -24,9 +31,13 @@
 		return $conf_code;
 	}
 
+	#################################################################
+
 	function users_email_confirm_address(){
 
 	}
+
+	#################################################################
 
 	function users_email_flag_addresses_for_user(&$user){
 
@@ -45,6 +56,8 @@
 
 		return 1;
 	}
+
+	#################################################################
 
 	function users_email_flag_address($email){
 
@@ -70,8 +83,6 @@
 		return 1;		
 	}
 
-	function users_email_purge_address($email){
-
-	}
+	#################################################################
 
 ?>
