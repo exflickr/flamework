@@ -16,7 +16,7 @@
 			$user[$k] = db_quote($v);
 		}
 
-		$enc_pass = login_encrypt_password($password, $GLOBALS['cfg']['crypto_password_secret']);
+		$enc_pass = login_encrypt_password($user['password'], $GLOBALS['cfg']['crypto_password_secret']);
 
 		$user['password'] = db_quote($enc_pass);
 		$user['created'] = time();

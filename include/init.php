@@ -115,6 +115,7 @@
 	loadlib('db');
 	#loadlib('cache');
 	loadlib('crypto');
+	loadlib('crumb');
 	loadlib('login');
 	#loadlib('email');
 	loadlib('utf8');
@@ -128,8 +129,7 @@
 
 	if ($this_is_webpage){
 
-		#login_b_cookie();
-		#login_check();
+		login_is_loggedin();
 	}
 
 
