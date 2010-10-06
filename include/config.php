@@ -46,7 +46,8 @@
 
 	# No, seriously. Change this...
 
-	$GLOBALS['cfg']['crypto_secret'] = rand(time(), time() * rand(2, 10));
+	$GLOBALS['cfg']['crypto_cookie_secret'] = '';
+	$GLOBALS['cfg']['crypto_password_secret'] = '';
 
 	#
 	# Things you may need to tweak
