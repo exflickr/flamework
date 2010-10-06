@@ -114,6 +114,7 @@
 	#loadlib('error');
 	loadlib('db');
 	#loadlib('cache');
+	loadlib('crypto');
 	loadlib('login');
 	#loadlib('email');
 	loadlib('utf8');
