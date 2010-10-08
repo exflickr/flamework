@@ -74,11 +74,11 @@
 
 	#################################################################
 
-	function login_do_logout(&$user){
+	function login_do_logout($redir='/'){
 
 		login_unset_cookie($GLOBALS['cfg']['auth_cookie_name']);
 
-		header("location: /");
+		header("location: {$redir}");
 		exit();
 	}
 
@@ -92,8 +92,8 @@
 
 	#################################################################
 
-	function login_encrypt_password($pass, $secret=''){
-		return hash_hmac("sha256", $pass, $secret);
+	function login_encrypt_password($pass){
+		return hash_hmac("sha256", $pass, $GLOBALS['cfg']['crypto_password_secret']);
 	}
 
 	#################################################################
