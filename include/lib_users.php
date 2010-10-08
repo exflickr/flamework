@@ -12,11 +12,11 @@
 
 	function users_create_user(&$user){
 
+		$enc_pass = login_encrypt_password($user['password']);
+
 		foreach ($user as $k => $v){
 			$user[$k] = db_quote($v);
 		}
-
-		$enc_pass = login_encrypt_password($user['password'], $GLOBALS['cfg']['crypto_password_secret']);
 
 		$user['password'] = db_quote($enc_pass);
 		$user['created'] = time();
@@ -40,19 +40,14 @@
 
 	#################################################################
 
-	function users_delete_user(&$user){
+	function users_update_user(&$user, &$update){
 
 		$enc_id = db_quote($user['user_id']);
+		$where = "user_id='{$enc_id}'";
 
-		# UsersEmail
-
-		$update = array(
-			'deleted' => time(),
-		);
-
-		$where = array(
-			'user_id' => $enc_id,
-		);
+		foreach ($update as $k => $v){
+			$update[$k] = db_quote($v);
+		}
 
 		$rsp = db_update('Users', $update, $where);
 
@@ -61,6 +56,31 @@
 		}
 
 		return 1;
+	}
+
+	#################################################################
+
+	function users_update_password(&$user, $new_password){
+
+		$update = array(
+			'password' => login_encrypt_password($new_password),
+		);
+
+		return users_update_user($user, $update);
+	}
+
+	#################################################################
+
+	function users_delete_user(&$user){
+
+		$now = time();
+
+		$update = array(
+			'deleted' => $now,
+			# reset the password here ?
+		);
+
+		return users_update_user($user, $update);
 	}
 
 	#################################################################
@@ -104,6 +124,30 @@
 		}
 
 		return $user;
+	}
+
+	#################################################################
+
+	function users_is_email_taken($email){
+
+		$enc_email = db_quote($email);
+
+		$sql = "SELECT user_id FROM Users WHERE email='{$enc_email}' AND deleted != 0";
+
+		$rsp = db_fetch($sql);
+		return db_single($rsp);
+	}
+
+	#################################################################
+
+	function users_is_username_taken($username){
+
+		$enc_username = db_quote($username);
+
+		$sql = "SELECT user_id FROM Users WHERE username='{$enc_username}' AND deleted != 0";
+
+		$rsp = db_fetch($sql);
+		return db_single($rsp);
 	}
 
 	#################################################################
