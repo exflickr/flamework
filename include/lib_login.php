@@ -8,7 +8,7 @@
 
 	function login_ensure_loggedin($redir='/'){
 
-		if (login_is_loggedin()){
+		if (login_check_login()){
 			return 1;
 		}
 
@@ -20,8 +20,14 @@
 	#################################################################
 
 	function login_is_loggedin(){
+		return (($GLOBALS['cfg']['user']) && ($GLOBALS['cfg']['user_ok'])) ? 1 : 0;
+	}
 
-		If (($GLOBALS['cfg']['user']) && ($GLOBALS['cfg']['user_ok'])){
+	#################################################################
+
+	function login_check_login(){
+
+		if (($GLOBALS['cfg']['user']) && ($GLOBALS['cfg']['user_ok'])){
 			return 1;
 		}
 
@@ -49,6 +55,10 @@
 			return 0;
 		}
 
+		if ($user['password'] !== $password){
+			return 0;
+		}
+ 
 		$GLOBALS['cfg']['user_ok'] = 1;
 		$GLOBALS['cfg']['user'] = $user;
 
