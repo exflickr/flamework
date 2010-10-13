@@ -21,6 +21,8 @@
 		$user['password'] = db_quote($enc_pass);
 		$user['created'] = time();
 
+		$user['conf_code'] = random_string(24);
+
 		$rsp = db_insert('Users', $user);
 			
 		if (! $rsp['ok']){
@@ -29,12 +31,6 @@
 		
 		$user['user_id'] = $rsp['insert_id'];
 
-		# do something with $conf_code here...
-
-		$is_primary = 1;
-		$conf_code = users_email_add_address($user, $user['email'], $is_primary);
-
-		$user['conf_code'] = $conf_code;
 		return $user;
 	}
 
@@ -62,8 +58,10 @@
 
 	function users_update_password(&$user, $new_password){
 
+		$enc_password = login_encrypt_password($new_password);
+
 		$update = array(
-			'password' => login_encrypt_password($new_password),
+			'password' => db_quote($enc_password),
 		);
 
 		return users_update_user($user, $update);
@@ -75,12 +73,22 @@
 
 		$now = time();
 
+		$email = $user['email'] . '.DELETED';
+
 		$update = array(
 			'deleted' => $now,
+			'email' => $email,
+
 			# reset the password here ?
 		);
 
 		return users_update_user($user, $update);
+	}
+
+	#################################################################
+
+	function users_reload_user(&$user){
+		$user = users_get_by_id($user['user_id']);
 	}
 
 	#################################################################
@@ -152,4 +160,73 @@
 
 	#################################################################
 
+	function users_get_by_password_reset_code($code){
+
+		$enc_code = db_quote($code);
+
+		$sql = "SELECT * FROM UsersPasswordReset WHERE reset_code = '{$enc_code}'";
+
+		$rsp = db_fetch($sql);
+		$row = db_single($rsp);
+
+		if (! $row){
+			return null;
+		}
+
+		return users_get_by_id($row['user_id']);
+	}
+
+	#################################################################
+
+	function users_purge_password_reset_codes(&$user){
+
+		$enc_user_id = db_quote($user['user_id']);
+
+		$sql = "DELETE FROM UsersPasswordReset WHERE user_id={$enc_user_id}";
+		$rsp = db_write($sql);
+
+		return $rsp['ok'];
+	}
+
+	#################################################################
+
+	function users_generate_password_reset_code(&$user){
+
+		users_purge_password_reset_codes($user);
+
+		$enc_user_id = db_quote($user['user_id']);
+
+		$code = '';
+
+		while (! $code){
+
+			$code = random_string(32);
+			$enc_code = db_quote($code);
+
+			$sql = "SELECT 1 FROM UsersPasswordReset WHERE reset_code='{$enc_code}'";
+			$rsp = db_fetch($sql);
+
+			if (db_single($rsp)){
+				$code = '';
+			}
+
+			break;
+		}
+
+		$insert = array(
+			'user_id' => $enc_user_id,
+			'reset_code' => $enc_code,
+			'created' => time(),
+		);
+
+		$rsp = db_insert('UsersPasswordReset', $insert);
+			
+		if (! $rsp['ok']){
+			return null;
+		}
+
+		return $code;
+	}
+
+	#################################################################
 ?>
