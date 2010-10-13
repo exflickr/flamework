@@ -63,7 +63,7 @@
 	# Things you can probably not worry about
 	#
 
-	$GLOBALS['cfg']['user'] = array();
+	$GLOBALS['cfg']['user'] = null;
 	$GLOBALS['cfg']['user_ok'] = 0;
 
 	$GLOBALS['cfg']['smarty_compile'] = 1;

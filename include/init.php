@@ -128,8 +128,7 @@
 
 
 	if ($this_is_webpage){
-
-		login_is_loggedin();
+		login_check_login();
 	}
 
 
@@ -165,7 +164,6 @@
 		list($usec, $sec) = explode(" ", microtime());
 		return intval(1000 * ((float)$usec + (float)$sec));
 	}
-
 
 	#
 	# this timer stores the end of core library loading
