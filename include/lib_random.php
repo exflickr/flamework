@@ -8,7 +8,7 @@
 
 		$parts = array();
 
-		foreach (range(0, $length) as $i){
+		foreach (range(1, $length) as $i){
          		$randnum = mt_rand(0,61);
 
          		if ($randnum < 10){
