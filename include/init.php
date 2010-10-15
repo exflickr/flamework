@@ -39,6 +39,10 @@
 
 	function loadlib($name){
 
+		if ($GLOBALS['loaded_libs'][$name]){
+			return;
+		}
+
 		$GLOBALS['loaded_libs'][$name] = 1;
 
 		$fq_name = _loadlib_enpathify("lib_{$name}.php");
