@@ -59,4 +59,20 @@
 	}
 
 	#################################################################
+
+	function crumb_ensure_valid_crumb($template='/page_bad_crumb.txt'){
+
+		$crumb = post_str('crumb');
+
+		if (! crumb_validate_crumb($crumb, $GLOBALS['cfg']['user'])){
+
+			$GLOBALS['error']['badcrumb'] = 1;
+			$smarty->display($template);
+			exit();
+		}
+
+		return 1;
+	}
+
+	#################################################################
 ?>
