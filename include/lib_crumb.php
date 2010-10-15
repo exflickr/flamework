@@ -47,12 +47,21 @@
 		return base64_encode(implode(":", $data));
 	}
 
-	function crumb_ensure_context($context){
+	#################################################################
 
-		if (! $context){
-			$context = $GLOBALS['HTTP_SERVER_VARS']['SCRIPT_NAME'];
+	function crumb_ensure_valid_crumb($template='/page_bad_crumb.txt'){
+
+		$crumb = post_str('crumb');
+
+		if (! crumb_validate_crumb($crumb, $GLOBALS['cfg']['user'])){
+
+			$GLOBALS['error']['badcrumb'] = 1;
+			$smarty->display($template);
+			exit();
 		}
 
-		return $context;
+		return 1;
 	}
+
+	#################################################################
 ?>
