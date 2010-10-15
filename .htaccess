@@ -2,7 +2,7 @@
 # Hey! Everything in here is better suited to httpd.conf, since
 # we get a performance boost if we can turn off AllowOverride and
 # not have to stat the webroot for every request. On the other
-# hand, this measn we never have to touch apache once it's up.
+# hand, this means we never have to touch apache once it's up.
 # Flexibility over performance.
 #
 # In an ideal world, you'd stick it in here on dev and your build
@@ -30,7 +30,7 @@ php_value last_modified off
 php_value short_tags on
 
 # this sets all current and future error flags on, except for E_NOTICE
-# which can go fuck itself. we have sxome separate code for checking the
+# which can go fuck itself. we have some separate code for checking the
 # one notice we do care about.
 php_value error_reporting 2147483639
 
