@@ -41,7 +41,7 @@
 	#
 
 	function db_insert($tbl, $hash){		return _db_insert($tbl, $hash, 'main'); }
-	function db_insert_users($k, $tbl, $hash){	return _db_insert($tbl, $hash, 'main', $k); }
+	function db_insert_users($k, $tbl, $hash){	return _db_insert($tbl, $hash, 'users', $k); }
 
 	function db_insert_dupe($tbl, $hash, $hash2){		return _db_insert_dupe($tbl, $hash, $hash2, 'main'); }
 	function db_insert_dupe_users($k, $tbl, $hash, $hash2){	return _db_insert_dupe($tbl, $hash, $hash2, 'users', $k); }
@@ -56,7 +56,7 @@
 	function db_fetch_paginated_users($k, $sql, $args){	return _db_fetch_paginated($sql, $args, 'users', $k); }
 
 	function db_write($sql){		return _db_write($sql, 'main'); }
-	function db_write_users($k, $sql){	return _db_write($sql, 'main', $k); }
+	function db_write_users($k, $sql){	return _db_write($sql, 'users', $k); }
 
 	#################################################################
 
