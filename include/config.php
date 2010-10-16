@@ -21,6 +21,8 @@
 		),
 	);
 
+	$GLOBALS['cfg']['db_profiling'] = 0;
+
 
 	$GLOBALS['cfg']['abs_root_url']		= 'http://www.ourapp.com/';
 	$GLOBALS['cfg']['safe_abs_root_url']	= $GLOBALS['cfg']['abs_root_url'];
