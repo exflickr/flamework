@@ -1,0 +1,9 @@
+{include file='inc_head.txt'}
+
+<h2>four-oh-four</h2>
+
+<p>
+{$smarty.server.REQUEST_URI|escape} does not exist.
+</p>
+
+{include file='inc_foot.txt'}
