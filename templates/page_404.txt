@@ -1,9 +1,8 @@
+{"HTTP/1.1 404 Not Found"|header}
 {include file='inc_head.txt'}
 
 <h2>four-oh-four</h2>
 
-<p>
-{$smarty.server.REQUEST_URI|escape} does not exist.
-</p>
+<p>{$smarty.server.REQUEST_URI|escape} does not exist.</p>
 
 {include file='inc_foot.txt'}
