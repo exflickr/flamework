@@ -1,5 +1,5 @@
 
-{if $smarty.get.debug}
+{if $cfg.admin_flags_show_notices}
 <div style="padding: 2em;">
 	{timings}
 </div>
