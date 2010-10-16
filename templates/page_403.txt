@@ -3,7 +3,7 @@
 <h2>four-oh-three</h2>
 
 <p>
-You do not have permission to view {$smarty.server.REQUEST_URI}.
+You do not have permission to view {$smarty.server.REQUEST_URI|escape}.
 </p>
 
 {include file='inc_foot.txt'}
