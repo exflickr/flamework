@@ -10,11 +10,11 @@
 	$GLOBALS['timings']['db_queries_count']	= 0;
 	$GLOBALS['timings']['db_queries_time']	= 0;
 	$GLOBALS['timings']['db_rows_count']	= 0;
-	$GLOBALS['timings']['db_rows_time']		= 0;
+	$GLOBALS['timings']['db_rows_time']	= 0;
 
-	$GLOBALS['timing_keys']['db_conns']		= 'DB Connections';
+	$GLOBALS['timing_keys']['db_conns']	= 'DB Connections';
 	$GLOBALS['timing_keys']['db_queries']	= 'DB Queries';
-	$GLOBALS['timing_keys']['db_rows']		= 'DB Rows Returned';
+	$GLOBALS['timing_keys']['db_rows']	= 'DB Rows Returned';
 
 	#################################################################
 
@@ -108,6 +108,15 @@
 
 		$GLOBALS['timings']['db_conns_count']++;
 		$GLOBALS['timings']['db_conns_time'] += $end-$start;
+
+
+		#
+		# profiling?
+		#
+
+		if ($GLOBALS['cfg']['db_profiling']){
+			@mysql_query("SET profiling = 1;", $GLOBALS['db_conns'][$cluster_key]);
+		}
 	}
 
 	#################################################################
@@ -129,13 +138,33 @@
 
 		log_notice('db', "DB-$cluster_key: $sql", $end-$start);
 
+
+		#
+		# profiling?
+		#
+
+		$profile = null;
+
+		if ($GLOBALS[cfg][db_profiling]){
+			$profile = array();
+			$p_result = @mysql_query("SHOW PROFILE ALL", $GLOBALS[db_conns][$cluster_key]);
+			while ($p_row = mysql_fetch_array($p_result, MYSQL_ASSOC)){
+				$profile[] = $p_row;
+			}
+		}
+
+
+		#
+		# build result
+		#
+
 		if (!$result){
 			$error_msg	= mysql_error($GLOBALS['db_conns'][$cluster_key]);
 			$error_code	= mysql_errno($GLOBALS['db_conns'][$cluster_key]);
 
 			log_error("DB-$cluster_key: $error_code ".HtmlSpecialChars($error_msg));
 
-			return array(
+			$ret = array(
 				'ok'		=> 0,
 				'error'		=> $error_msg,
 				'error_code'	=> $error_code,
@@ -143,15 +172,19 @@
 				'cluster'	=> $cluster,
 				'shard'		=> $k,
 			);
+		}else{
+			$ret = array(
+				'ok'		=> 1,
+				'result'	=> $result,
+				'sql'		=> $sql,
+				'cluster'	=> $cluster,
+				'shard'		=> $k,
+			);
 		}
 
-		return array(
-			'ok'		=> 1,
-			'result'	=> $result,
-			'sql'		=> $sql,
-			'cluster'	=> $cluster,
-			'shard'		=> $k,
-		);
+		if ($profile) $ret[profile] = $profile;
+
+		return $ret;
 	}
 
 	#################################################################
