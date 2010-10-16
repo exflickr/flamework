@@ -6,7 +6,7 @@
 # Flexibility over performance.
 #
 # In an ideal world, you'd stick it in here on dev and your build
-# system would bundle the changes into (a file incldued in) httpd.conf
+# system would bundle the changes into (a file included in) httpd.conf
 # for your production deployment. Yeah. Do that.
 #
 
