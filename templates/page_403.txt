@@ -1,0 +1,9 @@
+{include file='inc_head.txt'}
+
+<h2>four-oh-three</h2>
+
+<p>
+You do not have permission to view {$smarty.server.REQUEST_URI}.
+</p>
+
+{include file='inc_foot.txt'}
