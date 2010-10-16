@@ -67,7 +67,7 @@
 		if (! crumb_validate_crumb($crumb, $GLOBALS['cfg']['user'])){
 
 			$GLOBALS['error']['badcrumb'] = 1;
-			$smarty->display($template);
+			$GLOBALS['smarty']->display($template);
 			exit();
 		}
 

@@ -50,6 +50,7 @@
 	function db_update_users($k, $tbl, $hash, $where){	return _db_update($tbl, $hash, $where, 'users', $k); }
 
 	function db_fetch($sql){		return _db_fetch($sql, 'main'); }
+	function db_fetch_slave($sql){		return _db_fetch_slave($sql, 'main_slaves'); }
 	function db_fetch_users($k, $sql){	return _db_fetch($sql, 'users', $k); }
 
 	function db_fetch_paginated($sql, $args){		return _db_fetch_paginated($sql, $args, 'main'); }
@@ -88,6 +89,7 @@
 		$GLOBALS['db_conns'][$cluster_key] = @mysql_connect($host, $user, $pass, 1);
 
 		if ($GLOBALS['db_conns'][$cluster_key]){
+
 			@mysql_select_db($name, $GLOBALS['db_conns'][$cluster_key]);
 		}
 
@@ -198,6 +200,20 @@
 
 	function db_escape_rlike($string){
 		return preg_replace("/([.\[\]*^\$()])/", '\\\$1', $string);
+	}
+
+	#################################################################
+
+	function _db_fetch_slave($sql, $cluster){
+
+		$cluster_key = 'db_' . $cluster;
+
+		$slaves = array_keys($GLOBALS['cfg'][$cluster_key]['host']);
+
+		shuffle($slaves);
+		shuffle($slaves);
+
+		return _db_fetch($sql, $cluster, $slaves[0]);
 	}
 
 	#################################################################
