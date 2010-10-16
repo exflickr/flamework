@@ -88,7 +88,8 @@
 	$this_is_shell		= $_SERVER['SHELL'] ? 1 : 0;
 	$this_is_webpage	= $this_is_apache && !$this_is_api ? 1 : 0;
 
-	$cfg['admin_flags_no_db']	= $_GET['no_db'] ? 1 : 0;
+	$cfg['admin_flags_no_db']		= $_GET['no_db'] ? 1 : 0;
+	$cfg['admin_flags_show_notices']	= $_GET['debug'] ? 1 : 0;
 
 
 	#

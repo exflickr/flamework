@@ -95,7 +95,7 @@
 	function _log_handler_html($level, $msg, $more = array()){
 
 		# only shows notices if we asked to see them
-		if ($level == 'notice' && !$_GET['debug']) return;
+		if ($level == 'notice' && !$GLOBALS['cfg']['admin_flags_show_notices']) return;
 
 		$type = $more['type'] ? $more['type'] : '';
 
