@@ -10,6 +10,10 @@
 
 	#################################################################
 
+	$GLOBALS['users_local_cache'] = array();
+
+	#################################################################
+
 	function users_create_user(&$user){
 
 		$enc_pass = login_encrypt_password($user['password']);
@@ -31,6 +35,7 @@
 		
 		$user['user_id'] = $rsp['insert_id'];
 
+		$GLOBALS['user_local_cache'][$user['user_id']] = $user;
 		return $user;
 	}
 
@@ -51,6 +56,7 @@
 			return null;
 		}
 
+		unset($GLOBALS['user_local_cache'][$user['user_id']]);
 		return 1;
 	}
 
@@ -87,37 +93,47 @@
 
 	#################################################################
 
-	function users_reload_user(&$user){
-		$user = users_get_by_id($user['user_id']);
+	function users_reload_user(&$user, $force_master=1){
+
+		$user = users_get_by_id($user['user_id'], $force_master);
 	}
 
 	#################################################################
 
-	function users_get_by_id($id){
+	function users_get_by_id($id, $force_master=0){
+
+		if ((! $force_master) && (isset($GLOBALS['user_local_cache'][$id]))){
+			return $GLOBALS['user_local_cache'][$id];
+		}
 
 		$enc_id = db_quote($id);
 		$sql = "SELECT * FROM Users WHERE user_id='{$enc_id}'";
 
-		$rsp = db_fetch($sql);
-		return db_single($rsp);
+		$rsp = ($force_master) ? db_fetch($sql) : db_fetch_slave($sql);
+
+		$user = db_single($rsp);
+
+		$GLOBALS['user_local_cache'][$id] = $user;
+		return $user;
 	}
 
 	#################################################################
 
-	function users_get_by_email($email){
+	function users_get_by_email($email, $force_master=0){
 
 		$enc_email = db_quote($email);
 		$sql = "SELECT * FROM Users WHERE email='{$enc_email}'";
 
-		$rsp = db_fetch($sql);
+		$rsp = ($force_master) ? db_fetch($sql) : db_fetch_slave($sql);
+
 		return db_single($rsp);
 	}
 
 	#################################################################
 
-	function users_get_by_login($email, $password){
+	function users_get_by_login($email, $password, $force_master=0){
 
-		$user = users_get_by_email($email);
+		$user = users_get_by_email($email, $force_master);
 
 		if (! $user){
 			return null;
@@ -136,44 +152,47 @@
 
 	#################################################################
 
-	function users_is_email_taken($email){
+	function users_is_email_taken($email, $force_master=0){
 
 		$enc_email = db_quote($email);
 
 		$sql = "SELECT user_id FROM Users WHERE email='{$enc_email}' AND deleted != 0";
 
-		$rsp = db_fetch($sql);
+		$rsp = ($force_master) ? db_fetch($sql) : db_fetch_slave($sql);
+
 		return db_single($rsp);
 	}
 
 	#################################################################
 
-	function users_is_username_taken($username){
+	function users_is_username_taken($username, $force_master=0){
 
 		$enc_username = db_quote($username);
 
 		$sql = "SELECT user_id FROM Users WHERE username='{$enc_username}' AND deleted != 0";
 
-		$rsp = db_fetch($sql);
+		$rsp = ($force_master) ? db_fetch($sql) : db_fetch_slave($sql);
+
 		return db_single($rsp);
 	}
 
 	#################################################################
 
-	function users_get_by_password_reset_code($code){
+	function users_get_by_password_reset_code($code, $force_master=0){
 
 		$enc_code = db_quote($code);
 
 		$sql = "SELECT * FROM UsersPasswordReset WHERE reset_code = '{$enc_code}'";
 
-		$rsp = db_fetch($sql);
+		$rsp = ($force_master) ? db_fetch($sql) : db_fetch_slave($sql);
+
 		$row = db_single($rsp);
 
 		if (! $row){
 			return null;
 		}
 
-		return users_get_by_id($row['user_id']);
+		return users_get_by_id($row['user_id'], $force_master);
 	}
 
 	#################################################################
