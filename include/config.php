@@ -72,4 +72,5 @@
 
 	$GLOBALS['cfg']['check_notices'] = 1;
 
+	$GLOBALS['cfg']['db_profiling'] = 0;
 ?>
