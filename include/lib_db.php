@@ -60,7 +60,6 @@
 	#################################################################
 
 	function _db_connect($cluster, $k=null){
-		if ($_GET['no_db']) return;
 
 		$cluster_key = $k ? "{$cluster}-{$k}" : $cluster;
 
