@@ -128,8 +128,15 @@
 			_db_connect($cluster, $k);
 		}
 
+		#
+		# Used to see what function called do_query
+		#
+		$backtrace = debug_backtrace();
+		array_shift($backtrace);
+		$caller = array_shift($backtrace));
+
 		$start = microtime_ms();
-		$result = @mysql_query($sql, $GLOBALS['db_conns'][$cluster_key]);
+		$result = @mysql_query($sql . " /* " . $caller . " */", $GLOBALS['db_conns'][$cluster_key]);
 		$end = microtime_ms();
 
 		$GLOBALS['timings']['db_queries_count']++;
