@@ -127,7 +127,7 @@
 
 		if (!$allow_precache){
 
-			error_forbidden();
+			error_403();
 		}
 	}
 
