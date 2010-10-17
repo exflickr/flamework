@@ -181,7 +181,7 @@
 			);
 		}
 
-		if ($profile) $ret[profile] = $profile;
+		if ($profile) $ret['profile'] = $profile;
 
 		return $ret;
 	}
