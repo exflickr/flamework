@@ -1,8 +1,10 @@
-{utf8_headers}
-<!DOCTYPE html> 
+{utf8_headers}<!DOCTYPE html> 
 <html>
 <head>
 	<title>Page Title</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" media="all" href="/css/main.css" />
 </head>
 <body>
+
+<div id="main">
