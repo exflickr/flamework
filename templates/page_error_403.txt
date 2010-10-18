@@ -1,4 +1,4 @@
-{"HTTP/1.1 403 Forbidden"|header}{include file='inc_head.txt'}
+{"HTTP/1.1 403 Forbidden"|header}{include file='inc_head.txt' page_title='Permission Denied'}
 
 <h1>Page not available</h1>
 
