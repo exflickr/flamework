@@ -1,4 +1,4 @@
-{"HTTP/1.1 404 Not Found"|header}{include file='inc_head.txt' title='Page Not Found'}
+{"HTTP/1.1 404 Not Found"|header}{include file='inc_head.txt'}
 
 <h1>Page not found</h1>
 
