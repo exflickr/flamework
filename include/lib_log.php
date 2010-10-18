@@ -55,7 +55,22 @@
 	function log_notice($type, $msg, $time=-1){
 		_log_dispatch('notice', $msg, array('type' => $type, 'time' => $time));
 	}
+	
+	function log_reset_handlers(){
+		$GLOBALS['log_handlers'] = array();
+	}
+	
+	function log_add_handler($level, $handler){
+		if ($GLOBALS['log_handlers'][$level]){
+			array_push($GLOBALS['log_handlers'][$level], $handler);
+		}
+		else{
+			$GLOBALS['log_handlers'][$level] = array($handler);
+		}
+	}
 
+
+	###################################################################################################################
 
 	function _log_dispatch($level, $msg, $more = array()){
 
@@ -114,6 +129,27 @@
 		if ($more['time'] > -1) echo " ($more[time] ms)";
 
 		echo "</div>\n";
+	}
+	
+	
+	#
+	# boring plaintext output (for scripts)
+	#
+
+	function _log_handler_plain($level, $msg, $more = array()){
+
+		# only shows notices if we asked to see them
+		if ($level == 'notice' && !$GLOBALS['cfg']['admin_flags_show_notices']) return;
+
+		$type = $more['type'] ? $more['type'] : '';
+
+		if ($type) echo "[$type] ";
+
+		echo $msg;
+
+		if ($more['time'] > -1) echo " ($more[time] ms)";
+
+		echo "\n";
 	}
 
 	###################################################################################################################
