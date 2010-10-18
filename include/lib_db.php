@@ -129,8 +129,15 @@
 			_db_connect($cluster, $k);
 		}
 
+		#
+		# Used to see what function called do_query
+		#
+		$backtrace = debug_backtrace();
+		array_shift($backtrace);
+		$caller = array_shift($backtrace));
+
 		$start = microtime_ms();
-		$result = @mysql_query($sql, $GLOBALS['db_conns'][$cluster_key]);
+		$result = @mysql_query($sql . " /* " . $caller . " */", $GLOBALS['db_conns'][$cluster_key]);
 		$end = microtime_ms();
 
 		$GLOBALS['timings']['db_queries_count']++;
@@ -145,9 +152,9 @@
 
 		$profile = null;
 
-		if ($GLOBALS[cfg][db_profiling]){
+		if ($GLOBALS['cfg']['db_profiling']){
 			$profile = array();
-			$p_result = @mysql_query("SHOW PROFILE ALL", $GLOBALS[db_conns][$cluster_key]);
+			$p_result = @mysql_query("SHOW PROFILE ALL", $GLOBALS['db_conns'][$cluster_key]);
 			while ($p_row = mysql_fetch_array($p_result, MYSQL_ASSOC)){
 				$profile[] = $p_row;
 			}
@@ -182,7 +189,7 @@
 			);
 		}
 
-		if ($profile) $ret[profile] = $profile;
+		if ($profile) $ret['profile'] = $profile;
 
 		return $ret;
 	}
