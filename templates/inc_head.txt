@@ -4,6 +4,7 @@
 	<title>{$page_title|default:'Page Title'}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" media="all" href="/css/main.css" />
+	{$extra_head}
 </head>
 <body>
 
