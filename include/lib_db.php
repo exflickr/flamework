@@ -144,9 +144,9 @@
 
 		$profile = null;
 
-		if ($GLOBALS[cfg][db_profiling]){
+		if ($GLOBALS['cfg']['db_profiling']){
 			$profile = array();
-			$p_result = @mysql_query("SHOW PROFILE ALL", $GLOBALS[db_conns][$cluster_key]);
+			$p_result = @mysql_query("SHOW PROFILE ALL", $GLOBALS['db_conns'][$cluster_key]);
 			while ($p_row = mysql_fetch_array($p_result, MYSQL_ASSOC)){
 				$profile[] = $p_row;
 			}
