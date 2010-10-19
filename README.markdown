@@ -64,8 +64,8 @@ where you store your application's shared libraries.
 The first thing you should do is copy the default <code>.htaccess</code> files for
 the same folders (application root and shared libraries) from flamework:
 
-	cp /var/flamework/www/.htaccess /var/your-project/www/
-	cp /var/flamework/www/include/.htaccess /var/your-project/www/include/
+	cp /var/flamework/.htaccess /var/your-project/www/
+	cp /var/flamework/include/.htaccess /var/your-project/www/include/
 
 Next, edit <code>/var/your-project/www/.htaccess</code> to include a php <code>include_path</code
 config. Basically, all you're doing is telling PHP to look for libraries and other shared
@@ -80,7 +80,7 @@ contents.
 Now copy the default flamework config file in to your application's include
 directory:
 
-	cp /var/flamework/www/include/config.php /var/your-project/www/include/
+	cp /var/flamework/include/config.php /var/your-project/www/include/
 
 Update the (newer) file accordingly with your application's configuration and be
 sure to add the following line. This does what it sounds like:
