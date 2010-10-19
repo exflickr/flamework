@@ -35,12 +35,8 @@
 		# static redirect map. add things here if you know you moved them.
 		#
 
-		$redirs = array(
-			'/foo/'	=> '/bar/',
-		);
-
-		if ($redirs[$url]){
-			header("location: $redirs[$url]");
+		if ($redir = $GLOBALS['cfg']['rewrite_static_urls']){
+			header("location: {$redir}");
 			exit;
 		}
 

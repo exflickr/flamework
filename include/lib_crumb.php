@@ -1,24 +1,32 @@
 <?php
 
-	loadlib("crypto");
+	#
+	# $Id$
+	#
 
-	function crumb_generate_crumb($ttl_min, $context=''){
+	#################################################################
 
-		$context = crumb_ensure_context($context);
-		$crumb_data = crumb_generate_crumb_data($context);
+	function crumb_generate_crumb($user=null, $ttl=null){
 
-		$ttl_secs = time() + (60 * $ttl_min);
+		if (! $ttl_secs){
+			$ttl_secs = $GLOBALS['cfg']['crumb_ttl_default'];
+		}
+
+		$crumb_data = crumb_generate_crumb_data($user);
+
+		$ttl_secs = time() + $ttl_secs;
 		$crumb_data = implode(":", array($ttl_secs, $crumb_data));
 
-		return crypto_encrypt($crumb_data, $ttl);
+		return crypto_encrypt($crumb_data, $GLOBALS['cfg']['crypto_crumb_secret']);
 	}
 
-	function crumb_validate_crumb($crumb, $context=''){
+	#################################################################
 
-		$context = crumb_ensure_context($context);
-		$crumb_data = crumb_generate_crumb_data($context);
+	function crumb_validate_crumb($crumb, $user=null){
 
-		$crumb = crypto_decrypt($crumb);
+		$crumb_data = crumb_generate_crumb_data($user);
+
+		$crumb = crypto_decrypt($crumb, $GLOBALS['cfg']['crypto_crumb_secret']);
 
 		list($test_ttl, $test_data) = explode(":", $crumb, 2);
 
@@ -33,15 +41,18 @@
 		return 1;
 	}
 
-	function crumb_generate_crumb_data($context){
+	#################################################################
+
+	function crumb_generate_crumb_data($user=null){
 
 		$data = array(
-			$GLOBALS['HTTP_SERVER_VARS']['HTTP_USER_AGENT'],
-			$context,
+			$GLOBALS['_SERVER']['HTTP_USER_AGENT'],
+			$GLOBALS['_SERVER']['SCRIPT_NAME'],
+			$GLOBALS['_SERVER']['REMOTE_ADDR'],	# check if mobile?
 		);
 
-		if ($context){
-			$data[] = $context;
+		if ($user){
+			$data[] = md5($user['created'] * $user['user_id']);
 		}
 
 		return base64_encode(implode(":", $data));
@@ -56,7 +67,7 @@
 		if (! crumb_validate_crumb($crumb, $GLOBALS['cfg']['user'])){
 
 			$GLOBALS['error']['badcrumb'] = 1;
-			$smarty->display($template);
+			$GLOBALS['smarty']->display($template);
 			exit();
 		}
 

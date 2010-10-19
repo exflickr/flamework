@@ -6,6 +6,37 @@
 
 	#################################################################
 
+	function geo_utils_prepare_coordinate($coord){
+
+		$coord = geo_utils_trim_coordinate($coord);
+		return geo_utils_collapse_coordinate($coord);
+	}
+
+	#################################################################
+
+	function geo_utils_expand_coordinate($coord, $multiplier=1000000){
+
+		return $coord / $multiplier;
+	}
+
+	#################################################################
+
+	function geo_utils_collapse_coordinate($coord, $multiplier=1000000){
+
+		return $coord * $multiplier;
+	}
+
+	#################################################################
+
+	function geo_utils_trim_coordinate($coord, $offset=6){
+
+		$fmt = "%0{$offset}f";
+
+		return sprintf($fmt, $coord);
+	}
+
+	#################################################################
+
 	function geo_utils_is_valid_latitude($lat){
 
 		if (! is_numeric($lat)){

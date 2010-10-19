@@ -9,3 +9,19 @@
 <body>
 
 <div id="main">
+
+	<div id="nav">
+		<div id="login" style="float: left;">
+			<a href="/">Home</a>
+		</div>
+		<div id="login" style="float: right;">
+{if $cfg.user.id}
+{else}
+			<a href="/signin/">Sign In</a>
+{/if}
+		</div>
+		&nbsp;
+	</div>
+
+	<div id="content">
+

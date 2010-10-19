@@ -35,22 +35,43 @@
 
 	$GLOBALS['loaded_libs'] = array();
 
-	define('INCLUDE_DIR', dirname(__FILE__));
+	define('FLAMEWORK_INCLUDE_DIR', dirname(__FILE__).'/');
 
 	function loadlib($name){
 
-		if ($GLOBALS['loaded_libs'][$name]) return;
+		if ($GLOBALS['loaded_libs'][$name]){
+			return;
+		}
+
 		$GLOBALS['loaded_libs'][$name] = 1;
 
-		include(INCLUDE_DIR."/lib_$name.php");
+		$fq_name = _loadlib_enpathify("lib_{$name}.php");
+		include($fq_name);
 	}
 
 	function loadpear($name){
 
-		if ($GLOBALS['loaded_libs']['PEAR:'.$name]) return;
+		if ($GLOBALS['loaded_libs']['PEAR:'.$name]){
+			return;
+		}
+
 		$GLOBALS['loaded_libs']['PEAR:'.$name] = 1;
 
-		include(INCLUDE_DIR."/pear/$name.php");
+		$fq_name = _loadlib_enpathify("pear/{$name}.php");
+		include($fq_name);
+	}
+
+	function _loadlib_enpathify($lib){
+
+		# see also: http://www.php.net/manual/en/ini.core.php#ini.include-path
+
+		$inc_path = ini_get('include_path');
+
+		if (preg_match("/\/flamework\//", $inc_path)){
+			return $lib;
+		}
+
+		return FLAMEWORK_INCLUDE_DIR . $lib;		
 	}
 
 
@@ -58,7 +79,9 @@
 	# load config
 	#
 
-	include(INCLUDE_DIR."/config.php");
+	if (! $GLOBALS['cfg']['flamework_skip_init_config']){
+		include(FLAMEWORK_INCLUDE_DIR."/config.php");
+	}
 
 
 	#
@@ -101,22 +124,21 @@
 	loadlib('error');
 	loadlib('db');
 	#loadlib('cache');
-	#loadlib('login');
+	loadlib('crypto');
+	loadlib('crumb');
+	loadlib('login');
 	#loadlib('email');
 	loadlib('utf8');
 	#loadlib('args');
 	#loadlib('calendar');
-	#loadlib('users');
+	loadlib('users');
 	#loadlib('versions');
 	loadlib('http');
 	loadlib('sanitize');
 
 
-
 	if ($this_is_webpage){
-
-		#login_b_cookie();
-		#login_check();
+		login_check_login();
 	}
 
 
@@ -131,7 +153,6 @@
 			error_403();
 		}
 	}
-
 
 
 	#
