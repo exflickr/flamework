@@ -11,7 +11,22 @@ body {
 	width: 800px;
 	text-align: left;
 	background-color: #fff;
-	min-height: 400px;
+	padding: 0;
+}
+
+#nav {
+	background-color: #ddd;
+	padding: 0.5em 1em;
+}
+
+#footer {
+	background-color: #ddd;
+	padding: 0.5em 1em;
+	text-align: center;
+	color: #999;
+}
+
+#content {
 	padding: 2em;
 }
 
