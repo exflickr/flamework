@@ -1,5 +1,4 @@
-<?php
-
+<?
 	#
 	# $Id$
 	#
@@ -61,7 +60,10 @@
 
 	$smarty->assign('redir', get_str('redir'));
 
-	$smarty->display('page_signin.txt');
-	exit();
 
+	#
+	# output
+	#
+
+	$smarty->display('page_signin.txt');
 ?>

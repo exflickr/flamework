@@ -1,5 +1,4 @@
-<?php
-
+<?
 	#
 	# $Id$
 	#
@@ -71,6 +70,10 @@
 
 	$smarty->assign('redir', get_str('redir'));
 
+
+	#
+	# output
+	#
+
 	$smarty->display('page_signup.txt');
-	exit();
 ?>

@@ -1,5 +1,4 @@
-<?php
-
+<?
 	#
 	# $Id$
 	#
@@ -64,7 +63,10 @@
 		exit();
 	}
 
-	$smarty->display("page_account_password.txt");
-	exit();
 
+	#
+	# output
+	#
+
+	$smarty->display("page_account_password.txt");
 ?>
