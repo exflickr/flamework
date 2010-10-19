@@ -59,6 +59,8 @@
 	function db_write($sql){		return _db_write($sql, 'main'); }
 	function db_write_users($k, $sql){	return _db_write($sql, 'users', $k); }
 
+	function db_tickets_write($sql){		return _db_write($sql, 'tickets'); }
+
 	#################################################################
 
 	function _db_connect($cluster, $k=null){
