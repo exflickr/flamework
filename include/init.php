@@ -109,6 +109,7 @@
 	#loadlib('users');
 	#loadlib('versions');
 	loadlib('http');
+	loadlib('sanitize');
 
 
 
