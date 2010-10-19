@@ -1,0 +1,26 @@
+{assign var='page_title' value='Sign out'}
+{include file='inc_head.txt'}
+
+{if $signedout}
+<p>You are signed out!</p>
+{else}
+
+{if $error|@count}
+<p>
+{if $error.badcrumb}
+CRUMB.
+{else}
+INVISIBLE ERROR CAT HISSES AT YOU.
+{/if}
+</p>
+{/if}
+
+<form method="POST">
+	<input type="hidden" name="crumb" value="{$crumb|escape}" />
+	<input type="hidden" name="signout" value="1" />
+	<input type="submit" value="SIGN OUT" />
+</form>
+
+{/if}
+
+{include file='inc_foot.txt'}
