@@ -1,6 +1,3 @@
-[submodule "include/lib_sanitize"]
-	path = include/lib_sanitize
-	url = http://github.com/exflickr/lib_sanitize.git
 [submodule "include/lib_filter"]
 	path = include/lib_filter
 	url = http://github.com/exflickr/lib_filter.git

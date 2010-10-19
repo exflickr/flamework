@@ -1,5 +1,4 @@
-<?php
-
+<?
 	#
 	# $Id$
 	#
@@ -76,7 +75,10 @@
 		exit();	
 	}
 
-	$smarty->display('page_password_reset.txt');
-	exit();	
 
+	#
+	# output
+	#
+
+	$smarty->display('page_password_reset.txt');
 ?>
