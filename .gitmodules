@@ -1,0 +1,6 @@
+[submodule "include/lib_filter"]
+	path = include/lib_filter
+	url = http://github.com/exflickr/lib_filter.git
+[submodule "include/lib_oauth"]
+	path = include/lib_oauth
+	url = http://github.com/exflickr/lib_oauth.git
