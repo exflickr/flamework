@@ -385,9 +385,16 @@
 
 	#################################################################
 
+	#
+	# [iamcal] I'm still not convinced that this is needed, instead of AddSlashes().
+	# The difference is that it doesn't escape \r or \n (which don't matter at all)
+	# and \x1a (delete) which doesn;t appear to matter at all either. Anyone have
+	# any better reason?
+	#
+
 	function db_quote($str, $dbconn=null){
 
-		if (! $dbconn){
+		if (!$dbconn){
 			return mysql_real_escape_string($str);
 		}
 
@@ -395,5 +402,4 @@
 	}
 
 	#################################################################
-
 ?>
