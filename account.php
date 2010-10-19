@@ -1,5 +1,4 @@
-<?php
-
+<?
 	#
 	# $Id$
 	#
@@ -8,7 +7,10 @@
 
 	login_ensure_loggedin("/account");
 
-	$smarty->display("page_account.txt");
-	exit();
 
+	#
+	# output
+	#
+
+	$smarty->display("page_account.txt");
 ?>

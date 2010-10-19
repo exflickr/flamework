@@ -1,16 +1,25 @@
-<?php
-
+<?
 	#
 	# $Id$
 	#
 
 	include("include/init.php");
 
+
+	#
+	# only show this page if we're signed out
+	#
+
 	if (login_is_loggedin()){
 
 		header("location: /");
-		exit();
+		exit;
 	}
+
+
+	#
+	# send the reminded?
+	#
 
 	if (post_str('remind')){
 
@@ -40,6 +49,10 @@
 		}
 	}
 
+
+	#
+	# output
+	#
+
 	$smarty->display('page_password_forgot.txt');
-	exit();
 ?>
