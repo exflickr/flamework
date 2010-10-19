@@ -116,15 +116,12 @@
 
 	function login_set_cookie($name, $value, $expire=0, $path='/'){
 		$res = setcookie($name, $value, $expire, $path, $GLOBALS['cfg']['auth_cookie_domain']);
-
-		error_log("[COOKIE] $name, $value, $expire, $path, {$GLOBALS['cfg']['auth_cookie_domain']}");
-		error_log("[COOKIE] {$res}");
 	}
 
 	#################################################################
 
 	function login_unset_cookie($name){
-		login_set_cookie($name, "", time() - 3600); 
+		login_set_cookie($name, "", time() - 3600);
 	}
 
 	#################################################################
