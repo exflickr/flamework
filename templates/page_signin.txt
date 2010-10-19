@@ -1,0 +1,30 @@
+{assign var='page_title' value='Sign in'}
+{include file='inc_head.txt'}
+
+{if $error|@count}
+<p class="error">
+{if $error.loggedin}
+LOGGED IN.
+{elseif $error.missing}
+MISSING.
+{elseif $error.nouser}
+UNKNOWN.
+{elseif $error.deleted}
+DELETE.
+{elseif $error.password}
+PASSWORD.
+{else}
+INVISIBLE ERROR CAT HISSES AT YOU.
+{/if}
+</p>
+{/if}
+
+<form method="POST">
+	<input type="text" name="email" size="40" value="{$email|escape}" /><label for="email">email address</label><br />
+	<input type="password" name="password" size="40" /><label for="password">password</label><br />
+	<input type="hidden" name="signin" value="1" />
+	<input type="hidden" name="redir" value="{$redir|escape}" />
+	<input type="submit" value="SIGN IN" />
+</form>
+
+{include file='inc_foot.txt'}
