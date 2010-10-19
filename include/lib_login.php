@@ -57,7 +57,7 @@
 		if ($user['password'] !== $password){
 			return 0;
 		}
-
+ 
 		$GLOBALS['cfg']['user_ok'] = 1;
 		$GLOBALS['cfg']['user'] = $user;
 
@@ -119,7 +119,7 @@
 	#################################################################
 
 	function login_unset_cookie($name){
-		login_set_cookie($name, "", time() - 3600); 
+		login_set_cookie($name, "", time() - 3600);
 	}
 
 	#################################################################
