@@ -17,9 +17,7 @@ fork, commit and file a pull-request.
 Installation - As a base for a new project
 ------------------------------------------
 
-The easiest way to use flamework is to just clone it and start hacking directly on the code.
-
-* Copy everything to a web server running Apache with <code>mod_php</code>.
+* Copy everything to a web server running Apache with <code>mod_php</code> and <code>php5-mcrypt</code>.
 * Enable <code>AllowOverrides all</code> for the root.
 * Edit <code>include/config.php</code>.
 * That might be it.
