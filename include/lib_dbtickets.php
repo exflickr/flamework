@@ -26,18 +26,26 @@
 			$rsp = db_tickets_write("SET @@auto_increment_increment=2");
 
 			if (! $rsp['ok']){
+				log_error("Failed to set auto_increment_increment for {$table}");
 				return null;
 			}
 
 			$rsp = db_tickets_write("SET @@auto_increment_offset=1");
 
 			if (! $rsp['ok']){
+				log_error("Failed to set auto_increment_offset for {$table}");
 				return null;
 			}
 		}
 
 		$rsp = db_tickets_write("REPLACE INTO {$table} (stub) VALUES ('a')");
-		return ($rsp['ok']) ? $rsp['insert_id'] : null;
+
+		if ((! $rsp['ok']) || (! $rsp['insert_id'])){
+			log_error("Failed to replace into {$table}");
+			return null;
+		}
+
+		return $rsp['insert_id'];
         }
 
 	#################################################################
