@@ -134,6 +134,7 @@
 	loadlib('users');
 	#loadlib('versions');
 	loadlib('http');
+	loadlib('sanitize');
 
 
 	if ($this_is_webpage){
