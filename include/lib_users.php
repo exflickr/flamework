@@ -24,11 +24,11 @@
 		$user['conf_code'] = random_string(24);
 
 		$rsp = db_insert('Users', $user);
-			
+
 		if (! $rsp['ok']){
 			return null;
 		}
-		
+
 		$user['user_id'] = $rsp['insert_id'];
 
 		$GLOBALS['user_local_cache'][$user['user_id']] = $user;
@@ -235,7 +235,7 @@
 		);
 
 		$rsp = db_insert('UsersPasswordReset', $insert);
-			
+
 		if (! $rsp['ok']){
 			return null;
 		}
