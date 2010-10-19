@@ -1,26 +1,46 @@
-<?php
-
+<?
 	#
 	# $Id$
 	#
 
 	include("include/init.php");
 
-	if (! login_check_login()){
+
+	#
+	# are they signed in?
+	#
+
+	if (!login_check_login()){
+
+
+		#
+		#
+		#
 
 		if (get_isset('deleted')){
 
 			$smarty->assign('step', 'deleted');
+
 			$smarty->display('page_account_delete.txt');
-			exit();
+			exit;
 		}
 
 		header("location: /");
-		exit();
+		exit;
 	}
+
+
+	#
+	# generate a crumb
+	#
 
 	$new_crumb = crumb_generate_crumb($GLOBALS['cfg']['user']);
 	$smarty->assign('crumb', $new_crumb);
+
+
+	#
+	# delete account?
+	#
 
 	if (post_str('delete')){
 
@@ -48,11 +68,18 @@
 		}
 
 		$smarty->assign('step', 'confirm');
+
 		$smarty->display('page_account_delete.txt');
-		exit();
+		exit;
 	}
 
+
+	#
+	# output
+	#
+
 	$smarty->assign('step', 'start');
+
 	$smarty->display("page_account_delete.txt");
-	exit();
+	exit;
 ?>

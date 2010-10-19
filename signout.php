@@ -1,5 +1,4 @@
-<?php
-
+<?
 	#
 	# $Id$
 	#
@@ -36,6 +35,10 @@
 	$new_crumb = crumb_generate_crumb($GLOBALS['cfg']['user']);
 	$smarty->assign("crumb", $new_crumb);
 
+
+	#
+	# output
+	#
+
 	$smarty->display("page_signout.txt");
-	exit();
 ?>

@@ -13,7 +13,7 @@ CREATE TABLE `Users` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `by_email` (`email`),
   UNIQUE KEY `by_username` (`username`,`deleted`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8-bin;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `UsersPasswordReset`;
 
@@ -24,4 +24,4 @@ CREATE TABLE `UsersPasswordReset` (
   UNIQUE KEY `by_code` (`reset_code`),
   KEY `by_user` (`user_id`),
   KEY `by_timestamp` (`created`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf-bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

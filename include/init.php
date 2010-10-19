@@ -35,7 +35,7 @@
 
 	$GLOBALS['loaded_libs'] = array();
 
-	define('FLAMEWORK_INCLUDE_DIR', dirname(__FILE__));
+	define('FLAMEWORK_INCLUDE_DIR', dirname(__FILE__).'/');
 
 	function loadlib($name){
 
@@ -74,6 +74,7 @@
 		return FLAMEWORK_INCLUDE_DIR . $lib;		
 	}
 
+
 	#
 	# load config
 	#
@@ -81,6 +82,7 @@
 	if (! $GLOBALS['cfg']['flamework_skip_init_config']){
 		include(FLAMEWORK_INCLUDE_DIR."/config.php");
 	}
+
 
 	#
 	# install an error handler to check for dubious notices?
@@ -99,6 +101,7 @@
 		if (preg_match('!^Use of undefined constant!', $errstr)) return false;
 		return true;
 	}
+
 
 	#
 	# figure out some global flags
@@ -132,7 +135,7 @@
 	loadlib('users');
 	#loadlib('versions');
 	loadlib('http');
-
+	loadlib('sanitize');
 
 
 	if ($this_is_webpage){
@@ -153,7 +156,6 @@
 	}
 
 
-
 	#
 	# general utility functions
 	#
@@ -172,6 +174,7 @@
 		list($usec, $sec) = explode(" ", microtime());
 		return intval(1000 * ((float)$usec + (float)$sec));
 	}
+
 
 	#
 	# this timer stores the end of core library loading
