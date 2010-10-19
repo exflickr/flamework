@@ -41,3 +41,21 @@ ErrorDocument 403 /403.php
 
 # Get mod_rewrite fired up
 RewriteEngine on
+
+# Login stuff
+
+RewriteRule  ^signup/?$			/signup.php?%{QUERY_STRING} [P,L]
+RewriteRule  ^signin/?$			/signin.php?%{QUERY_STRING} [P,L]
+RewriteRule  ^signout/?$		/signout.php?%{QUERY_STRING} [P,L]
+RewriteRule  ^checkcookie/?$		/checkcookie.php?%{QUERY_STRING} [P,L]
+
+# Password retrieval stuff
+
+RewriteRule ^password/forgot/?$				/password_forgot.php?%{QUERY_STRING} [P,L]
+RewriteRule ^password/reset/([a-zA-Z0-9]+)/?$		/password_reset.php?reset=$1&%{QUERY_STRING} [P,L]
+
+# Account stuff
+
+RewriteRule  ^account/?$			/account.php?%{QUERY_STRING} [P,L]
+RewriteRule  ^account/password/?$		/account_password.php?%{QUERY_STRING} [P,L]
+RewriteRule  ^account/delete/?$			/account_delete.php?%{QUERY_STRING} [P,L]
