@@ -133,7 +133,7 @@
 		#
 		$backtrace = debug_backtrace();
 		array_shift($backtrace);
-		$caller = array_shift($backtrace));
+		$caller = array_shift($backtrace);
 
 		$start = microtime_ms();
 		$result = @mysql_query($sql . " /* " . $caller . " */", $GLOBALS['db_conns'][$cluster_key]);
