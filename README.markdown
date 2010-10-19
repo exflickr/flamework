@@ -61,7 +61,7 @@ In this example, we'll assume that they are. The first sub-folder is
 your application's directory root (e.g. the thing the interweb sees). The second is
 where you store your application's shared libraries.
 
-The first thing you should do is copy the default .htaccess files for
+The first thing you should do is copy the default <code>.htaccess</code> files for
 the same folders (application root and shared libraries) from flamework:
 
 	cp /var/flamework/www/.htaccess /var/your-project/www/
@@ -125,6 +125,7 @@ code, like this:
 		# your code goes here
 	?>
 
+Profit!
 
 
 Style guide
