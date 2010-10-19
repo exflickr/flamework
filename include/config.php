@@ -59,7 +59,7 @@
 
 	$GLOBALS['cfg']['crumb_ttl_default'] = 300;	# seconds
 
-	$GLOBALS['cfg']['rewrite_static_urls'] => array(
+	$GLOBALS['cfg']['rewrite_static_urls'] = array(
 		# '/foo' => '/bar/',
 	);
 
