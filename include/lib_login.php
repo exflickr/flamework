@@ -76,7 +76,7 @@
 		}
 
 		$redir = urlencode($redir);
-		header("location: /checkcookie?redir={$redir}");
+		header("location: /checkcookie/?redir={$redir}");
 		exit;
 	}
 
