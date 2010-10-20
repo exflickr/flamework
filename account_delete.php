@@ -5,16 +5,7 @@
 
 	include("include/init.php");
 
-
-	#
-	# are they signed in?
-	#
-
-	if (!login_check_login()){
-
-		$smarty->display('page_account_delete_done.txt');
-		exit;
-	}
+	login_ensure_loggedin();
 
 
 	#
@@ -36,7 +27,9 @@
 			$ok = users_delete_user($GLOBALS['cfg']['user']);
 
 			if ($ok){
-				login_do_logout('/account/delete/?deleted=1');
+				login_do_logout();
+
+				$smarty->display('page_account_delete_done.txt');
 				exit;
 			}
 

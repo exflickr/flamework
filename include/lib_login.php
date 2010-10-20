@@ -94,12 +94,9 @@
 
 	#################################################################
 
-	function login_do_logout($redir='/'){
+	function login_do_logout(){
 
 		login_unset_cookie($GLOBALS['cfg']['auth_cookie_name']);
-
-		header("location: {$redir}");
-		exit;
 	}
 
 	#################################################################
