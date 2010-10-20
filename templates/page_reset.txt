@@ -1,6 +1,8 @@
 {assign var="page_title" value="Reset your password"}
 {include file="inc_head.txt"}
 
+<h1 style="color: red">This doesn't work very well yet</h1>
+
 {* very bad errors *}
 
 {if $error.nouser}
