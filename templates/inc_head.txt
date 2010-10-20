@@ -17,6 +17,8 @@
 		<div id="login" style="float: right;">
 {if $cfg.user.id}
 {else}
+			<a href="/signup/">Create New Account</a>
+			|
 			<a href="/signin/">Sign In</a>
 {/if}
 		</div>
