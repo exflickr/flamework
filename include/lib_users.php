@@ -197,6 +197,8 @@
 
 	function users_generate_password_reset_code(&$user){
 
+		loadlib('random');
+
 		users_purge_password_reset_codes($user);
 
 		$code = '';
