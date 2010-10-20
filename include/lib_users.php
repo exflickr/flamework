@@ -195,6 +195,23 @@
 
 	#################################################################
 
+	function users_send_password_reset_code(&$user){
+
+		$code = users_generate_password_reset_code($user);
+		if (!$code) return 0;
+
+		$GLOBALS['smarty']->assign('code', $code);
+
+		email_send(array(
+			'to_email'	=> $user['email'],
+			'template'	=> 'email_password_reset.txt',
+		));
+
+		return 1;
+	}
+
+	#################################################################
+
 	function users_generate_password_reset_code(&$user){
 
 		loadlib('random');
