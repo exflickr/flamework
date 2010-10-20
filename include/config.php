@@ -78,9 +78,36 @@
 
 	$GLOBALS['cfg']['db_profiling'] = 0;
 
+	#
+	# db_enable_poormans_*
+	#
+	# If enabled, then the relevant database configs and handles
+	# will be automagically prepopulated using the relevant information
+	# in 'db_main'
+	#
+
+	#
+	# You should enable/set these flags if you want to
+	# use flamework in a setting where you only have access
+	# to a single database.
+	#
+
+	$GLOBALS['cfg']['db_enable_poormans_federation'] = 0;
+
+	$GLOBALS['cfg']['db_enable_poormans_slaves'] = 0;
+
+	$GLOBALS['cfg']['db_poormans_slaves_user'] = '';
+	$GLOBALS['cfg']['db_poormans_slaves_pass'] = '';
+
+	#
 	# For when you want to use tickets but can't tweak
 	# your my.cnf file or set up a dedicated ticketing
-	# server. See also: notes in lib_dbticketing.php
+	# server. flamework does not use tickets as part of
+	# core (yet) so this is really only necessary if your
+	# application needs db tickets.
+	#
 
 	$GLOBALS['cfg']['db_enable_poormans_ticketing'] = 0;
+
+
 ?>

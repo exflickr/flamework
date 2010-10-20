@@ -83,6 +83,45 @@
 		include(FLAMEWORK_INCLUDE_DIR."/config.php");
 	}
 
+	#
+	# Poor man's database configs:
+	# See notes in config.php
+	#
+
+	if ($GLOBALS['cfg']['db_enable_poormans_slaves']){
+
+		$GLOBALS['cfg']['db_main_slaves'] = $GLOBALS['cfg']['db_main'];
+
+		$GLOBALS['cfg']['db_main_slaves']['user'] = '';
+
+		$GLOBALS['cfg']['db_main_slaves']['host'] = array(
+			1 => $GLOBALS['cfg']['db_main']['host'],
+		);
+
+		$GLOBALS['cfg']['db_main_slaves']['name'] = array(
+			1 => $GLOBALS['cfg']['db_main']['name'],
+		);
+
+	}
+
+	if ($GLOBALS['cfg']['db_enable_poormans_ticketing']){
+
+		$GLOBALS['cfg']['db_tickets'] = $GLOBALS['cfg']['db_main'];
+	}
+
+	if ($GLOBALS['cfg']['db_enable_poormans_federation']){
+
+		$GLOBALS['cfg']['db_users'] = $GLOBALS['cfg']['db_main'];
+
+		$GLOBALS['cfg']['db_users']['host'] = array(
+			1 => $GLOBALS['cfg']['db_main']['host'],
+		);
+
+		$GLOBALS['cfg']['db_users']['name'] = array(
+			1 => $GLOBALS['cfg']['db_main']['name'],
+		);
+
+	}
 
 	#
 	# install an error handler to check for dubious notices?
