@@ -5,16 +5,7 @@
 
 	include("include/init.php");
 
-
-	#
-	# are we already signed out?
-	#
-
-	if (!login_is_loggedin()){
-
-		$smarty->display('page_signout_done.txt');
-		exit;
-	}
+	login_ensure_loggedin();
 
 
 	#
@@ -31,7 +22,10 @@
 
 	if (post_isset('done') && crumb_check($crumb_key)){
 
-		login_do_logout('/signout/?signedout=1');
+		login_do_logout();
+
+		$smarty->display('page_signout_done.txt');
+		exit;
 	}
 
 
