@@ -36,11 +36,11 @@
 		),
 	);
 
-	$GLOBALS['cfg']['abs_root_url']		= 'http://www.ourapp.com/';
+	$GLOBALS['cfg']['abs_root_url']		= 'http://'.$_SERVER['SERVER_NAME'].'/';
 	$GLOBALS['cfg']['safe_abs_root_url']	= $GLOBALS['cfg']['abs_root_url'];
 
-	$GLOBALS['cfg']['smarty_template_dir'] = dirname(__FILE__) . '/../templates/';
-	$GLOBALS['cfg']['smarty_compile_dir'] = dirname(__FILE__) . '/../templates_c/';
+	$GLOBALS['cfg']['smarty_template_dir'] = realpath(dirname(__FILE__) . '/../templates/');
+	$GLOBALS['cfg']['smarty_compile_dir'] = realpath(dirname(__FILE__) . '/../templates_c/');
 
 
 	# No, seriously. Change these...
