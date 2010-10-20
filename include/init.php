@@ -124,6 +124,7 @@
 	loadlib('error');
 	loadlib('sanitize');
 	loadlib('db');
+	loadlib('dbtickets');
 	#loadlib('cache');
 	loadlib('crypto');
 	loadlib('crumb');
