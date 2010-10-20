@@ -6,10 +6,15 @@
 
 	#################################################################
 
-	function geo_utils_prepare_coordinate($coord){
+	function geo_utils_prepare_coordinate($coord, $collapse=1){
 
 		$coord = geo_utils_trim_coordinate($coord);
-		return geo_utils_collapse_coordinate($coord);
+
+		if ($collapse){
+			$coord = geo_utils_collapse_coordinate($coord);
+		}
+
+		return $coord;
 	}
 
 	#################################################################
