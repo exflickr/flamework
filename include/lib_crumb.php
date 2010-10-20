@@ -6,35 +6,39 @@
 
 	#################################################################
 
-	function crumb_generate_crumb($user=null, $ttl=null){
+	#
+	# generate a crumb
+	#
 
-		if (! $ttl_secs){
-			$ttl_secs = $GLOBALS['cfg']['crumb_ttl_default'];
-		}
+	function crumb_generate($key){
 
-		$crumb_data = crumb_generate_crumb_data($user);
+		$base = crumb_get_base($key);
+		$time = time();
+		$snowman = "\xE2\x98\x83";
 
-		$ttl_secs = time() + $ttl_secs;
-		$crumb_data = implode(":", array($ttl_secs, $crumb_data));
+		$hash = crumb_hash($base.$time, 10);
 
-		return crypto_encrypt($crumb_data, $GLOBALS['cfg']['crypto_crumb_secret']);
+		return "{$time}-{$hash}-{$snowman}";
 	}
 
 	#################################################################
 
-	function crumb_validate_crumb($crumb, $user=null){
+	#
+	# check if a crumb is valid
+	#
 
-		$crumb_data = crumb_generate_crumb_data($user);
+	function crumb_validate($crumb, $key, $ttl=0){
 
-		$crumb = crypto_decrypt($crumb, $GLOBALS['cfg']['crypto_crumb_secret']);
+		$base = crumb_get_base($key);
+		list($time, $hash) = explode('-', $crumb);
 
-		list($test_ttl, $test_data) = explode(":", $crumb, 2);
+		$hash_test = crumb_hash($base.$time, 10);
 
-		if ($crumb_data != $test_data){
+		if ($hash_test != $hash){
 			return 0;
 		}
 
-		if ($test_ttl < time()){
+		if ($ttl && ($time + $ttl > time())){
 			return 0;
 		}
 
@@ -43,35 +47,63 @@
 
 	#################################################################
 
-	function crumb_generate_crumb_data($user=null){
+	#
+	# returns a string which we'll use as a base to combine with
+	# a timestamp to create the crumb. it should be a hex string.
+	#
+
+	function crumb_get_base($key){
 
 		$data = array(
+			$key,
 			$GLOBALS['_SERVER']['HTTP_USER_AGENT'],
 			$GLOBALS['_SERVER']['SCRIPT_NAME'],
 			$GLOBALS['_SERVER']['REMOTE_ADDR'],	# check if mobile?
 		);
 
-		if ($user){
-			$data[] = md5($user['created'] * $user['user_id']);
+		$base = implode(':', $data);
+
+
+		#
+		# if they're signed in, use their account
+		#
+
+		if ($GLOBALS['cfg']['user']['ok']){
+
+			$base .= $GLOBALS['cfg']['user']['id'];
 		}
 
-		return base64_encode(implode(":", $data));
+		return $base;
 	}
 
 	#################################################################
 
-	function crumb_ensure_valid_crumb($template='/page_bad_crumb.txt'){
+	function crumb_hash($str, $len=5){
 
-		$crumb = post_str('crumb');
+		return substr(sha1($GLOBALS['cfg']['crypto_crumb_secret'] . $str), 0, $len);
+	}
 
-		if (! crumb_validate_crumb($crumb, $GLOBALS['cfg']['user'])){
+	#################################################################
 
-			$GLOBALS['error']['badcrumb'] = 1;
-			$GLOBALS['smarty']->display($template);
-			exit();
-		}
+	function crumb_check($key, $ttl=0){
 
-		return 1;
+		$test = request_str('crumb');
+
+		return crumb_validate($test, $key, $ttl);
+	}
+
+	#################################################################
+
+	function crumb_input($key=""){
+
+		$crumb = crumb_generate($key);
+		return '<input type="hidden" name="crumb" value="'.$crumb.'" />';
+	}
+
+	function crumb_qs($key=""){
+
+		$crumb = crumb_generate($key);
+		return 'crumb='.urlencode($crumb);
 	}
 
 	#################################################################
