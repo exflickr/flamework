@@ -77,4 +77,10 @@
 	$GLOBALS['cfg']['check_notices'] = 1;
 
 	$GLOBALS['cfg']['db_profiling'] = 0;
+
+	# For when you want to use tickets but can't tweak
+	# your my.cnf file or set up a dedicated ticketing
+	# server. See also: notes in lib_dbticketing.php
+
+	$GLOBALS['cfg']['db_enable_poormans_ticketing'] = 0;
 ?>
