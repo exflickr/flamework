@@ -5,69 +5,94 @@
 
 	include("include/init.php");
 
-	if (login_is_loggedin()){
+	login_ensure_loggedout();
 
-		$GLOBALS['error']['loggedin'] = 1;
-		$smarty->display('page_signup.txt');
-		exit();
-	}
+
+	#
+	# carry this argument through
+	#
+
+	$smarty->assign('redir', request_str('redir'));
+
+
+	#
+	# are we signing up?
+	#
 
 	if (post_str('signup')){
 
-		$email = post_str('email');
-		$password = post_str('password');
-		$username = post_str('username');
+		$ok = 1;
 
-		$redir = post_str('redir');
+		$email		= post_str('email');
+		$password	= post_str('password');
+		$username	= post_str('username');
+		$redir		= post_str('redir');
+
+		$smarty->assign('email', $email);
+		$smarty->assign('password', $password);
+		$smarty->assign('username', $username);
 		$smarty->assign('redir', $redir);
 
-		if ((! $email) || (! $password)){
 
-			$GLOBALS['error']['missing'] = 1;
-			$smarty->display('page_signup.txt');
-			exit();
+		#
+		# all fields are in order?
+		#
+
+		if ((!strlen($email)) || (!strlen($password)) || (!strlen($username))){
+
+			$smarty->assign('error_missing', 1);
+			$ok = 0;
 		}
 
-		if (users_is_email_taken($email)){
 
-			$GLOBALS['error']['email_taken'] = 1;
+		#
+		# email available?
+		#
 
-			$smarty->assign('username', $username);
-			$smarty->assign('password', $password);
-			$smarty->display('page_signup.txt');
-			exit();
+		if ($ok && users_is_email_taken($email)){
+
+			$smarty->assign('email', '');
+			$smarty->assign('error_email_taken', 1);
+			$ok = 0;
 		}
 
-		if (($username) && (users_is_username_taken($username))){
 
-			$GLOBALS['error']['username_taken'] = 1;
+		#
+		# username available?
+		#
 
-			$smarty->assign('email', $email);
-			$smarty->assign('password', $password);
-			$smarty->display('page_signup.txt');
-			exit();
+		if ($ok && users_is_username_taken($username)){
+
+			$smarty->assign('username', '');
+			$smarty->assign('error_username_taken', 1);
+			$ok = 0;
 		}
 
-		$user = users_create_user(array(
-			'username'	=> $username,
-			'email'		=> $email,
-			'password'	=> $password,
-		));
 
-		if (!$user['user_id']){
+		#
+		# create account
+		#
 
-			$GLOBALS['error']['failed'] = 1;
-			$smarty->display('page_signup.txt');
-			exit;
+		if ($ok){
+
+			$user = users_create_user(array(
+				'username'	=> $username,
+				'email'		=> $email,
+				'password'	=> $password,
+			));
+
+			if ($user['id']){
+
+				$redir = ($redir) ? $redir : '/';
+
+				login_do_login($user);
+				exit;
+			}
+
+			$smarty->assign('error_failed', 1);
+			$ok = 0;
 		}
-
-		$redir = ($redir) ? $redir : '/';
-
-		login_do_login($user);
-		exit;
 	}
-
-	$smarty->assign('redir', get_str('redir'));
 
 
 	#
