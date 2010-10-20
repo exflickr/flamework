@@ -54,3 +54,7 @@ pre.admin-debug {
 p.error {
 	background-color: #f99;
 }
+
+p.message {
+	background-color: #9f9;
+}
