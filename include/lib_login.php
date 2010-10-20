@@ -22,6 +22,7 @@
 	function login_ensure_loggedout($redir="/"){
 
 		if (login_check_login()){
+			login_do_logout();
 			header("location: $redir");
 			exit;
 		}
@@ -56,7 +57,7 @@
 			return 0;
 		}
 
-		$user = users_get_by_id($user_id, $password);
+		$user = users_get_by_id($user_id);
 
 		if (! $user){
 			return 0;
@@ -69,7 +70,7 @@
 		if ($user['password'] !== $password){
 			return 0;
 		}
- 
+
 		$GLOBALS['cfg']['user'] = $user;
 
 		return 1;
