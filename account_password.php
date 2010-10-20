@@ -5,62 +5,69 @@
 
 	include("include/init.php");
 
-	login_ensure_loggedin("/account/password/change");
+	login_ensure_loggedin();
 
-	$new_crumb = crumb_generate_crumb($GLOBALS['cfg']['user']);
-	$smarty->assign("crumb", $new_crumb);
 
-	if (post_str('change')){
+	#
+	# crumb key
+	#
 
-		$crumb = post_str('crumb');
+	$crumb_key = 'account_password';
+	$smarty->assign("crumb_key", $crumb_key);
 
-		if (! crumb_validate_crumb($crumb, $GLOBALS['cfg']['user'])){
 
-			$GLOBALS['error']['badcrumb'] = 1;
-			$smarty->display("page_account_password.txt");
-			exit();
-		}
 
-		$old_pass = post_str('old_password');
+	#
+	# update?
+	#
+
+	if (post_str('change') && crumb_check($crumb_key)){
+
+		$old_pass	= trim(post_str('old_password'));
+		$new_pass1	= trim(post_str('new_password1'));
+		$new_pass2	= trim(post_str('new_password2'));
+
+		$ok = 1;
 
 		if (login_encrypt_password($old_pass) !== $GLOBALS['cfg']['user']['password']){
 
-			$GLOBALS['error']['oldpass_mismatch'] = 1;
-			$smarty->display("page_account_password.txt");
-			exit();
+			$smarty->assign('error_oldpass_mismatch', 1);
+			$ok = 0;
 		}
 
-		$new_pass1 = post_str('new_password1');
-		$new_pass2 = post_str('new_password2');
+		if ($ok && $new_pass1 !== $new_pass2){
 
-		if ((trim($new_pass1) === '') || (trim($new_pass2) === '')){
-
-			$GLOBALS['error']['newpass_empty'] = 1;
-			$smarty->display("page_account_password.txt");
-			exit();
+			$smarty->assign('error_newpass_mismatch', 1);
+			$ok = 0;
 		}
 
-		if ($new_pass1 !== $new_pass2){
+		if ($ok && !strlen($new_pass2)){
 
-			$GLOBALS['error']['newpass_mismatch'] = 1;
-			$smarty->display("page_account_password.txt");
-			exit();
+			$smarty->assign('error_newpass_empty', 1);
+			$ok = 0;
 		}
 
-		if (! users_update_password($GLOBALS['cfg']['user'], $new_pass1)){
-			$GLOBALS['error']['fail'] = 1;
-			$smarty->display("page_account_password.txt");
-			exit();
+		if ($ok){
+			if (!users_update_password($GLOBALS['cfg']['user'], $new_pass1)){
+
+				$smarty->assign('error_fail', 1);
+				$ok = 0;
+			}
 		}
 
-		# Refresh the user so that we pick up the newer password when
-		# we set new cookies. Should this be a function in lib_users?
-		# (20101012/asc)
+		if ($ok){
 
-		$GLOBALS['cfg']['user'] = users_get_by_id($GLOBALS['cfg']['user']['user_id']);
+			#
+			# Refresh the user so that we pick up the newer password when
+			# we set new cookies. Should this be a function in lib_users?
+			# (20101012/asc)
+			#
 
-		login_do_login($GLOBALS['cfg']['user'], "/account/?password=1");
-		exit();
+			$GLOBALS['cfg']['user'] = users_get_by_id($GLOBALS['cfg']['user']['user_id']);
+
+			login_do_login($GLOBALS['cfg']['user'], "/account/?password=1");
+			exit;
+		}
 	}
 
 
