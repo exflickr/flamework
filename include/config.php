@@ -6,11 +6,10 @@
 
 	$GLOBALS['cfg'] = array();
 
+
 	#
 	# Things you'll certainly need to tweak
 	#
-
-	$GLOBALS['cfg'] = array();
 
 	$GLOBALS['cfg']['db_main'] = array(
 		'host'	=> 'localhost',
@@ -50,6 +49,7 @@
 	$GLOBALS['cfg']['crypto_password_secret'] = '';
 	$GLOBALS['cfg']['crypto_crumb_secret'] = '';
 
+
 	#
 	# Things you may need to tweak
 	#
@@ -62,6 +62,7 @@
 	$GLOBALS['cfg']['rewrite_static_urls'] = array(
 		# '/foo' => '/bar/',
 	);
+
 
 	#
 	# Things you can probably not worry about
@@ -77,6 +78,7 @@
 	$GLOBALS['cfg']['check_notices'] = 1;
 
 	$GLOBALS['cfg']['db_profiling'] = 0;
+
 
 	#
 	# db_enable_poormans_*
@@ -99,6 +101,7 @@
 	$GLOBALS['cfg']['db_poormans_slaves_user'] = '';
 	$GLOBALS['cfg']['db_poormans_slaves_pass'] = '';
 
+
 	#
 	# For when you want to use tickets but can't tweak
 	# your my.cnf file or set up a dedicated ticketing
@@ -108,6 +111,5 @@
 	#
 
 	$GLOBALS['cfg']['db_enable_poormans_ticketing'] = 0;
-
 
 ?>
