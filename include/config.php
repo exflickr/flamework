@@ -63,6 +63,11 @@
 		# '/foo' => '/bar/',
 	);
 
+	$GLOBALS['cfg']['email_from_name']	= 'flamework app';
+	$GLOBALS['cfg']['email_from_email']	= 'admin@ourapp.com';
+	$GLOBALS['cfg']['auto_email_args']	= '-fadmin@ourapp.com';
+
+
 
 	#
 	# Things you can probably not worry about

@@ -168,7 +168,7 @@
 	loadlib('crypto');
 	loadlib('crumb');
 	loadlib('login');
-	#loadlib('email');
+	loadlib('email');
 	loadlib('utf8');
 	#loadlib('args');
 	#loadlib('calendar');
