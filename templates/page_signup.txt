@@ -1,11 +1,10 @@
 {assign var='page_title' value='Sign up for a new account'}
 {include file='inc_head.txt'}
 
-{if $error_loggedin}<p>LOGGEDIN.</p>{/if}
-{if $error_missing}MISSING.</p>{/if}
-{if $error_email_taken}EMAIL.</p>{/if}
-{if $error_username_taken}USERNAME.</p>{/if}
-{if $error_failed}FAILED.</p>{/if}
+{if $error_missing}		<p class="error">Please fill out all the fields</p>{/if}
+{if $error_email_taken}		<p class="error">Email address already registered.</p>{/if}
+{if $error_username_taken}	<p class="error">Username is taken.</p>{/if}
+{if $error_failed}		<p class="error">Failed for an unknown reason :(</p>{/if}
 
 <form method="POST">
 	<input type="text" name="username" size="40" value="{$username|escape}" /><label for="username">username</label><br />
