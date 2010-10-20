@@ -106,7 +106,7 @@
 
 	function login_generate_auth_cookie(&$user){
 
-		$cookie = implode(":", array($user['user_id'], $user['password']));
+		$cookie = implode(":", array($user['id'], $user['password']));
 		return crypto_encrypt($cookie, $GLOBALS['cfg']['crypto_cookie_secret']);
 	}
 
