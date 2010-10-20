@@ -154,7 +154,9 @@
 
 		$enc_email = AddSlashes($email);
 
-		return db_single(db_fetch("SELECT id FROM Users WHERE email='{$enc_email}' AND deleted != 0"));
+		$row = db_single(db_fetch("SELECT id FROM Users WHERE email='{$enc_email}' AND deleted=0"));
+
+		return $row['id'] ? 1 : 0;
 	}
 
 	#################################################################
@@ -163,7 +165,8 @@
 
 		$enc_username = AddSlashes($username);
 
-		return db_single(db_fetch("SELECT id FROM Users WHERE username='{$enc_username}' AND deleted != 0"));
+		$row = db_single(db_fetch("SELECT id FROM Users WHERE username='{$enc_username}' AND deleted=0"));
+		return $row['id'] ? 1 : 0;
 	}
 
 	#################################################################
