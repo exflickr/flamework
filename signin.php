@@ -5,60 +5,94 @@
 
 	include("include/init.php");
 
-	if (login_is_loggedin()){
+	login_ensure_loggedout();
 
-		header("location: /");
-		exit();
-	}
+
+	#
+	# pass through
+	#
+
+	$redir = request_str('redir');
+	$smarty->assign('redir', $redir);
+
+
+	#
+	# try and sign in?
+	#
 
 	if (post_str('signin')){
 
-		$email = post_str('email');
-		$password = post_str('password');
-		$redir = post_str('redir');
+		$email		= post_str('email');
+		$password	= post_str('password');
 
 		$smarty->assign('email', $email);
-		$smarty->assign('redir', $redir);
 
-		if ((! $email) || (! $password)){
+		$ok = 1;
 
-			$GLOBALS['error']['missing'] = 1;
-			$smarty->display('page_signin.txt');
-			exit();
+
+		#
+		# required fields?
+		#
+
+		if ((!strlen($email)) || (!strlen($password))){
+
+			$smarty->assign('error_missing', 1);
+			$ok = 0;
 		}
 
-		$user = users_get_by_email($email);
 
-		if (! $user['user_id']){
+		#
+		# user exists?
+		#
 
-			$GLOBALS['error']['nouser'] = 1;
-			$smarty->display('page_signin.txt');
-			exit();
+		if ($ok){
+			$user = users_get_by_email($email);
+
+			if (!$user['id']){
+
+				$smarty->assign('error_nouser', 1);
+				$ok = 0;
+			}
 		}
 
-		if ($user['deleted']){
 
-			$GLOBALS['error']['deleted'] = 1;
-			$smarty->display('page_signin.txt');
-			exit();
+		#
+		# users deleted?
+		#
+
+		if ($ok && $user['deleted']){
+
+			$smarty->assign('error_deleted', 1);
+			$ok = 0;
 		}
 
-		$enc_password = login_encrypt_password($password, $GLOBALS['cfg']['crypto_password_secret']);
 
-		if ($enc_password != $user['password']){
+		#
+		# password match
+		#
 
-			$GLOBALS['error']['password'] = 1;
-			$smarty->display('page_signin.txt');
-			exit();
+		if ($ok){
+			$enc_password = login_encrypt_password($password, $GLOBALS['cfg']['crypto_password_secret']);
+
+			if ($enc_password != $user['password']){
+
+				$smarty->assign('error_password', 1);
+				$ok = 0;
+			}
 		}
 
-		$redir = ($redir) ? $redir : '/';
 
-		login_do_login($user, $redir);
-		exit();
+		#
+		# it's all good - sign in
+		#
+
+		if ($ok){
+			$redir = ($redir) ? $redir : '/';
+
+			login_do_login($user, $redir);
+			exit;
+		}
 	}
-
-	$smarty->assign('redir', get_str('redir'));
 
 
 	#
