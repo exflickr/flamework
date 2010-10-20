@@ -78,7 +78,7 @@
 		# if we get a null in, always return a null
 		#
 
-		if ($type == 'isset') return sset($input);
+		if ($type == 'isset') return isset($input);
 
 		if (!isset($input)) return $default;
 
