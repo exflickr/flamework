@@ -14,6 +14,6 @@
 	<input type="submit" value="SIGN IN" />
 </form>
 
-<p><a href="/password/forgot/">Forgotten your password?</a></p>
+<p><a href="/forgot/">Forgotten your password?</a></p>
 
 {include file='inc_foot.txt'}

@@ -31,7 +31,7 @@
 			$ok = 0;
 		}
 
-		if ($ok && !users_generate_password_reset_code($user)){
+		if ($ok && !users_send_password_reset_code($user)){
 
 			$smarty->assign('error_notsent', 1);
 			$ok = 0;
@@ -40,7 +40,7 @@
 		if ($ok){
 			$smarty->assign('sent_to', $user['email']);
 
-			$smarty->display('page_password_forgot_sent.txt');
+			$smarty->display('page_forgot_sent.txt');
 			exit;
 		}
 	}
@@ -50,5 +50,5 @@
 	# output
 	#
 
-	$smarty->display('page_password_forgot.txt');
+	$smarty->display('page_forgot.txt');
 ?>

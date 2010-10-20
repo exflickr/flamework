@@ -33,7 +33,7 @@
 	if (! $user){
 
 		$GLOBALS['error']['nouser'] = 1;		
-		$smarty->display('page_password_reset.txt');
+		$smarty->display('page_reset.txt');
 		exit();	
 	}
 
@@ -49,21 +49,21 @@
 		if ((! $new_password1) || (! $new_password2)){
 
 			$GLOBALS['error']['missing_password'] = 1;
-			$smarty->display('page_password_reset.txt');
+			$smarty->display('page_reset.txt');
 			exit();	
 		}
 
 		if ($new_password1 !== $new_password2){
 
 			$GLOBALS['error']['password_mismatch'] = 1;
-			$smarty->display('page_password_reset.txt');
+			$smarty->display('page_reset.txt');
 			exit();	
 		}
 
 		if (! users_update_password($user, $new_password1)){
 
 			$GLOBALS['error']['update_failed'] = 1;
-			$smarty->display('page_password_reset.txt');
+			$smarty->display('page_reset.txt');
 			exit();	
 		}
 
@@ -80,5 +80,5 @@
 	# output
 	#
 
-	$smarty->display('page_password_reset.txt');
+	$smarty->display('page_reset.txt');
 ?>
