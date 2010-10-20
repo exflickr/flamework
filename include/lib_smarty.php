@@ -18,9 +18,6 @@
 
 	$GLOBALS['smarty']->assign_by_ref('cfg', $GLOBALS['cfg']);
 
-	$GLOBALS['smarty']->assign_by_ref("get_vars", $_GET);
-	$GLOBALS['smarty']->assign_by_ref("post_vars", $_POST);
-
 	#######################################################################################
 
 	function smarty_timings(){
