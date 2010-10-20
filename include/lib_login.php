@@ -5,15 +5,27 @@
 
 	#################################################################
 
-	function login_ensure_loggedin($redir='/'){
+	function login_ensure_loggedin($redir=null){
+
+		if (!login_check_login()){
+			if ($redir){
+				header("location: /signin/?redir=".urlencode($redir));
+			}else{
+				header("location: /signin/");
+			}
+			exit;
+		}
+	}
+
+	#################################################################
+
+	function login_ensure_loggedout($redir="/"){
 
 		if (login_check_login()){
-			return 1;
+			header("location: $redir");
+			exit;
 		}
 
-		$redir = urlencode($redir);
-		header("location: /signin?redir={$redir}");
-		exit();
 	}
 
 	#################################################################
