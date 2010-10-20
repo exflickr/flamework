@@ -48,14 +48,13 @@
 			exit();
 		}
 
-		$args = array(
-			'email' => db_quote($email),
-			'password' => db_quote($password),
-		);
+		$user = users_create_user(array(
+			'username'	=> $username,
+			'email'		=> $email,
+			'password'	=> $password,
+		));
 
-		$user = users_create_user($args);
-
-		if (! $user['user_id']){
+		if (!$user['user_id']){
 
 			$GLOBALS['error']['failed'] = 1;
 			$smarty->display('page_signup.txt');
@@ -65,7 +64,7 @@
 		$redir = ($redir) ? $redir : '/';
 
 		login_do_login($user);
-		exit();
+		exit;
 	}
 
 	$smarty->assign('redir', get_str('redir'));
