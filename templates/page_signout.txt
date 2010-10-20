@@ -1,26 +1,12 @@
 {assign var='page_title' value='Sign out'}
 {include file='inc_head.txt'}
 
-{if $signedout}
-<p>You are signed out!</p>
-{else}
+<p>This is an intermediate page so that we can generate and check a crumb. We will inline this into the URL shortly.</p>
 
-{if $error|@count}
-<p>
-{if $error.badcrumb}
-CRUMB.
-{else}
-INVISIBLE ERROR CAT HISSES AT YOU.
-{/if}
-</p>
-{/if}
-
-<form method="POST">
-	<input type="hidden" name="crumb" value="{$crumb|escape}" />
-	<input type="hidden" name="signout" value="1" />
+<form action="/signout/" method="post" accept-encoding="UTF-8">
+	{$crumb_key|crumb_input}
+	<input type="hidden" name="done" value="1" />
 	<input type="submit" value="SIGN OUT" />
 </form>
-
-{/if}
 
 {include file='inc_foot.txt'}

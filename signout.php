@@ -5,35 +5,33 @@
 
 	include("include/init.php");
 
-	if (! login_is_loggedin()){
 
-		if (get_isset('signedout')){
+	#
+	# are we already signed out?
+	#
 
-			$smarty->assign('signedout', 1);
-			$smarty->display('page_signout.txt');
-			exit();
-		}
+	if (!login_is_loggedin()){
 
-		header("location: /");
-		exit();
+		$smarty->display('page_signout_done.txt');
+		exit;
 	}
 
-	if (post_str('signout')){
+	#
+	# crumb key
+	#
 
-		$crumb = post_str('crumb');
+	$crumb_key = 'logout';
+	$smarty->assign("crumb_key", $crumb_key);
 
-		if (! crumb_validate_crumb($crumb, $GLOBALS['cfg']['user'])){
 
-			$GLOBALS['error']['badcrumb'] = 1;
-			$smarty->display("page_signout.txt");
-			exit();
-		}
+	#
+	# sign out?
+	#
 
-		login_do_logout('/signout?signedout=1');
+	if (post_isset('done') && crumb_check($crumb_key)){
+
+		login_do_logout('/signout/?signedout=1');
 	}
-
-	$new_crumb = crumb_generate_crumb($GLOBALS['cfg']['user']);
-	$smarty->assign("crumb", $new_crumb);
 
 
 	#
