@@ -1,18 +1,13 @@
 {assign var="page_title" value="Your account"}
 {include file="inc_head.txt"}
 
-{if $get_vars.password}
-<p class="message">Your password has been updated.</p>
-{/if}
+{if $smarty.get.password}<p class="message">Your password has been updated.</p>{/if}
 
 <h1>Your account</h1>
 
 <ul>
-	<li><a href="{$cfg.abs_root_url}/account/password/">Change your password</a></li>
-</ul>
-
-<ul>
-	<li><a href="{$cfg.abs_root_url}/account/delete/">Delete your account</a></li>
+	<li><a href="/account/password/">Change your password</a></li>
+	<li><a href="/account/delete/">Delete your account</a></li>
 </ul>
 
 {include file="inc_foot.txt"}
