@@ -1,23 +1,11 @@
 {assign var='page_title' value='Sign up for a new account'}
 {include file='inc_head.txt'}
 
-{if $error|@count}
-<p>
-{if $error.loggedin}
-LOGGEDIN.
-{elseif $error.missing}
-MISSING.
-{elseif $error.email_taken}
-EMAIL.
-{elseif $error.username_taken}
-USERNAME.
-{elseif $error.failed}
-FAILED.
-{else}
-INVISIBLE ERROR CAT HISSES AT YOU.
-{/if}
-</p>
-{/if}
+{if $error_loggedin}<p>LOGGEDIN.</p>{/if}
+{if $error_missing}MISSING.</p>{/if}
+{if $error_email_taken}EMAIL.</p>{/if}
+{if $error_username_taken}USERNAME.</p>{/if}
+{if $error_failed}FAILED.</p>{/if}
 
 <form method="POST">
 	<input type="text" name="username" size="40" value="{$username|escape}" /><label for="username">username</label><br />
