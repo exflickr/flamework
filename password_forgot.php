@@ -5,47 +5,43 @@
 
 	include("include/init.php");
 
-
-	#
-	# only show this page if we're signed out
-	#
-
-	if (login_is_loggedin()){
-
-		header("location: /");
-		exit;
-	}
+	login_ensure_loggedout();
 
 
 	#
-	# send the reminded?
+	# send the reminder?
 	#
 
 	if (post_str('remind')){
 
-		$email = post_str('email');
-		$user = users_get_by_email($email);
+		$email	= post_str('email');
+		$user	= users_get_by_email($email);
 
-		if (! $user){
+		$ok = 1;
 
-			$GLOBALS['error']['nouser'] = 1;
+		if (!$user){
+
+			$smarty->assign('error_nouser', 1);
+			$ok = 0;
 		}
 
-		else if ($user['deleted']){
+		if ($ok && $user['deleted']){
 
-			$GLOBALS['error']['user_deleted'] = 1;
+			$smarty->assign('error_deleted', 1);
+			$ok = 0;
 		}
 
-		# check conf code here?
+		if ($ok && !users_generate_password_reset_code($user)){
 
-		else if (! users_generate_password_reset_code($user)){
-
-			$GLOBALS['error']['notsent'] = 1;
+			$smarty->assign('error_notsent', 1);
+			$ok = 0;
 		}
 
-		else {
-			$smarty->assign('sent', 1);
+		if ($ok){
 			$smarty->assign('sent_to', $user['email']);
+
+			$smarty->display('page_password_forgot_sent.txt');
+			exit;
 		}
 	}
 
