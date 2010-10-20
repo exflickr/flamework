@@ -63,7 +63,7 @@
 			# (20101012/asc)
 			#
 
-			$GLOBALS['cfg']['user'] = users_get_by_id($GLOBALS['cfg']['user']['user_id']);
+			$GLOBALS['cfg']['user'] = users_get_by_id($GLOBALS['cfg']['user']['id']);
 
 			login_do_login($GLOBALS['cfg']['user'], "/account/?password=1");
 			exit;
