@@ -3,10 +3,10 @@
 
 <p>Are you <strong>really sure</strong> you want to delete your account?</p>
 
-<form method="POST">
+<form action="/account/delete/" method="post">
 	<input type="checkbox" name="confirm" /><label for="confirm">Yes, I want to delete my account.</label><br />
 	<input type="hidden" name="delete" value="1" />
-	<input type="hidden" name="crumb" value="{$crumb|escape}" />
+	{$crumb_key|crumb_input}
 	<input type="SUBMIT" value="DELETE MY ACCOUNT" />
 </form>
 
