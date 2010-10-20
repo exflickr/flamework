@@ -50,3 +50,7 @@ pre.admin-debug {
 	margin: 0;
 	padding: 1em;
 }
+
+p.error {
+	background-color: #f99;
+}
