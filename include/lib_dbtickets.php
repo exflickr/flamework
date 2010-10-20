@@ -10,7 +10,7 @@
 
 	#################################################################
 
-        function dbtickets_create($len=32, $poormans_dbtickets=0){
+        function dbtickets_create($len=32){
 
                 $table = 'Tickets' . intval($len);
 
@@ -18,7 +18,7 @@
 		# its mysql config files and/or the ability to set up
 		# a dedicated DB server for tickets.
 
-		if ($poormans_dbtickets){
+		if ($GLOBALS['cfg']['db_enable_poormans_ticketing']){
 
 			# ALTER TABLE tbl_name AUTO_INCREMENT = (n)
 			# how the fuck do you set the offset from the SQL CLI ?
