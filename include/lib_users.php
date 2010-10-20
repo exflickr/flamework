@@ -10,24 +10,43 @@
 
 	#################################################################
 
+	#
+	# create a user record. the fields pass in $user
+	# ARE NOT ESCAPED.
+	#
+
 	function users_create_user(&$user){
 
-		$enc_pass = login_encrypt_password($user['password']);
+		#
+		# set up some extra fields first
+		#
 
-		foreach ($user as $k => $v){
-			$user[$k] = db_quote($v);
-		}
+		loadlib('random');
 
-		$user['password'] = db_quote($enc_pass);
+		$user['password'] = login_encrypt_password($user['password']);
 		$user['created'] = time();
-
 		$user['conf_code'] = random_string(24);
 
-		$rsp = db_insert('Users', $user);
 
-		if (! $rsp['ok']){
+		#
+		# now create the escaped version
+		#
+
+		$hash = array();
+		foreach ($user as $k => $v){
+			$hash[$k] = AddSlashes($v);
+		}
+
+		$rsp = db_insert('Users', $hash);
+
+		if (!$rsp['ok']){
 			return null;
 		}
+
+
+		#
+		# cache the unescaped version
+		#
 
 		$user['user_id'] = $rsp['insert_id'];
 
@@ -37,18 +56,20 @@
 
 	#################################################################
 
-	function users_update_user(&$user, &$update){
+	#
+	# update multiple fields on an user record. the hash passed
+	# in $update IS NOT ESCAPED.
+	#
 
-		$enc_id = db_quote($user['user_id']);
-		$where = "user_id='{$enc_id}'";
+	function users_update_user(&$user, $update){
 
 		foreach ($update as $k => $v){
-			$update[$k] = db_quote($v);
+			$update[$k] = AddSlashes($v);
 		}
 
-		$rsp = db_update('Users', $update, $where);
+		$rsp = db_update('Users', $update, "user_id=$user[user_id]");
 
-		if (! $rsp['ok']){
+		if (!$rsp['ok']){
 			return null;
 		}
 
@@ -62,76 +83,57 @@
 
 		$enc_password = login_encrypt_password($new_password);
 
-		$update = array(
-			'password' => db_quote($enc_password),
-		);
-
-		return users_update_user($user, $update);
+		return users_update_user($user, array(
+			'password' => AddSlashes($enc_password),
+		));
 	}
 
 	#################################################################
 
 	function users_delete_user(&$user){
 
-		$now = time();
-
-		$email = $user['email'] . '.DELETED';
-
-		$update = array(
-			'deleted' => $now,
-			'email' => $email,
+		return users_update_user($user, array(
+			'deleted'	=> time(),
+			'email'		=> $user['email'] . '.DELETED',
 
 			# reset the password here ?
-		);
-
-		return users_update_user($user, $update);
+		));
 	}
 
 	#################################################################
 
-	function users_reload_user(&$user, $force_master=1){
+	function users_reload_user(&$user){
 
-		$user = users_get_by_id($user['user_id'], $force_master);
+		$user = users_get_by_id($user['user_id']);
 	}
 
 	#################################################################
 
-	function users_get_by_id($id, $force_master=0){
+	function users_get_by_id($id){
 
-		if ((! $force_master) && (isset($GLOBALS['user_local_cache'][$id]))){
-			return $GLOBALS['user_local_cache'][$id];
-		}
-
-		$enc_id = db_quote($id);
-		$sql = "SELECT * FROM Users WHERE user_id='{$enc_id}'";
-
-		$rsp = ($force_master) ? db_fetch($sql) : db_fetch_slave($sql);
-
-		$user = db_single($rsp);
+		$user = db_single(db_fetch("SELECT * FROM Users WHERE user_id=".intval($id)));
 
 		$GLOBALS['user_local_cache'][$id] = $user;
+
 		return $user;
 	}
 
 	#################################################################
 
-	function users_get_by_email($email, $force_master=0){
+	function users_get_by_email($email){
 
-		$enc_email = db_quote($email);
-		$sql = "SELECT * FROM Users WHERE email='{$enc_email}'";
+		$enc_email = AddSlashes($email);
 
-		$rsp = ($force_master) ? db_fetch($sql) : db_fetch_slave($sql);
-
-		return db_single($rsp);
+		return db_single(db_fetch("SELECT * FROM Users WHERE email='{$enc_email}'"));
 	}
 
 	#################################################################
 
-	function users_get_by_login($email, $password, $force_master=0){
+	function users_get_by_login($email, $password){
 
-		$user = users_get_by_email($email, $force_master);
+		$user = users_get_by_email($email);
 
-		if (! $user){
+		if (!$user){
 			return null;
 		}
 
@@ -148,57 +150,42 @@
 
 	#################################################################
 
-	function users_is_email_taken($email, $force_master=0){
+	function users_is_email_taken($email){
 
-		$enc_email = db_quote($email);
+		$enc_email = AddSlashes($email);
 
-		$sql = "SELECT user_id FROM Users WHERE email='{$enc_email}' AND deleted != 0";
-
-		$rsp = ($force_master) ? db_fetch($sql) : db_fetch_slave($sql);
-
-		return db_single($rsp);
+		return db_single(db_fetch("SELECT user_id FROM Users WHERE email='{$enc_email}' AND deleted != 0"));
 	}
 
 	#################################################################
 
-	function users_is_username_taken($username, $force_master=0){
+	function users_is_username_taken($username){
 
-		$enc_username = db_quote($username);
+		$enc_username = AddSlashes($username);
 
-		$sql = "SELECT user_id FROM Users WHERE username='{$enc_username}' AND deleted != 0";
-
-		$rsp = ($force_master) ? db_fetch($sql) : db_fetch_slave($sql);
-
-		return db_single($rsp);
+		return db_single(db_fetch("SELECT user_id FROM Users WHERE username='{$enc_username}' AND deleted != 0"));
 	}
 
 	#################################################################
 
-	function users_get_by_password_reset_code($code, $force_master=0){
+	function users_get_by_password_reset_code($code){
 
-		$enc_code = db_quote($code);
+		$enc_code = AddSlashes($code);
 
-		$sql = "SELECT * FROM UsersPasswordReset WHERE reset_code = '{$enc_code}'";
+		$row = db_single(db_fetch("SELECT * FROM UsersPasswordReset WHERE reset_code='{$enc_code}'"));
 
-		$rsp = ($force_master) ? db_fetch($sql) : db_fetch_slave($sql);
-
-		$row = db_single($rsp);
-
-		if (! $row){
+		if (!$row){
 			return null;
 		}
 
-		return users_get_by_id($row['user_id'], $force_master);
+		return users_get_by_id($row['user_id']);
 	}
 
 	#################################################################
 
 	function users_purge_password_reset_codes(&$user){
 
-		$enc_user_id = db_quote($user['user_id']);
-
-		$sql = "DELETE FROM UsersPasswordReset WHERE user_id={$enc_user_id}";
-		$rsp = db_write($sql);
+		$rsp = db_write("DELETE FROM UsersPasswordReset WHERE user_id=$user[user_id]");
 
 		return $rsp['ok'];
 	}
@@ -209,34 +196,29 @@
 
 		users_purge_password_reset_codes($user);
 
-		$enc_user_id = db_quote($user['user_id']);
+		$enc_user_id = AddSlashes($user['user_id']);
 
 		$code = '';
 
-		while (! $code){
+		while (!$code){
 
 			$code = random_string(32);
-			$enc_code = db_quote($code);
+			$enc_code = AddSlashes($code);
 
-			$sql = "SELECT 1 FROM UsersPasswordReset WHERE reset_code='{$enc_code}'";
-			$rsp = db_fetch($sql);
-
-			if (db_single($rsp)){
+			if (db_single(db_fetch("SELECT 1 FROM UsersPasswordReset WHERE reset_code='{$enc_code}'"))){
 				$code = '';
 			}
 
 			break;
 		}
 
-		$insert = array(
-			'user_id' => $enc_user_id,
-			'reset_code' => $enc_code,
-			'created' => time(),
-		);
+		$rsp = db_insert('UsersPasswordReset', array(
+			'user_id'	=> $enc_user_id,
+			'reset_code'	=> $enc_code,
+			'created'	=> time(),
+		));
 
-		$rsp = db_insert('UsersPasswordReset', $insert);
-
-		if (! $rsp['ok']){
+		if (!$rsp['ok']){
 			return null;
 		}
 
