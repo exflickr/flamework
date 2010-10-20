@@ -17,7 +17,7 @@
 		<div id="login" style="float: right;">
 {if $cfg.user.id}
 			Hello {$cfg.user.username|escape}.
-			<a href="#">Logout</a>
+			<a href="/signout/">Logout</a>
 {else}
 			<a href="/signup/">Create New Account</a>
 			|
