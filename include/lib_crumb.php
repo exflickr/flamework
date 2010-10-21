@@ -68,7 +68,7 @@
 		# if they're signed in, use their account
 		#
 
-		if ($GLOBALS['cfg']['user']['ok']){
+		if ($GLOBALS['cfg']['user']['id']){
 
 			$base .= $GLOBALS['cfg']['user']['id'];
 		}
