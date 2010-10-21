@@ -92,8 +92,6 @@
 
 		$GLOBALS['cfg']['db_main_slaves'] = $GLOBALS['cfg']['db_main'];
 
-		$GLOBALS['cfg']['db_main_slaves']['user'] = '';
-
 		$GLOBALS['cfg']['db_main_slaves']['host'] = array(
 			1 => $GLOBALS['cfg']['db_main']['host'],
 		);
@@ -101,7 +99,6 @@
 		$GLOBALS['cfg']['db_main_slaves']['name'] = array(
 			1 => $GLOBALS['cfg']['db_main']['name'],
 		);
-
 	}
 
 	if ($GLOBALS['cfg']['db_enable_poormans_ticketing']){
