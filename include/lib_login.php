@@ -31,14 +31,14 @@
 	#################################################################
 
 	function login_is_loggedin(){
-		return (($GLOBALS['cfg']['user']) && ($GLOBALS['cfg']['user_ok'])) ? 1 : 0;
+		return $GLOBALS['cfg']['user']['id'] ? true : false;
 	}
 
 	#################################################################
 
 	function login_check_login(){
 
-		if (($GLOBALS['cfg']['user']) && ($GLOBALS['cfg']['user_ok'])){
+		if ($GLOBALS['cfg']['user']['id']){
 			return 1;
 		}
 
@@ -70,7 +70,6 @@
 			return 0;
 		}
  
-		$GLOBALS['cfg']['user_ok'] = 1;
 		$GLOBALS['cfg']['user'] = $user;
 
 		return 1;
@@ -96,7 +95,6 @@
 
 	function login_do_logout(){
 		$GLOBALS['cfg']['user'] = null;
-		$GLOBALS['cfg']['user_ok'] = 0;
 		login_unset_cookie($GLOBALS['cfg']['auth_cookie_name']);
 	}
 
