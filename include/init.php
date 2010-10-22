@@ -159,6 +159,7 @@
 	#
 
 	loadlib('log');		# logging comes first, so that other modules can log during startup
+	log_notice('init', 'this is ' . $_SERVER['SCRIPT_NAME'] . ' on ' . $cfg['environment']);
 	loadlib('smarty');	# smarty comes next, since other libs register smarty modules
 	loadlib('error');
 	loadlib('sanitize');
