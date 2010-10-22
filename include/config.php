@@ -115,5 +115,11 @@
 	#
 
 	$GLOBALS['cfg']['db_enable_poormans_ticketing'] = 0;
+	
+	#
+	# This will assign $pagination automatically for smarty
+	#
+	
+	$GLOBALS['cfg']['pagination_assign_smarty_variable'] = 1;
 
 ?>
