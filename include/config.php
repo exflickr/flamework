@@ -122,4 +122,12 @@
 	
 	$GLOBALS['cfg']['pagination_assign_smarty_variable'] = 1;
 
+	$GLOBALS['cfg']['pagination_per_page'] = 10;
+	$GLOBALS['cfg']['pagination_spill'] = 2;
+
+	#
+	# Feature flags
+	#
+
+	$GLOBALS['cfg']['enable_feature_password_retrieval'] = 1;
 ?>

@@ -335,12 +335,12 @@
 
 	##############################################################################
 
-	function sanitize_intval32($input, $complain=false){
+	function sanitize_int32($input, $complain=false){
 
 		$r = intval($input);
 
 		if ($r == 2147483647 && $complain){
-			die("sanitize_intval32($input) overflowed");
+			die("sanitize_int32($input) overflowed");
 		}
 
 		return $r;

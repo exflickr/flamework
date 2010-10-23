@@ -5,6 +5,10 @@
 
 	include("include/init.php");
 
+	if (! $GLOBALS['cfg']['enable_feature_password_retrieval']){
+		error_404();
+	}
+
 	login_ensure_loggedout();
 
 
