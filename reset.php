@@ -3,13 +3,14 @@
 	# $Id$
 	#
 
-	# HEY LOOK! THIS DOESN'T ACTUALLY SEND PASSWORD RESET EMAILS.
-	# YET. (20101018/asc)
-
 	include("include/init.php");
 
 	login_ensure_loggedout();
 
+
+	if (! $GLOBALS['cfg']['enable_feature_password_retrieval']){
+		error_404();
+	}
 
 	$reset_code = post_str('reset');
 

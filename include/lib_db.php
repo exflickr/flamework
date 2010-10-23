@@ -290,8 +290,8 @@
 		#
 
 		$page		= isset($args['page'])		? max(1, $args['page'])		: 1;
-		$per_page	= isset($args['per_page'])	? max(1, $args['per_page'])	: 10;
-		$spill		= isset($args['spill'])		? max(0, $args['spill'])	: 2;
+		$per_page	= isset($args['per_page'])	? max(1, $args['per_page'])	: $GLOBALS['cfg']['pagination_per_page'];
+		$spill		= isset($args['spill'])		? max(0, $args['spill'])	: $GLOBALS['cfg']['pagination_spill'];
 
 		if ($spill >= $per_page) $spill = $per_page - 1;
 
