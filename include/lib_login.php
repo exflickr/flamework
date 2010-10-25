@@ -43,6 +43,10 @@
 
 	function login_check_login(){
 
+		if (! $GLOBALS['cfg']['enable_feature_signin']){
+			return 0;
+		}
+
 		if ($GLOBALS['cfg']['user']['id']){
 			return 1;
 		}

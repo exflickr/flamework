@@ -1,6 +1,10 @@
 {assign var='page_title' value='Sign in'}
 {include file='inc_head.txt'}
 
+{if $error.signin_disabled}
+<p class="error">Sign ins are currently disabled.</p>
+{else}
+
 {if $error_missing}	<p class="error">Please enter your email address and password.</p>{/if}
 {if $error_nouser}	<p class="error">Sorry, we can't find an account with that email address.</p>{/if}
 {if $error_deleted}	<p class="error">Account has been deleted.</p>{/if}
@@ -16,6 +20,8 @@
 
 {if $cfg.enable_feature_password_retrieval}
 <p><a href="/forgot/">Forgotten your password?</a></p>
+{/if}
+
 {/if}
 
 {include file='inc_foot.txt'}

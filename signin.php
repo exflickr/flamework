@@ -5,6 +5,12 @@
 
 	include("include/init.php");
 
+	if (! $GLOBALS['cfg']['enable_feature_signin']){
+		$GLOBALS['error']['signin_disabled'] = 1;
+		$smarty->display('page_signin.txt');
+		exit();
+	}
+
 	login_ensure_loggedout();
 
 
