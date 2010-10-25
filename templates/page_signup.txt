@@ -1,6 +1,10 @@
 {assign var='page_title' value='Sign up for a new account'}
 {include file='inc_head.txt'}
 
+{if $error.signup_disabled}
+<p class="error">Signups are currently disabled</p>
+{else}
+
 {if $error_missing}		<p class="error">Please fill out all the fields</p>{/if}
 {if $error_email_taken}		<p class="error">Email address already registered.</p>{/if}
 {if $error_username_taken}	<p class="error">Username is taken.</p>{/if}
@@ -14,5 +18,6 @@
 	<input type="hidden" name="redir" value="{$redir|escape}" />
 	<input type="submit" value="CREATE YOUR ACCOUNT" />
 </form>
+{/if}
 
 {include file='inc_foot.txt'}

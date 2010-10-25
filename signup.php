@@ -5,6 +5,12 @@
 
 	include("include/init.php");
 
+	if (! $GLOBALS['cfg']['enable_feature_signup']){
+		$GLOBALS['error']['signup_disabled'] = 1;
+		$smarty->display('page_signup.txt');
+		exit();
+	}
+
 	login_ensure_loggedout();
 
 
