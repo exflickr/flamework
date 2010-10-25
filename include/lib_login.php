@@ -12,7 +12,7 @@
 
 	function login_ensure_loggedin($redir=null){
 
-		if (login_check_login()) return;
+		if ($GLOBALS['cfg']['user']['id']) return;
 
 		if ($redir){
 			header("location: /signin/?redir=".urlencode($redir));
@@ -31,7 +31,7 @@
 
 	function login_ensure_loggedout($redir="/", $force_logout=false){
 
-		if (!login_check_login()) return;
+		if (!$GLOBALS['cfg']['user']['id']) return;
 
 		if ($force_logout) login_do_logout();
 
