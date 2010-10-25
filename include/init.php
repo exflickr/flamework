@@ -11,6 +11,7 @@
 	#
 
 	putenv('TZ=PST8PDT');
+	date_default_timezone_set('America/Los_Angeles');
 
 	$GLOBALS['timings'] = array();
 	$GLOBALS['timings']['execution_start'] = microtime_ms();
