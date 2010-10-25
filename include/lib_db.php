@@ -304,7 +304,7 @@
 		$ret = _db_fetch(preg_replace(array('/^SELECT .* FROM/i', '/ ORDER BY .*$/'), array('SELECT COUNT(*) FROM', ''), $sql), $cluster, $k);
 		if (!$ret['ok']) return $ret;
 
-		$total_count = array_pop($ret['rows'][0]);
+		$total_count = intval(array_pop($ret['rows'][0]));
 		$page_count = ceil($total_count / $per_page);
 
 
@@ -335,13 +335,13 @@
 		$ret = _db_fetch($sql, $cluster, $k);
 
 		$ret['pagination'] = array(
-			'total_count' => (int)$total_count,
-			'page' => $page,
-			'per_page' => $per_page,
-			'page_count' => $page_count,
+			'total_count'	=> $total_count,
+			'page'		=> $page,
+			'per_page'	=> $per_page,
+			'page_count'	=> $page_count,
 		);
 		
-		if ($GLOBALS['cfg']['pagination_assign_smarty_variable']) {
+		if ($GLOBALS['cfg']['pagination_assign_smarty_variable']){
 			$GLOBALS['smarty']->assign('pagination', $ret['pagination']);
 			$GLOBALS['smarty']->register_function('pagination', 'smarty_function_pagination');
 		}
