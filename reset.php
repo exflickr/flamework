@@ -8,11 +8,8 @@
 
 	include("include/init.php");
 
-	if (login_is_loggedin()){
+	login_ensure_loggedout();
 
-		header("location: /");
-		exit();
-	}
 
 	$reset_code = post_str('reset');
 

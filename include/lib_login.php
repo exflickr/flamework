@@ -41,12 +41,6 @@
 
 	#################################################################
 
-	function login_is_loggedin(){
-		return $GLOBALS['cfg']['user']['id'] ? true : false;
-	}
-
-	#################################################################
-
 	function login_check_login(){
 
 		if ($GLOBALS['cfg']['user']['id']){
