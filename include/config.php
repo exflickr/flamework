@@ -125,6 +125,9 @@
 	$GLOBALS['cfg']['pagination_per_page'] = 10;
 	$GLOBALS['cfg']['pagination_spill'] = 2;
 
+	$GLOBALS['cfg']['geo_geocoding_service'] = 'yahoo';
+	$GLOBALS['cfg']['geo_geocoding_yahoo_apikey'] = '';
+
 	#
 	# Feature flags
 	#
