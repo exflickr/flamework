@@ -88,7 +88,7 @@
 
 			if ($user['id']){
 
-				$redir = ($redir) ? $redir : '/';
+				$redir = strlen($redir) ? $redir : '/';
 
 				login_do_login($user, $redir);
 				exit;
