@@ -43,7 +43,7 @@
 
 	function login_check_login(){
 
-		if (! $GLOBALS['cfg']['enable_feature_signin']){
+		if (!$GLOBALS['cfg']['enable_feature_signin']){
 			return 0;
 		}
 
@@ -53,7 +53,7 @@
 
 		$auth_cookie = login_get_cookie($GLOBALS['cfg']['auth_cookie_name']);
 
-		if (! $auth_cookie){
+		if (!$auth_cookie){
 			return 0;
 		}
 

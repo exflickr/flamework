@@ -21,10 +21,14 @@
 			|
 			<a href="/signout/">Logout</a>
 {else}
-			{if $cfg.enable_feature_signin}
-			{if $cfg.enable_feature_signup}
-			<a href="/signup/">Create New Account</a> | {/if}
-			{/if}
+	{if $cfg.enable_feature_signin}
+		{if $cfg.enable_feature_signup}
+			<a href="/signup/">Create New Account</a>
+			|
+		{/if}
+			<a href="/signin/">Sign In</a>
+		{/if}
+	{/if}
 {/if}
 		</div>
 		&nbsp;
