@@ -1,0 +1,6 @@
+{assign var='page_title' value='Sign up for a new account'}
+{include file='inc_head.txt'}
+
+<p class="error">Signups are currently disabled</p>
+
+{include file='inc_foot.txt'}
