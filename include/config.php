@@ -36,7 +36,7 @@
 		),
 	);
 
-	$GLOBALS['cfg']['abs_root_url']		= 'http://'.$_SERVER['SERVER_NAME'].'/';
+	$GLOBALS['cfg']['abs_root_url']		= 'http://'.($_SERVER['SERVER_NAME'] || 'fake.com').'/';
 	$GLOBALS['cfg']['safe_abs_root_url']	= $GLOBALS['cfg']['abs_root_url'];
 
 	$GLOBALS['cfg']['smarty_template_dir'] = realpath(dirname(__FILE__) . '/../templates/');
