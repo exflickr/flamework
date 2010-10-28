@@ -10,6 +10,8 @@
 	#  * set the mbstring encoding
 	#
 
+	error_reporting((E_ALL | E_STRICT) ^ E_NOTICE);
+
 	putenv('TZ=PST8PDT');
 	date_default_timezone_set('America/Los_Angeles');
 
@@ -80,7 +82,7 @@
 	# load config
 	#
 
-	if (! $GLOBALS['cfg']['flamework_skip_init_config']){
+	if (!$GLOBALS['cfg']['flamework_skip_init_config']){
 		include(FLAMEWORK_INCLUDE_DIR."/config.php");
 	}
 
