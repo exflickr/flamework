@@ -27,7 +27,6 @@
 			|
 		{/if}
 			<a href="/signin/">Sign In</a>
-		{/if}
 	{/if}
 {/if}
 		</div>
