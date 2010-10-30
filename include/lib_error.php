@@ -35,7 +35,7 @@
 		# static redirect map. add things here if you know you moved them.
 		#
 
-		if ($redir = $GLOBALS['cfg']['rewrite_static_urls']){
+		if ($redir = $GLOBALS['cfg']['rewrite_static_urls'][$url]){
 			header("location: {$redir}");
 			exit;
 		}
