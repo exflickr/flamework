@@ -93,6 +93,7 @@
 		if ($GLOBALS['db_conns'][$cluster_key]){
 
 			@mysql_select_db($name, $GLOBALS['db_conns'][$cluster_key]);
+			@mysql_query("SET character_set_results='utf8', character_set_client='utf8', character_set_connection='utf8', character_set_database='utf8', character_set_server='utf8'", $GLOBALS['db_conns'][$cluster_key]);
 		}
 
 		$end = microtime_ms();
