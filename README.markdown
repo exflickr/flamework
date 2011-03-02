@@ -71,7 +71,7 @@ directories for Smarty. You may want to copy over the <code>templates</code> and
 <code>templates_c</code> from the flamework trunk but those details are still left
 up to you, for the time being.)
 
-Next, edit <code>/var/your-project/www/.htaccess</code> to include a php <code>include_path</code
+Next, edit <code>/var/your-project/www/.htaccess</code> to include a php <code>include_path</code>
 config. Basically, all you're doing is telling PHP to look for libraries and other shared
 code in your application *first* and then to fall back on flamework. For example:
 
