@@ -20,6 +20,7 @@ Installation - As a base for a new project
 * Enable <code>AllowOverrides all</code> for the root.
 * Copy <code>include/config.php.example</code> to <code>include/config.php</code> and edit it.
 * Ensure that the <code>templates_c</code> directory can be written to by your webserver.
+* Load the schema into mysql: <code>mysql -uwww -Dflamework -p < schema/db_main.schema</code>
 
 That might be it.
 
