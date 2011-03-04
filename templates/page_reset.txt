@@ -28,8 +28,8 @@ INVISIBLE ERROR CAT HISSES AT YOU!
 
 <p>Please enter your new password</p>
 
-<form action="/password_reset.php" method="post" accept-encoding="UTF-8">
-	<input type="hidden" name="reset" value="{$reset_code|escape}" />
+<form action="/reset/{$reset_code|escape}/" method="post" accept-encoding="UTF-8">
+	<input type="hidden" name="done" value="1" />
 	<input type="password" name="new_password1" size="40" value="" /><label for="new_password1">your new password</label><br />
 	<input type="password" name="new_password2" size="40" value="" /><label for="new_password2">your new password (again)</label><br />
 	<input type="SUBMIT" value="RESET YOUR PASSWORD" />
