@@ -12,11 +12,7 @@
 		error_404();
 	}
 
-	$reset_code = post_str('reset');
-
-	if (! $reset_code){
-		$reset_code = get_str('reset');
-	}
+	$reset_code = get_str('reset');
 
 	if (! $reset_code){
 
@@ -30,16 +26,14 @@
 
 	if (! $user){
 
-		$GLOBALS['error']['nouser'] = 1;		
+		$GLOBALS['error']['nouser'] = 1;
 		$smarty->display('page_reset.txt');
 		exit();	
 	}
 
-	$new_reset_code = users_generate_password_reset_code($user);
+	$smarty->assign('reset_code', $reset_code);
 
-	$smarty->assign('reset_code', $new_reset_code);
-
-	if (post_str('reset')){
+	if (post_isset('done')){
 
 		$new_password1 = post_str('new_password1');
 		$new_password2 = post_str('new_password2');
@@ -67,7 +61,7 @@
 
 		users_purge_password_reset_codes($user);
 
-		$user = users_get_by_id($user['user_id']);
+		$user = users_get_by_id($user['id']);
 
 		login_do_login($user, "/account/?password=1");
 		exit();	

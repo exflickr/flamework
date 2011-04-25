@@ -18,8 +18,9 @@ Installation - As a base for a new project
 
 * Copy everything to a web server running Apache with <code>mod_php</code> and <code>php5-mcrypt</code>.
 * Enable <code>AllowOverrides all</code> for the root.
-* Edit <code>include/config.php</code>.
+* Copy <code>include/config.php.example</code> to <code>include/config.php</code> and edit it.
 * Ensure that the <code>templates_c</code> directory can be written to by your webserver.
+* Load the schema into mysql: <code>mysql -uwww -Dflamework -p < schema/db_main.schema</code>
 
 That might be it.
 
@@ -70,7 +71,7 @@ directories for Smarty. You may want to copy over the <code>templates</code> and
 <code>templates_c</code> from the flamework trunk but those details are still left
 up to you, for the time being.)
 
-Next, edit <code>/var/your-project/www/.htaccess</code> to include a php <code>include_path</code
+Next, edit <code>/var/your-project/www/.htaccess</code> to include a php <code>include_path</code>
 config. Basically, all you're doing is telling PHP to look for libraries and other shared
 code in your application *first* and then to fall back on flamework. For example:
 
