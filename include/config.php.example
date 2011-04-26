@@ -1,5 +1,4 @@
 <?
-
 	#
 	# $Id$
 	#
@@ -115,7 +114,8 @@
 	#
 
 	$GLOBALS['cfg']['db_enable_poormans_ticketing'] = 0;
-	
+
+
 	#
 	# This will assign $pagination automatically for smarty
 	#
@@ -128,6 +128,7 @@
 	$GLOBALS['cfg']['geo_geocoding_service'] = 'yahoo';
 	$GLOBALS['cfg']['geo_geocoding_yahoo_apikey'] = '';
 
+
 	#
 	# Feature flags
 	#
@@ -136,4 +137,13 @@
 	$GLOBALS['cfg']['enable_feature_signin'] = 1;
 	$GLOBALS['cfg']['enable_feature_account_delete'] = 1;
 	$GLOBALS['cfg']['enable_feature_password_retrieval'] = 1;
+
+
+	#
+	# enable this flag to show a full call chain (instead of just the
+	# immediate caller) in database query log messages and embedded in
+	# the actual SQL sent to the server.
+	#
+
+	$GLOBALS['cfg']['db_full_callstack'] = 0;
 ?>
