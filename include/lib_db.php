@@ -367,7 +367,7 @@
 
 	function _db_comment_query($sql, $trace){
 
-		$debug = $_SERVER['PHP_SELF'].": ".$trace;
+		$debug = $_SERVER['SCRIPT_NAME'].": ".$trace;
 		$debug = str_replace('*', '?', $debug); # just incase there is '*/' in the debug message
 
 		return "/* $debug */ $sql";
