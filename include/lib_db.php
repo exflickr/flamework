@@ -132,21 +132,17 @@
 			_db_connect($cluster, $k);
 		}
 
-		#
-		# Used to see what function called do_query
-		#
-		$backtrace = debug_backtrace();
-		array_shift($backtrace);
-		$caller = array_shift($backtrace);
+		$trace = _db_callstack();
+		$use_sql = _db_comment_query($sql, $trace);
 
 		$start = microtime_ms();
-		$result = @mysql_query($sql . " /* " . $caller . " */", $GLOBALS['db_conns'][$cluster_key]);
+		$result = @mysql_query($use_sql, $GLOBALS['db_conns'][$cluster_key]);
 		$end = microtime_ms();
 
 		$GLOBALS['timings']['db_queries_count']++;
 		$GLOBALS['timings']['db_queries_time'] += $end-$start;
 
-		log_notice('db', "DB-$cluster_key: $sql", $end-$start);
+		log_notice('db', "DB-$cluster_key: $sql ($trace)", $end-$start);
 
 
 		#
@@ -365,6 +361,54 @@
 			'affected_rows'	=> mysql_affected_rows($GLOBALS['db_conns'][$cluster_key]),
 			'insert_id'	=> mysql_insert_id($GLOBALS['db_conns'][$cluster_key]),
 		);
+	}
+
+	#################################################################
+
+	function _db_comment_query($sql, $trace){
+
+		$debug = $_SERVER['PHP_SELF'].": ".$trace;
+		$debug = str_replace('*', '?', $debug); # just incase there is '*/' in the debug message
+
+		return "/* $debug */ $sql";
+	}
+
+	#################################################################
+
+	function _db_callstack(){
+
+		#
+		# get the backtrace, minus any functions that starts with db_ or _db_
+		#
+
+		$trace = debug_backtrace();
+
+		while (substr($trace[0]['function'], 0, 3) == 'db_' || substr($trace[0]['function'], 0, 4) == '_db_'){
+			array_shift($trace);
+		}
+
+
+		#
+		# full stack?
+		#
+
+		if ($GLOBALS['cfg']['db_full_callstack']){
+
+			$items = array();
+
+			foreach($trace as $t){
+				$items[] = $t['function'].'()';
+			}
+
+			return implode(' -> ', array_reverse($items));
+		}
+
+
+		#
+		# single
+		#
+
+		return $trace[0]['function'] ? $trace[0]['function'].'()' : '_global_';
 	}
 
 	#################################################################
