@@ -5,7 +5,6 @@
 
 	$GLOBALS['cfg'] = array();
 
-	$GLOBALS['cfg']['environment'] = 'dev';
 
 	#
 	# Things you'll certainly need to tweak
@@ -67,6 +66,12 @@
 	$GLOBALS['cfg']['email_from_email']	= 'admin@ourapp.com';
 	$GLOBALS['cfg']['auto_email_args']	= '-fadmin@ourapp.com';
 
+
+	#
+	# Set this to 'prod' for production use
+	#
+
+	$GLOBALS['cfg']['environment'] = 'dev';
 
 
 	#
