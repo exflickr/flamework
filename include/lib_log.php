@@ -40,7 +40,7 @@
 	# log a startup notice so we know what page this is and what env
 	#
 
-	log_notice('init', "this is $_SERVER[PHP_SELF] on $cfg[environment]");
+	log_notice('init', "this is $_SERVER[SCRIPT_NAME] on $cfg[environment]");
 
 	###################################################################################################################
 
