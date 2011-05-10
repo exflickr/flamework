@@ -27,7 +27,7 @@ php_value register_globals 0
 php_value magic_quotes_runtime 0
 php_value track_errors 1
 php_value last_modified off
-php_value short_tags on
+php_value short_open_tag on
 
 # this sets all current and future error flags on, except for E_NOTICE
 # which can go fuck itself. we have some separate code for checking the
