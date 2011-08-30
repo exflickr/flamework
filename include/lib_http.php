@@ -81,6 +81,7 @@
 			$url = $req['url'];
 
 			$method = (isset($req['method'])) ? strtoupper($req['method']) : 'GET';
+			$body = (is_array($req['body'])) ? $req['body'] : null;
 			$headers = (is_array($req['headers'])) ? $req['headers'] : array();
 			$more = (is_array($req['more'])) ? $req['more'] : array();
 
@@ -90,12 +91,16 @@
 				$ch = http_head($url, $headers, $more);
 			}
 
-			else if ($method == 'POST'){
-				$ch = http_post($url, $headers, $more);
-			}
-
 			else if ($method == 'GET'){
 				$ch = http_get($url, $headers, $more);
+			}
+
+			else if ($method == 'POST'){
+				$ch = http_post($url, $body, $headers, $more);
+			}
+
+			else if ($method == 'PUT'){
+				$ch = http_put($url, $body, $headers, $more);
 			}
 
 			else {
