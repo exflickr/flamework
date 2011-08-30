@@ -23,7 +23,11 @@
 		$ch = _http_curl_handle($url, $headers, $more);
 
 		if ($more['head']){
+
+			# ensure NOBODY is set so that headers are returned
+
 			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'HEAD');
+			curl_setopt($ch, CURLOPT_NOBODY, true);
 			curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 		}
 
