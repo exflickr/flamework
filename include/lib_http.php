@@ -12,8 +12,20 @@
 	########################################################################
 
 	function http_head($url, $headers=array(), $more=array()){
-		$more['head'] = 1;
-		return http_get($url, $headers, $more);
+
+		$ch = _http_curl_handle($url, $headers, $more);
+
+		# ensure NOBODY is set so that headers are returned
+
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'HEAD');
+		curl_setopt($ch, CURLOPT_NOBODY, true);
+		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+
+		if ($more['return_curl_handle']){
+			return $ch;
+		}
+
+		return _http_request($ch, $url, $more);
 	}
 
 	########################################################################
@@ -21,15 +33,6 @@
 	function http_get($url, $headers=array(), $more=array()){
 
 		$ch = _http_curl_handle($url, $headers, $more);
-
-		if ($more['head']){
-
-			# ensure NOBODY is set so that headers are returned
-
-			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'HEAD');
-			curl_setopt($ch, CURLOPT_NOBODY, true);
-			curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
-		}
 
 		if ($more['return_curl_handle']){
 			return $ch;
