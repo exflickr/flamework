@@ -52,15 +52,26 @@
 
 	########################################################################
 
-	function http_put($url, $bytes, $header=array(), $more=array()){
+	function http_put($url, $bytes, $headers=array(), $more=array()){
 
 		$ch = _http_curl_handle($url, $headers, $more);
 
-		curl_setopt($ch, CURLOPT_PUT, true);
+		# See the monster you've created, Roy? See???!?!?!!
+
+		if (isset($more['donotsend_transfer_encoding'])){
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+		}
+
+		else {
+			curl_setopt($ch, CURLOPT_PUT, true);
+		}
+
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $bytes);
 		curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
 
-		curl_setopt($ch, CURLOPT_INFILE, $bytes);
-		curl_setopt($ch, CURLOPT_INFILESIZE, strlen($bytes));
+		# TODO: sort out PUT-ing files
+		# curl_setopt($ch, CURLOPT_INFILE, $bytes);
+		# curl_setopt($ch, CURLOPT_INFILESIZE, strlen($bytes));
 
 		if ($more['return_curl_handle']){
 			return $ch;
