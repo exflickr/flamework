@@ -52,6 +52,25 @@
 
 	########################################################################
 
+	function http_put($url, $bytes, $header=array(), $more=array()){
+
+		$ch = _http_curl_handle($url, $headers, $more);
+
+		curl_setopt($ch, CURLOPT_PUT, true);
+		curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+
+		curl_setopt($ch, CURLOPT_INFILE, $bytes);
+		curl_setopt($ch, CURLOPT_INFILESIZE, strlen($bytes));
+
+		if ($more['return_curl_handle']){
+			return $ch;
+		}
+
+		return _http_request($ch, $url, $more);
+	}
+
+	########################################################################
+
 	function http_multi(&$requests){
 
 		$handles = array();
