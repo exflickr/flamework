@@ -18,16 +18,21 @@
 
 	#################################################################
 
-	#
-	# connect to the main cluster immediately so that we can show a
-	# downtime notice it's it's not available? you might not want to
-	# so this - depends on whether you can ever stand the main cluster
-	# being down.
-	#
+	function db_init(){
 
-	if ($GLOBALS['cfg']['db_main']['auto_connect']){
-		_db_connect('main');
+		#
+		# connect to the main cluster immediately so that we can show a
+		# downtime notice it's it's not available? you might not want to
+		# so this - depends on whether you can ever stand the main cluster
+		# being down.
+		#
+
+		if ($GLOBALS['cfg']['db_main']['auto_connect']){
+			_db_connect('main');
+		}
 	}
+
+	#################################################################
 
 	#
 	# These are just shortcuts to the real functions which allow
