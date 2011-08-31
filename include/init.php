@@ -10,6 +10,8 @@
 	#  * set the mbstring encoding
 	#
 
+	# Also: there is running code at the bottom of this file
+
 	error_reporting((E_ALL | E_STRICT) ^ E_NOTICE);
 
 	putenv('TZ=PST8PDT');
