@@ -6,13 +6,13 @@
 
 	#################################################################
 
-        # http://code.flickr.com/blog/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/
+	# http://code.flickr.com/blog/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/
 
 	#################################################################
 
-        function dbtickets_create($len=32){
+	function dbtickets_create($len=32){
 
-                $table = 'Tickets' . intval($len);
+		$table = 'Tickets' . intval($len);
 
 		# As in an instance of flamework that has no access to
 		# its mysql config files and/or the ability to set up
@@ -46,7 +46,7 @@
 		}
 
 		return $rsp['insert_id'];
-        }
+	}
 
 	#################################################################
 ?>
