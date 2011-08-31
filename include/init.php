@@ -177,25 +177,6 @@
 	loadlib('http');
 	loadlib('sanitize');
 
-
-	if ($this_is_webpage){
-		login_check_login();
-	}
-
-
-	#
-	# disable precaching
-	#
-
-	if (StrToLower($_SERVER['HTTP_X_MOZ']) == 'prefetch'){
-
-		if (!$allow_precache){
-
-			error_403();
-		}
-	}
-
-
 	#
 	# general utility functions
 	#
@@ -215,16 +196,37 @@
 		return intval(1000 * ((float)$usec + (float)$sec));
 	}
 
+	#
+	# Smarty stuff
+	#
+
+	$GLOBALS['error'] = array();
+	$GLOBALS['smarty']->assign_by_ref('error', $error);
+
+	#
+	# Hey look! Running code! Note that db_init will try
+	# to automatically connect to the db_main database
+	# (unless you've disable the 'auto_connect' flag) and
+	# will blow its brains out if there's a problem.
+	#
+	
+	db_init();
+
+	if ($this_is_webpage){
+		login_check_login();
+	}
+
+	if (StrToLower($_SERVER['HTTP_X_MOZ']) == 'prefetch'){
+
+		if (! $GLOBALS['cfg']['allow_precache']){
+			error_403();
+		}
+	}
 
 	#
 	# this timer stores the end of core library loading
 	#
 
 	$GLOBALS['timings']['init_end'] = microtime_ms();
-
-	# Smarty stuff
-
-	$GLOBALS['error'] = array();
-	$GLOBALS['smarty']->assign_by_ref('error', $error);
 	
 ?>
