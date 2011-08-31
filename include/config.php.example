@@ -153,4 +153,7 @@
 	#
 
 	$GLOBALS['cfg']['db_full_callstack'] = 0;
+
+	$GLOBALS['cfg']['allow_prefetch'] = 0;
+
 ?>
