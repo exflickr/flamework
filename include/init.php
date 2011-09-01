@@ -164,6 +164,7 @@
 	loadlib('smarty');	# smarty comes next, since other libs register smarty modules
 	loadlib('error');
 	loadlib('sanitize');
+	loadlib('filter');
 	loadlib('db');
 	loadlib('dbtickets');
 	#loadlib('cache');
@@ -177,7 +178,6 @@
 	loadlib('users');
 	#loadlib('versions');
 	loadlib('http');
-	loadlib('sanitize');
 
 	#
 	# general utility functions
@@ -196,6 +196,13 @@
 	function microtime_ms(){
 		list($usec, $sec) = explode(" ", microtime());
 		return intval(1000 * ((float)$usec + (float)$sec));
+	}
+
+	function filter_strict($str){
+
+		$filter = new lib_filter();
+		$filter->allowed = array();
+		return $filter->go($str);
 	}
 
 	#
