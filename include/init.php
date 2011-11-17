@@ -179,6 +179,19 @@
 	#loadlib('versions');
 	loadlib('http');
 
+	if (($GLOBALS['cfg']['disable_site']) && (! $this_is_shell)){
+
+		header("HTTP/1.1 503 Service Temporarily Unavailable");
+		header("Status: 503 Service Temporarily Unavailable");
+
+		if ($retry = intval($GLOBALS['cfg']['disable_site_retry_after'])){
+			header("Retry-After: {$retry}");
+		}
+
+		$smarty->display("page_site_disabled.txt");
+		exit();
+	}
+
 	#
 	# general utility functions
 	#
