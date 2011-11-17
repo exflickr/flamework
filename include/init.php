@@ -179,12 +179,12 @@
 	#loadlib('versions');
 	loadlib('http');
 
-	if (($GLOBALS['cfg']['disable_site']) && (! $this_is_shell)){
+	if (($GLOBALS['cfg']['site_disabled']) && (! $this_is_shell)){
 
 		header("HTTP/1.1 503 Service Temporarily Unavailable");
 		header("Status: 503 Service Temporarily Unavailable");
 
-		if ($retry = intval($GLOBALS['cfg']['disable_site_retry_after'])){
+		if ($retry = intval($GLOBALS['cfg']['site_disabled_retry_after'])){
 			header("Retry-After: {$retry}");
 		}
 
