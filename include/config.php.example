@@ -5,6 +5,8 @@
 
 	$GLOBALS['cfg'] = array();
 
+	$GLOBALS['cfg']['disable_site'] = 0;
+	$GLOBALS['cfg']['disable_site_retry_after'] = 0;	# seconds; if set will return HTTP Retry-After header
 
 	#
 	# Things you'll certainly need to tweak
