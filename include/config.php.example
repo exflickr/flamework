@@ -5,6 +5,8 @@
 
 	$GLOBALS['cfg'] = array();
 
+	$GLOBALS['cfg']['site_name'] = 'flamework';
+
 	$GLOBALS['cfg']['site_disabled'] = 0;
 	$GLOBALS['cfg']['site_disabled_retry_after'] = 0;	# seconds; if set will return HTTP Retry-After header
 
