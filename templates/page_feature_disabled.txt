@@ -1,0 +1,6 @@
+{include file="inc_head.txt"}
+
+{* http://stosberg.net/unicode/crying-cat-face/codepoint/128575/ *}
+<p><span class="crying_cat_face">😿</span> This part of the site is currently disabled. Sad face.</p>
+
+{include file="inc_foot.txt"}
