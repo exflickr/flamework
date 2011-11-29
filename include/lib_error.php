@@ -119,6 +119,60 @@
 
 	###############################################################################
 
+	function error_500($msg=null){
+
+		$GLOBALS['no_cache'] = 1;
+
+
+		#
+		# build debug block
+		#
+
+		$debug_block = '';
+		if (!is_null($msg)){
+			$debug_block .= "Message:\n";
+			$debug_block .= error_format_pre($msg)."\n\n";
+		}
+
+		$debug_block .= "Args:\n";
+		$args = array(
+			'SERVER_REQUEST_URI'	=> $_SERVER['REQUEST_URI'],
+			'SERVER_REDIRECT_URL'	=> $_SERVER['REDIRECT_URL'],
+		);
+		$debug_block .= error_format_hash($args)."\n\n";
+
+		$debug_block .= "Backtrace:\n";
+		$debug_block .= error_format_indent(error_smart_trace());
+
+		$GLOBALS['smarty']->assign('debug_block', $debug_block);
+
+
+		#
+		# output
+		#
+
+		$GLOBALS['smarty']->display('page_error_500.txt');
+		exit;
+	}
+
+	###############################################################################
+
+	# TO DO: work out how to use this for when the site is disabled
+	# in include/init.php (
+
+	function error_disabled($feature=''){
+
+		header("HTTP/1.1 503 Service Temporarily Unavailable");
+		header("Status: 503 Service Temporarily Unavailable");
+
+		$GLOBALS['smarty']->assign("feature", $feature);
+
+		$GLOBALS['smarty']->display("page_feature_disabled.txt");
+		exit();
+	}
+
+	###############################################################################
+
 	function error_smart_trace(){
 
 		$root_path = realpath(dirname(__FILE__)."/..");
