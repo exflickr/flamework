@@ -23,10 +23,10 @@ fork, commit and file a pull-request.
 
 That might be it.
 
-If you'd like to use Flamework as an external library, <a href="docs/install_external.md">read this</a>.
+If you'd like to use Flamework as an external library, <a href="/exflickr/flamework/blob/master/docs/install_external.md">read this</a>.
 
 
 ## Other documentation
 
-* <a href="/exflickr/flamework/blob/master/troubleshooting.md">Troubleshooting</a>
-* <a href="/exflickr/flamework/blob/master/style_guide.md">Style guide</a>
+* <a href="/exflickr/flamework/blob/master/docs/troubleshooting.md">Troubleshooting</a>
+* <a href="/exflickr/flamework/blob/master/docs/style_guide.md">Style guide</a>
