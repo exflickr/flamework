@@ -30,3 +30,26 @@ If you'd like to use Flamework as an external library, <a href="/exflickr/flamew
 
 * <a href="/exflickr/flamework/blob/master/docs/troubleshooting.md">Troubleshooting</a>
 * <a href="/exflickr/flamework/blob/master/docs/style_guide.md">Style guide</a>
+
+
+## Libraries & Tools
+
+There are several drop-in external libraries for common tasks:
+
+* <a href="https://github.com/straup/flamework-geo">flamework-geo</a> - Geo libraries and helper functions
+* <a href="https://github.com/straup/flamework-aws">flamework-aws</a> - S3 upload library
+* <a href="https://github.com/straup/flamework-api">flamework-api</a> - Add an external API
+* <a href="https://github.com/straup/flamework-invitecodes">flamework-invitecodes</a> - Generate invite codes
+* <a href="https://github.com/iamcal/flamework-useragent">flamework-useragent</a> - Parse useragent strings
+* <a href="https://github.com/iamcal/flamework-JSON">flamework-JSON</a> - Parse invalid JSON
+
+<a href="https://github.com/straup/">Aaron</a> has created several starter configurations for using delegated aut:
+
+* <a href="https://github.com/straup/flamework-flickrapp">flamework-flickrapp</a> - Authenticate using Flickr
+* <a href="https://github.com/straup/flamework-twitterapp">flamework-twitterapp</a> -  Authenticate using Twitter
+* <a href="https://github.com/straup/flamework-foursquareapp">flamework-foursquareapp</a> - Authenticate using foursquare
+* <a href="https://github.com/straup/flamework-osmapp">flamework-osmapp</a> - Authenticate using OpenStreetMap
+
+And some random odds and ends:
+
+* <a href="https://github.com/straup/flamework">flamework-tools</a> - Automation scripts
