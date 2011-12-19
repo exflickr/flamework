@@ -28,5 +28,5 @@ If you'd like to use Flamework as an external library, <a href="docs/install_ext
 
 ## Other documentation
 
-* <a href="docs/troubleshooting.md">Troubleshooting</a>
-* <a href="docs/style_guide.md">Style guide</a>
+* <a href="/exflickr/flamework/blob/master/troubleshooting.md">Troubleshooting</a>
+* <a href="/exflickr/flamework/blob/master/style_guide.md">Style guide</a>
