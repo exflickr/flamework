@@ -43,7 +43,7 @@ There are several drop-in external libraries for common tasks:
 * <a href="https://github.com/iamcal/flamework-useragent">flamework-useragent</a> - Parse useragent strings
 * <a href="https://github.com/iamcal/flamework-JSON">flamework-JSON</a> - Parse invalid JSON
 
-<a href="https://github.com/straup/">Aaron</a> has created several starter configurations for using delegated aut:
+<a href="https://github.com/straup/">Aaron</a> has created several starter configurations for using delegated auth:
 
 * <a href="https://github.com/straup/flamework-flickrapp">flamework-flickrapp</a> - Authenticate using Flickr
 * <a href="https://github.com/straup/flamework-twitterapp">flamework-twitterapp</a> -  Authenticate using Twitter
