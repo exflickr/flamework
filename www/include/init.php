@@ -160,6 +160,7 @@
 	# load some libraries which we will 'always' need
 	#
 
+	loadlib('features');
 	loadlib('log');		# logging comes first, so that other modules can log during startup
 	loadlib('smarty');	# smarty comes next, since other libs register smarty modules
 	loadlib('error');
