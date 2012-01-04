@@ -24,10 +24,12 @@
 		'notice'	=> array('html'),
 		'error'		=> array('html', 'error_log'),
 		'fatal'		=> array('html', 'error_log'),
+		'debug'		=> array(),
 	);
 
 	$GLOBALS['log_html_colors'] = array(
 		'db'		=> '#eef,#000',
+		'cache'		=> '#fdd,#000',
 		'smarty'	=> '#efe,#000',
 		'http'		=> '#ffe,#000',
 		'_error'	=> '#fcc,#000',
@@ -50,6 +52,7 @@
 
 	function log_fatal($msg){
 		_log_dispatch('fatal', $msg);
+		error_500();		
 		exit;
 	}
 
@@ -61,6 +64,10 @@
 
 	function log_notice($type, $msg, $time=-1){
 		_log_dispatch('notice', $msg, array('type' => $type, 'time' => $time));
+	}
+	
+	function log_debug($type, $msg, $time=-1){
+		_log_dispatch('debug', $msg, array('type' => $type, 'time' => $time));
 	}
 	
 	function log_reset_handlers(){
@@ -75,7 +82,6 @@
 			$GLOBALS['log_handlers'][$level] = array($handler);
 		}
 	}
-
 
 	###################################################################################################################
 
