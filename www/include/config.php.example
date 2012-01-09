@@ -107,7 +107,7 @@
 	# to a single database.
 	#
 
-	$GLOBALS['cfg']['db_enable_poormans_federation'] = 0;
+	$GLOBALS['cfg']['db_enable_poormans_federation'] = 1;
 
 	$GLOBALS['cfg']['db_enable_poormans_slaves'] = 0;
 
@@ -123,7 +123,7 @@
 	# application needs db tickets.
 	#
 
-	$GLOBALS['cfg']['db_enable_poormans_ticketing'] = 0;
+	$GLOBALS['cfg']['db_enable_poormans_ticketing'] = 1;
 
 
 	#
