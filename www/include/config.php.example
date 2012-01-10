@@ -84,6 +84,16 @@
 
 	$GLOBALS['cfg']['user'] = null;
 
+	# If you are running Flamework on a host where you can not change the permissions
+	# on the www/templates_c directory (to be owned by the web server) you'll need to
+	# do a couple of things. The first is to set the 'smarty_compile' flag to 0. That
+	# means you'll need to pre-compile all your templates by hand. You can do this with
+	# 'compile-templates.php' script that is part of Flamework 'bin' directory. Obviously
+	# this doesn't make much sense if you are actively developing a site but might be
+	# useful if you've got something working and then just want to run it on a shared
+	# hosting provider where you can't change the permissions on on files, like pair or
+	# dreamhost. (20120110/straup)
+
 	$GLOBALS['cfg']['smarty_compile'] = 1;
 
 	$GLOBALS['cfg']['http_timeout'] = 3;
