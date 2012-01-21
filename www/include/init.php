@@ -202,7 +202,7 @@
 	loadlib('filter');
 	loadlib('db');
 	loadlib('dbtickets');
-	#loadlib('cache');
+	loadlib('cache');
 	loadlib('crypto');
 	loadlib('crumb');
 	loadlib('login');
