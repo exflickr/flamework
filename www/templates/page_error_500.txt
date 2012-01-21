@@ -1,0 +1,11 @@
+{"HTTP/1.1 500 Server Error"|header}{include file='inc_head.txt' page_title='Server Error'}
+
+<h1>Server Error</h1>
+
+<p>There was a problem completing your request. We're looking in to it. Sorry :(</p>
+
+<div class="admin-section">
+	<pre class="admin-debug">{$debug_block}</pre>
+</div>
+
+{include file='inc_foot.txt'}
