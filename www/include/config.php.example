@@ -14,6 +14,8 @@
 	# Things you'll certainly need to tweak
 	#
 
+	# see also: https://github.com/straup/flamework-tools/blob/master/bin/setup-db.sh
+
 	$GLOBALS['cfg']['db_main'] = array(
 		'host'	=> 'localhost',
 		'user'	=> 'root',
