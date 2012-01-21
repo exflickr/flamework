@@ -29,6 +29,8 @@ php_value track_errors 1
 php_value last_modified off
 php_value short_open_tag on
 
+php_flag display_errors off
+
 # this sets all current and future error flags on, except for E_NOTICE
 # which can go fuck itself. we have some separate code for checking the
 # one notice we do care about.
