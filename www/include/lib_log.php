@@ -24,7 +24,8 @@
 		'notice'	=> array('html'),
 		'error'		=> array('html', 'error_log'),
 		'fatal'		=> array('html', 'error_log'),
-		'debug'		=> array(),
+		'rawr'		=> array('error_log'),
+		'debug'		=> array('plain'),
 	);
 
 	$GLOBALS['log_html_colors'] = array(
@@ -56,6 +57,10 @@
 		exit;
 	}
 
+	function log_rawr($msg){
+		_log_dispatch('rawr', $msg);
+		exit;
+	}
 
 	function log_error($msg){
 		_log_dispatch('error', $msg);
@@ -112,7 +117,7 @@
 
 		$msg = str_replace("\n", ' ', $msg);
 
-		error_log("[$level] $msg ($page)");
+		error_log("[$level] $msg");
 	}
 
 
@@ -121,6 +126,10 @@
 	#
 
 	function _log_handler_html($level, $msg, $more = array()){
+
+		if (! auth_has_role('staff')){
+			return;
+		}
 
 		# only shows notices if we asked to see them
 		if ($level == 'notice' && !$GLOBALS['cfg']['admin_flags_show_notices']) return;
@@ -154,7 +163,7 @@
 		# only shows notices if we asked to see them
 		if ($level == 'notice' && !$GLOBALS['cfg']['admin_flags_show_notices']) return;
 
-		$type = $more['type'] ? $more['type'] : '';
+		$type = $more['type'] ? $more['type'] : $level;
 
 		if ($type) echo "[$type] ";
 
