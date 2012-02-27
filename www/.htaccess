@@ -43,7 +43,6 @@ ErrorDocument 403 /403.php
 
 # Get mod_rewrite fired up
 RewriteEngine on
-RewriteBase /
 
 # Login stuff
 
