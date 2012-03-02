@@ -6,7 +6,7 @@
 {if $error_deleted}	<p class="error">Account has been deleted.</p>{/if}
 {if $error_password}	<p class="error">Incorrect password.</p>{/if}
 
-<form action="/signin/" method="post" accept-encoding="UTF-8">
+<form action="{$cfg.abs_root_url}signin/" method="post" accept-encoding="UTF-8">
 	<input type="text" name="email" size="40" value="{$email|escape}" /><label for="email">email address</label><br />
 	<input type="password" name="password" size="40" /><label for="password">password</label><br />
 	<input type="hidden" name="signin" value="1" />
