@@ -134,10 +134,6 @@ As of this writing Flamework defines/expects the following clusters:
 
 This is the database cluster where user accounts and other lookup-style database tables live.
 
-+ **db_main_slave**
-
-These are read-only versions of the `db_main` cluster that are updated using [MySQL replication](http://dev.mysql.com/doc/refman/5.0/en/replication.html).
-
 + **db_users**
 
 These are the federated tables, sometimes called "shards". This is where the bulk of the data in Dotspotting is stored because it can be spread out, in smaller chunks, across a whole bunch of databases rather than a single monolithic monster database that becomes a single point of failure and it just generally a nuisance to maintain.
