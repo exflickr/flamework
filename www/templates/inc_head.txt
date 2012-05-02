@@ -10,6 +10,10 @@
 
 <div id="main">
 
+{if $cfg.display_message}
+	<div id="message">{$cfg.display_message_text|escape}</div>
+{/if}
+
 	<div id="nav">
 		<div id="login" style="float: left;">
 			<a href="{$cfg.abs_root_url}">Home</a>

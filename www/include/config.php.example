@@ -5,10 +5,20 @@
 
 	$GLOBALS['cfg'] = array();
 
+	#
+	# Things you may want to change in a hurry
+	#
+
 	$GLOBALS['cfg']['site_name'] = 'flamework';
+	$GLOBALS['cfg']['environment'] = 'dev';
 
 	$GLOBALS['cfg']['site_disabled'] = 0;
 	$GLOBALS['cfg']['site_disabled_retry_after'] = 0;	# seconds; if set will return HTTP Retry-After header
+
+	# Message is displayed in the nav header in inc_head.txt
+
+	$GLOBALS['cfg']['display_message'] = 0;
+	$GLOBALS['cfg']['display_message_text'] = '';
 
 	#
 	# Things you'll certainly need to tweak
@@ -71,14 +81,6 @@
 	$GLOBALS['cfg']['email_from_name']	= 'flamework app';
 	$GLOBALS['cfg']['email_from_email']	= 'admin@ourapp.com';
 	$GLOBALS['cfg']['auto_email_args']	= '-fadmin@ourapp.com';
-
-
-	#
-	# Set this to 'prod' for production use
-	#
-
-	$GLOBALS['cfg']['environment'] = 'dev';
-
 
 	#
 	# Things you can probably not worry about
