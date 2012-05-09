@@ -260,4 +260,13 @@
 	}
 
 	#################################################################
+
+	function users_get_users($args=array()){
+
+		$sql = "SELECT * FROM Users ORDER BY id ASC";
+		return db_fetch_paginated($sql, $args);
+	}
+
+	#################################################################
+
 ?>
