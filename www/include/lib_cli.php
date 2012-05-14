@@ -34,14 +34,13 @@
 
 		foreach ($spec as $key => $details){
 
-			$extras = "::";
+			# Note: the meanning of 'required' is a bit different than the
+			# semantics in the getopt() function. (20120514/straup)
+
+			$extras = ":";
 			$name = $key;
 
-			if ($details['required']){
-				$extras = ":";
-			}
-
-			else if (isset($details['boolean'])){
+			if (isset($details['boolean'])){
 				$extras = "";
 			}
 
