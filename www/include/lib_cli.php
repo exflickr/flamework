@@ -104,22 +104,42 @@
 			echo "{$msg}\n\n";
 		}
 
-		echo "Usage:\n";
+		echo "Usage:\n\n";
+		echo "   $>php -q {$GLOBALS['argv'][0]}";
+
+		if (count($spec)){
+			echo " --options\n\n";
+			echo "Valid options are:\n";
+		}
+
+		echo "\n";
 
 		foreach ($spec as $key => $details){
+
 			echo "-{$key} ";
 
 			if (isset($details['name'])){
 				echo "--{$details['name']} ";
 			}
 
-			if (isset($details['help']) && ($details['help'])){
-				echo "\n";
-				echo "   {$details['help']}";
+			if ($details['required']){
+				echo "(required)";
 			}
 
-			if ($details['required']){
-				echo " (required)";
+			if (isset($details['help']) && ($details['help'])){
+				echo "\n";
+
+				# chunk_split is the quick and dirty way of doing
+				# this; it does not account for splitting on words
+				# or multibyte strings (20120514/straup)
+
+				$chunks = chunk_split($details['help'], 80);
+				$chunks = rtrim($chunks);
+
+				foreach (explode("\n", $chunks) as $chunk){
+					$chunk = trim($chunk);
+					echo "   {$chunk}\n";
+				}
 			}
 
 			echo "\n";
