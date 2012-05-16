@@ -1,14 +1,12 @@
 <?php
 
-	# This isn't finished yet (20120513/straup)
-
 	#################################################################
 
 	# $spec = array(
-	# 	"i" => array("name" => "input", "required" => 1, "help" => "yer input"),
-	# 	"o" => array("name" => "output", "required" => 1, "help" => "yer output"),
-	# 	"u" => array("name" => "username", "required" => 1, "help" => "a username"),
-	# 	"y" => array("name" => "year", "required" => 1, "help" => "what time is it?"),
+	# 	"input" => array("flag" => "i", "required" => 1, "help" => "yer input"),
+	# 	"output" => array("flag" => "o", "required" => 1, "help" => "yer output"),
+	# 	"username" => array("flag" => "u", "required" => 1, "help" => "a username"),
+	# 	"year" => array("flag" => "y", "required" => 1, "help" => "what time is it?", "sanitize" => "int32"),
 	# );
 
 	function cli_getopts($spec, $more=array()){
@@ -21,8 +19,8 @@
 
 		if ($more['include_help']){
 
-			$spec['h'] = array(
-				"name" => "help",
+			$spec['help'] = array(
+				"flag" => "h",
 				"help" => "print this message",
 				"boolean" => 1,
 			);
@@ -30,67 +28,76 @@
 
 		$short_opts = array();
 		$long_opts = array();
-		$names = array();
+		$flags = array();
 
-		foreach ($spec as $key => $details){
+		foreach ($spec as $name => $details){
 
-			$extras = "::";
-			$name = $key;
-
-			if ($details['required']){
-				$extras = ":";
+			if (! isset($details['flag'])){
+				continue;
 			}
 
-			else if (isset($details['boolean'])){
+			$flag = $details['flag'];
+
+			if (isset($spec[$flag])){
+				continue;
+			}
+
+			$flags[$flag] = $name;
+
+			$extras = ":";
+
+			if (isset($details['boolean'])){
 				$extras = "";
 			}
 
-			else {}
-
-			$short_opts[] = "{$key}{$extras}";
-
-			if (isset($details['name'])){
-				$name = $details['name'];
-			}
-
-			$names[$name] = $key;
+			$short_opts[] = "{$flag}{$extras}";
 			$long_opts[] = "{$name}{$extras}";
 		}
 
 		$short_opts = implode("", $short_opts);
 
-		$opts = getopt($short_opts, $long_opts);
+		# See this: we're going to return a cleaned up version
+		# of the input parameters using longnames as keys
 
-		$help = ((isset($opts['h'])) || (isset($opts['help']))) ? 1 : 0;
+		$_opts = getopt($short_opts, $long_opts);
+		$opts = array();
+
+		$help = ((isset($_opts['h'])) || (isset($_opts['help']))) ? 1 : 0;
 
 		if (($help) && ($more['include_help'])){
 			cli_help($spec);
 			return;
 		}
 
-		foreach ($opts as $k => $stuff){
+		foreach ($_opts as $key => $stuff){
 
-			if (isset($spec[$k])){
-
-				if ($name = $spec[$k]['name']){
-					$opts[$name] = $stuff;
-				}
+			if (isset($spec[$key])){
+				$opts[$key] = $stuff;
 			}
 
-			else {
-				$opts[$names[$k]] = $stuff;
+			else if (isset($flags[$key])){
+				$name = $flags[$key];
+				$opts[$name] = $stuff;
 			}
 		}
 
 		foreach ($spec as $key => $details){
 
-			if (! $details['required']){
+			if ((! isset($opts[$key])) && (! $details['required'])){
 				continue;
 			}
 
 			if (! isset($opts[$key])){
-				cli_help($spec, "Required parameter ({$spec[$key]['name']}) missing");
+				cli_help($spec, "Required parameter '{$key}' missing");
 			}		
+
+			if (isset($details['sanitize'])){
+				loadlib("sanitize");
+				$opts[$key] = sanitize($opts[$key], $details['sanitize']);
+			}
+
+			# note: we are only sanitizing input and not are not testing the
+			# actual values, just their presense (20120516/straup)
 		}
 
 		return $opts;
@@ -114,16 +121,23 @@
 
 		echo "\n";
 
-		foreach ($spec as $key => $details){
+		foreach ($spec as $name => $details){
 
-			echo "-{$key} ";
+			echo "--{$name} ";
 
-			if (isset($details['name'])){
-				echo "--{$details['name']} ";
+			if (isset($details['flag'])){
+				echo "-{$details['flag']} ";
 			}
 
-			if ($details['required']){
-				echo "(required)";
+			if ((isset($details['required'])) && ($details['required'])){
+
+				echo "(required";
+
+				if (isset($details['sanitize'])){
+					echo ", {$details['sanitize']}";
+				}
+
+				echo ")";
 			}
 
 			if (isset($details['help']) && ($details['help'])){
