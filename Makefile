@@ -1,3 +1,11 @@
+it: clean
+so: all
+
+clean:
+	rm -f ./TODO.txt
+
+all: todo
+
 todo:
 	touch TODO.txt
 	echo "# This file was generated automatically by grep-ing for 'TO DO' in the source code." > ./TODO.txt
@@ -13,6 +21,3 @@ templates:
 
 secret:
 	php -q ./bin/generate_secret.php
-
-clean:
-	rm -f ./TODO.txt
