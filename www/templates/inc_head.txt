@@ -4,6 +4,12 @@
 	<title>{$cfg.site_name|escape}{if $page_title} | {$page_title|escape}{/if}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" media="all" href="{$cfg.abs_root_url}css/main.css" />
+	{* these are required for the pagination keyboard/touch shortcuts (at least) *}
+	{* trying to account for all the possibilities of why you might include them *} 
+	{* seems like a waste of time so, for now anyway, they're just included always *}
+	{* (20120522/straup) *}
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/jquery.touchwipe.js"></script>
 	{$extra_head}
 </head>
 <body>

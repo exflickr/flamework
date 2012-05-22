@@ -150,6 +150,9 @@
 	$GLOBALS['cfg']['pagination_spill'] = 2;
 	$GLOBALS['cfg']['pagination_style'] = 'pretty';
 
+	$GLOBALS['cfg']['pagination_keyboard_shortcuts'] = 1;
+	$GLOBALS['cfg']['pagination_touch_shortcuts'] = 1;
+
 	#
 	# Feature flags
 	#
