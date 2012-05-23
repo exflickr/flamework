@@ -35,6 +35,8 @@ If you've never watched [Cal Henderson's](http://www.iamcal.com) "Why I Hate Dja
 
 Flamework is not really a framework, at least not by most people's standards. All software development is basically pain management and Flamework assumes that the most important thing is *the speed with which the code running an application can be re-arranged, in order to adapt to circumstances*, even if it's at the cost of "doing things twice" or "repeating ourselves".
 
+(Also, in fairness to the Django kids a lot has changed and gotten better since Cal's talk way back when.)
+
 **Flamework is basically two things:**
 
 1. A set of common libraries and functions.
