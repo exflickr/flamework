@@ -9,7 +9,7 @@
 	{* seems like a waste of time so, for now anyway, they're just included always *}
 	{* (20120522/straup) *}
 	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/jquery.touchwipe.js"></script>
+	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/jquery.touchwipe.min.js"></script>
 	{$extra_head}
 </head>
 <body>
