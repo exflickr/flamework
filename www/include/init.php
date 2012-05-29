@@ -93,6 +93,18 @@
 
 	$server_url = $GLOBALS['cfg']['abs_root_url'];
 
+	if ($_SERVER['SERVER_PORT']) {
+		$server_port = null;
+		if ($_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 443) {
+			$server_port = $_SERVER['SERVER_PORT'];
+		}
+
+		if ($server_port) {
+			$scheme = ($_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
+			$server_url = "{$scheme}://{$_SERVER['SERVER_NAME']}:{$server_port}";
+		}
+	}
+	
 	if (! $server_url){
 		$scheme = ($_SERVER['SERVER_PORT'] == 443) ? "https" : "http";
 		$server_url = "{$scheme}://{$_SERVER['SERVER_NAME']}";
@@ -100,8 +112,7 @@
 
 	$cwd = '';
 
-        if ($parent_dirname = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/')){
-
+	if ($parent_dirname = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/')){
 		$parts = explode("/", $parent_dirname);
 		$cwd = implode("/", array_slice($parts, 1));
 
@@ -115,7 +126,7 @@
 	# at some point or another. So we choose trailing slashes.
 
 	$GLOBALS['cfg']['abs_root_url'] = rtrim($server_url, '/') . "/";
-
+	
 	if ($cwd){
 		$GLOBALS['cfg']['abs_root_url'] .= $cwd . "/";
 	}
