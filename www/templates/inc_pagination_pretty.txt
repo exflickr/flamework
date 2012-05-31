@@ -1,5 +1,7 @@
 <p class="pag_head">Page {$pagination.page} of {$pagination.page_count}</p>
 {if $pagination.page_count > 1}
+
+	<span id="pag_prev">
     {* previous button *}
     {if $pagination.page > 1}
 		{if $pagination_page_as_queryarg}
@@ -11,7 +13,11 @@
 	     <span class="pag_inactive">Previous page</span>
 	{/if}
 	
+	</span>
+
 	{* middle *}
+
+	<span id="pag_middle">
 
 	{if $pagination.page_count > 10}
 	    {assign var=range_mid value=7}
@@ -57,7 +63,7 @@
     	    {/if}
     	    
     	{/section}
-	
+
 	{else}
 	
     	{section name=paglp start=1 loop=$pagination.page_count+1}
@@ -77,9 +83,9 @@
 	
 	{/if}
 
+	</span>	
 	
-	
-    
+	<span id="pag_next">    
     
     {* next button *}
     {if $pagination.page < $pagination.page_count}
@@ -92,7 +98,7 @@
 	    <span class="pag_inactive">Next page</span>
 	{/if}
     
-    
+	</span>    
     
 
 	

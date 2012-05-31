@@ -13,67 +13,9 @@
 {capture assign="next_page"}{if $pagination.page < $pagination.page_count}{if $pagination_page_as_queryarg}{$pagination_url}&page={$pagination.page+1}{else}{$pagination_url}page{$pagination.page+1}{/if}{/if}{/capture}
 
 {if $cfg.pagination_keyboard_shortcuts}
-
-<script type="text/javascript">
-
-var prev = {if $pagination.page_count > 1 and $pagination.page > 1}'{$prev_page}'{else}null{/if};
-var next = {if $pagination.page_count > 1 and $pagination.page < $pagination.page_count}'{$next_page}'{else}null{/if};
-
-{literal}
-
-$(document).ready(function(){
-
-	var goto_next = function(){
-		if (next){
-			location.href = next;
-		}
-	};
-
-	var goto_previous = function(){
-		if (prev){
-			location.href = prev;
-		}
-	};
-
-	$(document).keypress(function(e){
-
-		if (e.keyCode == 37){
-			goto_previous();
-		}
-
-		else if (e.keyCode == 39){
-			goto_next();
-		}
-
-		else {}
-	});
-
-{/literal}
-
-{if $cfg.pagination_touch_shortcuts}
-{literal}
-	// http://www.netcu.de/jquery-touchwipe-iphone-ipad-library
-
-	$(document).touchwipe({
-		wipeLeft: goto_next,
-		wipeRight: goto_previous,
-		wipeUp: function(){},
-		wipeDown: function(){},
-		min_move_x: 100,
-		min_move_y: 100,
-		preventDefaultEvents: false,
-		allowPageScroll: 'vertical'
-	});
-{/literal}
-{/if}
-
-{literal}
-});
-
-{/literal}
-
-</script>
-
+{capture assign="paginate_previous"}{if $pagination.page_count > 1 and $pagination.page > 1}{$prev_page}{else}{/if}{/capture}
+{capture assign="paginate_next"}{if $pagination.page_count > 1 and $pagination.page < $pagination.page_count}{$next_page}{else}{/if}{/capture}
+{include file="inc_pagination_shortcuts.txt"}
 {/if}
 
 {/if}
