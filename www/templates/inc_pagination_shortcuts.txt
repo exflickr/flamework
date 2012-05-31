@@ -1,0 +1,59 @@
+<script type="text/javascript">
+
+var prev = {if $paginate_previous}'{$paginate_previous}'{else}null{/if};
+var next = {if $paginate_next}'{$paginate_next}'{else}null{/if};
+
+{literal}
+
+$(document).ready(function(){
+
+	var goto_next = function(){
+		if (next){
+			location.href = next;
+		}
+	};
+
+	var goto_previous = function(){
+		if (prev){
+			location.href = prev;
+		}
+	};
+
+	$(document).keypress(function(e){
+
+		if (e.keyCode == 37){
+			goto_previous();
+		}
+
+		else if (e.keyCode == 39){
+			goto_next();
+		}
+
+		else {}
+	});
+
+{/literal}
+
+{if $cfg.pagination_touch_shortcuts}
+{literal}
+	// http://www.netcu.de/jquery-touchwipe-iphone-ipad-library
+
+	$(document).touchwipe({
+		wipeLeft: goto_next,
+		wipeRight: goto_previous,
+		wipeUp: function(){},
+		wipeDown: function(){},
+		min_move_x: 100,
+		min_move_y: 100,
+		preventDefaultEvents: false,
+		allowPageScroll: 'vertical'
+	});
+{/literal}
+{/if}
+
+{literal}
+});
+
+{/literal}
+
+</script>
