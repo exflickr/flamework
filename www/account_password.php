@@ -29,8 +29,7 @@
 
 		$ok = 1;
 
-		if (login_encrypt_password($old_pass) !== $GLOBALS['cfg']['user']['password']){
-
+		if (! passwords_validate_password($old_password, $GLOBALS['cfg']['user']['password'])){
 			$smarty->assign('error_oldpass_mismatch', 1);
 			$ok = 0;
 		}
