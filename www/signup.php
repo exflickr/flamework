@@ -5,10 +5,7 @@
 
 	include("include/init.php");
 
-	if (!$GLOBALS['cfg']['enable_feature_signup']){
-		$smarty->display('page_signup_disabled.txt');
-		exit;
-	}
+	features_ensure_enabled("signup");
 
 	login_ensure_loggedout();
 
@@ -72,7 +69,6 @@
 			$smarty->assign('error_username_taken', 1);
 			$ok = 0;
 		}
-
 
 		#
 		# create account

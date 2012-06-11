@@ -5,10 +5,7 @@
 
 	include("include/init.php");
 
-	if (!$GLOBALS['cfg']['enable_feature_signin']){
-		$smarty->display('page_signin_disabled.txt');
-		exit;
-	}
+	features_ensure_enabled("signin");
 
 	login_ensure_loggedout();
 
