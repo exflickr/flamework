@@ -142,7 +142,7 @@
 			return null;
 		}
 
-		if (! passwords_validate_password($password, $user['password'])){
+		if (! passwords_validate_password_for_user($password, $user)){
 			return null;
 		}
 
