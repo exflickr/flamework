@@ -2,7 +2,7 @@
 
 	$GLOBALS['passwords_canhas_bcrypt'] = 0;
 
-	if (CRYPTO_BLOWFISH){
+	if (CRYPT_BLOWFISH){
 		$GLOBALS['passwords_canhas_bcrypt'] = 1;
 		loadlib("bcrypt");
 	}
@@ -25,7 +25,7 @@
 
 		if ($GLOBALS['passwords_canhas_bcrypt']){
 			$h = new BCryptHasher();
-			return $h->CheckPassword($password, $enc_password)
+			return $h->CheckPassword($password, $enc_password);
 		}
 
 		$test = passwords_encrypt_password($password);
