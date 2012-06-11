@@ -77,10 +77,8 @@
 		#
 
 		if ($ok){
-			$enc_password = login_encrypt_password($password, $GLOBALS['cfg']['crypto_password_secret']);
 
-			if ($enc_password != $user['password']){
-
+			if (! passwords_validate_password($password, $user['password'])){
 				$smarty->assign('error_password', 1);
 				$ok = 0;
 			}
