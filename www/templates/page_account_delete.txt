@@ -5,7 +5,7 @@
 
 <p>Are you sure you want to delete your account?</p>
 
-<form action="/account/delete/" method="post">
+<form action="{$cfg.abs_root_url}account/delete/" method="post">
 	<input type="hidden" name="delete" value="1" />
 	{$crumb_key|crumb_input}
 	<input type="SUBMIT" value="DELETE MY ACCOUNT" />

@@ -15,7 +15,7 @@
 </form>
 
 {if $cfg.enable_feature_password_retrieval}
-<p><a href="/forgot/">Forgotten your password?</a></p>
+<p><a href="{$cfg.abs_root_url}forgot/">Forgotten your password?</a></p>
 {/if}
 
 {include file='inc_foot.txt'}
