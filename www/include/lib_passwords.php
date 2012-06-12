@@ -9,9 +9,15 @@
 
 	#################################################################
 
-	function passwords_encrypt_password($password){
+	function passwords_encrypt_password($password, $more=array()){
 
-		if ($GLOBALS['passwords_canhas_bcrypt']){
+		$defaults = array(
+			'use_bcrypt' => 1
+		);
+
+		$more = array_merge($defaults, $more);
+
+		if (($GLOBALS['passwords_canhas_bcrypt']) && ($more['use_bcrypt'])){
 			$h = new BCryptHasher();
 			return $h->HashPassword($password);
 		}
@@ -21,14 +27,20 @@
 
 	#################################################################
 
-	function passwords_validate_password($password, $enc_password){
+	function passwords_validate_password($password, $enc_password, $more=array()){
 
-		if ($GLOBALS['passwords_canhas_bcrypt']){
+		$defaults = array(
+			'use_bcrypt' => 1
+		);
+
+		$more = array_merge($defaults, $more);
+
+		if (($GLOBALS['passwords_canhas_bcrypt']) && ($more['use_bcrypt'])){
 			$h = new BCryptHasher();
 			return $h->CheckPassword($password, $enc_password);
 		}
 
-		$test = passwords_encrypt_password($password);
+		$test = passwords_encrypt_password($password, $more);
 
 		$len_test = strlen($test);
 		$len_pswd = strlen($enc_password);
@@ -65,7 +77,11 @@
 
 		$is_bcrypt = (substr($enc_password, 0, 4) == '$2a$') ? 1 : 0;
 
-		$is_ok = passwords_validate_password($password, $enc_password);
+		$validate_more = array(
+			'use_bcrypt' => $is_bcrypt,
+		);
+
+		$is_ok = passwords_validate_password($password, $enc_password, $validate_more);
 
 		if (($is_ok) && (! $is_bcrypt) && ($more['ensure_bcrypt']) && ($GLOBALS['passwords_canhas_bcrypt'])){
 			users_update_password($user, $password);
