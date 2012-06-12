@@ -84,7 +84,12 @@
 		$is_ok = passwords_validate_password($password, $enc_password, $validate_more);
 
 		if (($is_ok) && (! $is_bcrypt) && ($more['ensure_bcrypt']) && ($GLOBALS['passwords_canhas_bcrypt'])){
-			users_update_password($user, $password);
+
+			# note the pass-by-ref above
+
+			if (users_update_password($user, $password)){
+				$user = users_get_by_id($user['id']);
+			}
 		}
 
 		return $is_ok;
