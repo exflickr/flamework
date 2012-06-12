@@ -1,0 +1,18 @@
+<div id="pag_bookends">
+	<span id="pag_prev">
+	{if $paginate_previous}
+		<a href="{$paginate_previous}" class="ds_pag">Previous</a>
+	{else}
+		<span class="pag_inactive">Previous</span>
+	{/if}
+	</span>
+
+	<span id="pag_next">
+	{if $paginate_next}
+		<a href="{$paginate_next}" class="ds_pag">Next</a>
+	{else}
+		<span class="pag_inactive">Next</span>
+	{/if}
+	</span>
+
+</div>

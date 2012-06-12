@@ -6,8 +6,10 @@
 {if $smarty.get.password}<p class="message">Your password has been updated.</p>{/if}
 
 <ul>
-	<li><a href="/account/password/">Change your password</a></li>
-	<li><a href="/account/delete/">Delete your account</a></li>
+	<li><a href="{$cfg.abs_root_url}account/password/">Change your password</a></li>
+{if $cfg.enable_feature_account_delete}
+	<li><a href="{$cfg.abs_root_url}account/delete/">Delete your account</a></li>
+{/if}
 </ul>
 
 {include file="inc_foot.txt"}

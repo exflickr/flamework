@@ -48,6 +48,9 @@
 	function db_insert($tbl, $hash){		return _db_insert($tbl, $hash, 'main'); }
 	function db_insert_users($k, $tbl, $hash){	return _db_insert($tbl, $hash, 'users', $k); }
 
+	function db_insert_many($tbl, $rows){		return _db_insert_many($tbl, $rows, 'main'); }
+	function db_insert_many_users($tbl, $rows){	return _db_insert_many($tbl, $rows, 'users', $k); }
+
 	function db_insert_dupe($tbl, $hash, $hash2){		return _db_insert_dupe($tbl, $hash, $hash2, 'main'); }
 	function db_insert_dupe_users($k, $tbl, $hash, $hash2){	return _db_insert_dupe($tbl, $hash, $hash2, 'users', $k); }
 
@@ -219,6 +222,21 @@
 		}
 
 		return _db_write("INSERT INTO $tbl (`".implode('`,`',$fields)."`) VALUES ('".implode("','",$hash)."') ON DUPLICATE KEY UPDATE ".implode(', ',$bits), $cluster, $shard);
+	}
+
+	#################################################################
+
+	function _db_insert_many($tbl, $rows, $cluster, $shard=null){
+
+		$fields = array_keys($rows[0]);
+		$values = array();
+
+		foreach ($rows as $row){
+
+			$values[] = "('" . implode("','", $row) . "')";
+		}
+
+		return _db_write("INSERT INTO $tbl (`".implode('`,`',$fields)."`) VALUES " . implode(",", $values), $cluster, $k);
 	}
 
 	#################################################################

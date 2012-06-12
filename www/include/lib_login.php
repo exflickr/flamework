@@ -15,9 +15,9 @@
 		if ($GLOBALS['cfg']['user']['id']) return;
 
 		if ($redir){
-			header("location: /signin/?redir=".urlencode($redir));
+			header("location: {$GLOBALS['cfg']['abs_root_url']}signin/?redir=".urlencode($redir));
 		}else{
-			header("location: /signin/");
+			header("location: {$GLOBALS['cfg']['abs_root_url']}signin/");
 		}
 		exit;
 	}
@@ -29,13 +29,13 @@
 	# optionally logging them out first.
 	#
 
-	function login_ensure_loggedout($redir="/", $force_logout=false){
+	function login_ensure_loggedout($redir="", $force_logout=false){
 
 		if (!$GLOBALS['cfg']['user']['id']) return;
 
 		if ($force_logout) login_do_logout();
 
-		header("location: $redir");
+		header("location: {$GLOBALS['cfg']['abs_root_url']} . {$redir}");
 		exit;
 	}
 
@@ -93,12 +93,10 @@
 		$auth_cookie = login_generate_auth_cookie($user);
 		login_set_cookie($GLOBALS['cfg']['auth_cookie_name'], $auth_cookie, $expires);
 
-		if (! $redir){
-			$redir = '/';
-		}
-
+		$redir = $redir;
 		$redir = urlencode($redir);
-		header("location: /checkcookie/?redir={$redir}");
+
+		header("location: {$GLOBALS['cfg']['abs_root_url']}checkcookie/?redir={$redir}");
 		exit;
 	}
 
@@ -119,12 +117,6 @@
 
 	#################################################################
 
-	function login_encrypt_password($pass){
-		return hash_hmac("sha256", $pass, $GLOBALS['cfg']['crypto_password_secret']);
-	}
-
-	#################################################################
-
 	function login_get_cookie($name){
 		return $_COOKIE[$name];
 	}
@@ -132,7 +124,8 @@
 	#################################################################
 
 	function login_set_cookie($name, $value, $expire=0, $path='/'){
-		$res = setcookie($name, $value, $expire, $path, $GLOBALS['cfg']['auth_cookie_domain']);
+		$domain = ($GLOBALS['cfg']['environment'] == 'localhost') ? $GLOBALS['cfg']['auth_cookie_domain'] : false;
+		$res = setcookie($name, $value, $expire, $path, $domain);
 	}
 
 	#################################################################

@@ -12,31 +12,10 @@
 
 {capture assign="next_page"}{if $pagination.page < $pagination.page_count}{if $pagination_page_as_queryarg}{$pagination_url}&page={$pagination.page+1}{else}{$pagination_url}page{$pagination.page+1}{/if}{/if}{/capture}
 
-<script type="text/javascript">
-
-var prev = {if $pagination.page_count > 1 and $pagination.page > 1}'{$prev_page}'{else}null{/if};
-var next = {if $pagination.page_count > 1 and $pagination.page < $pagination.page_count}'{$next_page}'{else}null{/if};
-
-{literal}
-
-$(document).ready(function(){
-
-	$(document).keypress(function(e){
-
-		if ((e.keyCode == 37) && (prev)){
-			location.href = prev;
-		}
-
-		else if ((e.keyCode == 39) && (next)){
-			location.href = next;
-		}
-
-		else {}
-	});
-});
-
-{/literal}
-
-</script>
+{if $cfg.pagination_keyboard_shortcuts}
+{capture assign="paginate_previous"}{if $pagination.page_count > 1 and $pagination.page > 1}{$prev_page}{else}{/if}{/capture}
+{capture assign="paginate_next"}{if $pagination.page_count > 1 and $pagination.page < $pagination.page_count}{$next_page}{else}{/if}{/capture}
+{include file="inc_pagination_shortcuts.txt"}
+{/if}
 
 {/if}

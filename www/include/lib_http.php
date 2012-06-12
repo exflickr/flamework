@@ -59,6 +59,26 @@
 
 	########################################################################
 
+	# uncertain what to think about $post_fields as different servers
+	# expect different things (aka params sent as GET/query args)...
+	# thanks, Roy (20120601/straup)
+
+	function http_delete($url, $post_fields, $headers=array(), $more=array()){
+
+		$ch = _http_curl_handle($url, $headers, $more);
+
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
+
+		if ($more['return_curl_handle']){
+			return $ch;
+		}
+
+		return _http_request($ch, $url, $more);
+	}
+
+	########################################################################
+
 	function http_put($url, $bytes, $headers=array(), $more=array()){
 
 		$ch = _http_curl_handle($url, $headers, $more);
@@ -115,6 +135,10 @@
 
 			else if ($method == 'POST'){
 				$ch = http_post($url, $body, $headers, $more);
+			}
+
+			else if ($method == 'DELETE'){
+				$ch = http_delete($url, $body, $headers, $more);
 			}
 
 			else if ($method == 'PUT'){

@@ -1,0 +1,6 @@
+# This file was generated automatically by grep-ing for 'TO DO' in the source code.
+# This file is meant as a pointer to the actual details in the files themselves.
+# This file was created Mon May 21 12:27:52 PDT 2012
+
+www/include/lib_error.php:169:	# TO DO: work out how to use this for when the site is disabled
+www/include/lib_users.php:257:		# TO DO: an actual cluster ID if federated

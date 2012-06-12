@@ -24,10 +24,13 @@
 		'notice'	=> array('html'),
 		'error'		=> array('html', 'error_log'),
 		'fatal'		=> array('html', 'error_log'),
+		'rawr'		=> array('error_log'),
+		'debug'		=> array('plain'),
 	);
 
 	$GLOBALS['log_html_colors'] = array(
 		'db'		=> '#eef,#000',
+		'cache'		=> '#fdd,#000',
 		'smarty'	=> '#efe,#000',
 		'http'		=> '#ffe,#000',
 		'_error'	=> '#fcc,#000',
@@ -50,9 +53,14 @@
 
 	function log_fatal($msg){
 		_log_dispatch('fatal', $msg);
+		error_500();		
 		exit;
 	}
 
+	function log_rawr($msg){
+		_log_dispatch('rawr', $msg);
+		exit;
+	}
 
 	function log_error($msg){
 		_log_dispatch('error', $msg);
@@ -61,6 +69,10 @@
 
 	function log_notice($type, $msg, $time=-1){
 		_log_dispatch('notice', $msg, array('type' => $type, 'time' => $time));
+	}
+	
+	function log_debug($type, $msg, $time=-1){
+		_log_dispatch('debug', $msg, array('type' => $type, 'time' => $time));
 	}
 	
 	function log_reset_handlers(){
@@ -75,7 +87,6 @@
 			$GLOBALS['log_handlers'][$level] = array($handler);
 		}
 	}
-
 
 	###################################################################################################################
 
@@ -106,7 +117,7 @@
 
 		$msg = str_replace("\n", ' ', $msg);
 
-		error_log("[$level] $msg ($page)");
+		error_log("[$level] $msg");
 	}
 
 
@@ -115,6 +126,10 @@
 	#
 
 	function _log_handler_html($level, $msg, $more = array()){
+
+		if (! auth_has_role('staff')){
+			return;
+		}
 
 		# only shows notices if we asked to see them
 		if ($level == 'notice' && !$GLOBALS['cfg']['admin_flags_show_notices']) return;
@@ -148,7 +163,7 @@
 		# only shows notices if we asked to see them
 		if ($level == 'notice' && !$GLOBALS['cfg']['admin_flags_show_notices']) return;
 
-		$type = $more['type'] ? $more['type'] : '';
+		$type = $more['type'] ? $more['type'] : $level;
 
 		if ($type) echo "[$type] ";
 
