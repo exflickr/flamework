@@ -18,7 +18,7 @@
 		'host'	=> 'localhost',
 		'user'	=> 'branch-in',
 		'pass'	=> 'soe22*tR.{5O',
-		'name'	=> 'branch-in',
+		'name'	=> 'branch-in-main',
 		'auto_connect' => 0,
 	);
 
