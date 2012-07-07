@@ -126,7 +126,7 @@ Here is a simple bare-bones example of how it all fits together:
 	# note how we're importing lib_example.php (above)
 	# and squirting everything out to page_example.txt (below)
 
-	<?php>
+	<?php
 		include("include/init.php");
 		loadlib("example");
 
@@ -139,10 +139,11 @@ Here is a simple bare-bones example of how it all fits together:
 
 	# page_example.txt
 
-	{assign var="page_title" value="example page title"}
-	{include file="inc_head.txt"}
+	{include file="inc_head.txt" page_title="example page title"}
+
 	<p>{if $cfg.user.id}Hello, {$cfg.user.username|escape}!{else}Hello, stranger!{/if}</p>
-	<p>foo is: {$foo|@join(",")|escape}</p>
+	<p>foo is: {','|@implode:$foo|escape}</p>
+
 	{include file="inc_foot.txt"}
 
 The only "rules" here are:
@@ -159,17 +160,17 @@ Global Variables
 
 Flamework uses and assigns global PHP variables on the grounds that it's really just not that big a deal. A non-exhaustive list of global variables that Flameworks assigns is:
 
-* $GLOBALS['cfg'] -- this is a great big hash that contains all the various site configs
+* $GLOBALS['cfg'] -- A great big hash that contains all the various site configs and runtime authentication info.
 
-* $GLOBALS['smarty'] -- a [Smarty](http://www.smarty.net/) templating object
+* $GLOBALS['smarty'] -- A [Smarty](http://www.smarty.net/) templating object.
 
-* $GLOBALS['timings'] -- a hash used to store site performance metrics
+* $GLOBALS['timings'] -- A hash used to store site performance metrics.
 
-* $GLOBALS['loaded_libs'] -- a hash used to store information about libraries that have been loaded
+* $GLOBALS['loaded_libs'] -- A hash used to store information about libraries that have been loaded. You should never access this directly, just call `loadlib()`.
 
-* $GLOBALS['local_cache'] -- a hash used to store locally cached data
+* $GLOBALS['local_cache'] -- A hash used to store locally cached data. You shoiuld never access this directly, just use the `cache_*()` functions.
 
-* $GLOBALS['error'] -- a (helper) hash used to assign site errors to; this is also automagically assigned to a corresponding Smarty variable
+* $GLOBALS['error'] -- A (helper) hash used to assign site errors to; this is also automagically assigned to a corresponding Smarty variable.
 
 The database model
 --
