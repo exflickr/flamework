@@ -1,0 +1,37 @@
+{utf8_headers}<!DOCTYPE html> 
+<html>
+<head>
+	<title>{$cfg.site_name|escape}{if $page_title} | {$page_title|escape}{/if}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" media="all" href="/css/main.css" />
+	{$extra_head}
+</head>
+<body>
+
+<div id="main">
+
+	<div id="nav">
+		<div id="login" style="float: left;">
+			<a href="/">Home</a>
+		</div>
+		<div id="login" style="float: right;">
+{if $cfg.user.id}
+			Hello {$cfg.user.username|escape}.
+			<a href="/account/">Account</a>
+			|
+			<a href="/signout/">Logout</a>
+{else}
+	{if $cfg.enable_feature_signin}
+		{if $cfg.enable_feature_signup}
+			<a href="/signup/">Create New Account</a>
+			|
+		{/if}
+			<a href="/signin/">Sign In</a>
+	{/if}
+{/if}
+		</div>
+		&nbsp;
+	</div>
+
+	<div id="content">
+

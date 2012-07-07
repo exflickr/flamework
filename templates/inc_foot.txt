@@ -1,0 +1,16 @@
+	</div>
+
+	<div id="footer">
+		Footer
+	</div>
+
+{if $cfg.admin_flags_show_notices}
+<div style="padding: 2em;">
+	{timings}
+</div>
+{/if}
+
+</div>
+
+</body>
+</html>
