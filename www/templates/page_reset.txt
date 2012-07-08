@@ -5,9 +5,9 @@
 
 {* very bad errors *}
 
-{if $error.nouser}
+{if $error_nouser}
 <p class="error">NO USER.</p>
-{elseif $error.update_failed}
+{elseif $error_update_failed}
 <p class="error">UPDATE FAILED.</p>
 {else}
 
@@ -15,12 +15,11 @@
 
 {if $error|@count}
 <p class="error">
-{if $error.missing_password}
+{if $error_missing_password}
 MISSING.
-{elseif $error.password_mismatch}
+{elseif $error_password_mismatch}
 MISMATCH.
 {else}
-{$error|@dumper}
 INVISIBLE ERROR CAT HISSES AT YOU!
 </p>
 {/if}
