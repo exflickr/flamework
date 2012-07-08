@@ -53,19 +53,19 @@ Change the site name to reflect your sub-domain name and whether you're running 
 
 Set up your database name, database user and database password. Copy and paste these into ...
 
-		$GLOBALS['cfg']['db_main'] = array(
-			'host' => 'localhost',
-			'name' => 'my-database-name',
-			'user' => 'my-database-user',
-			'pass' => 'my-database-users-password',
-			'auto_connect' => 0,
-		);
+	$GLOBALS['cfg']['db_main'] = array(
+		'host' => 'localhost',
+		'name' => 'my-database-name',
+		'user' => 'my-database-user',
+		'pass' => 'my-database-users-password',
+		'auto_connect' => 0,
+	);
 
 Setup your encryption secrets secrets. SSH to your host and run `php <root>/bin/generate_secret.php`, 3 times. Copy and paste each secret into 
 
-		$GLOBALS['cfg']['crypto_cookie_secret'] = 'first-secret-here';
-		$GLOBALS['cfg']['crypto_password_secret'] = 'third-secret-here';
-		$GLOBALS['cfg']['crypto_crumb_secret'] = 'second-secret-here';
+	$GLOBALS['cfg']['crypto_cookie_secret'] = 'first-secret-here';
+	$GLOBALS['cfg']['crypto_password_secret'] = 'third-secret-here';
+	$GLOBALS['cfg']['crypto_crumb_secret'] = 'second-secret-here';
 
 (If you don't have shell access to your web-server, you can run this command from the shell on a local machine)
 
@@ -126,7 +126,7 @@ by third-party libraries (like [Smarty](http://www.smarty.net/)).
 
 Here is a simple bare-bones example of how it all fits together:
 
-	# lib_example.php
+	# /include/lib_example.php
 
 	<?php
 		function example_foo(&$user){
@@ -135,7 +135,7 @@ Here is a simple bare-bones example of how it all fits together:
 		}
 	?>
 
-	# example.php
+	# /example.php
 	#
 	# note how we're importing lib_example.php (above)
 	# and squirting everything out to page_example.txt (below)
@@ -151,7 +151,7 @@ Here is a simple bare-bones example of how it all fits together:
 		exit();
 	?>
 
-	# page_example.txt
+	# /templates/page_example.txt
 
 	{include file="inc_head.txt" page_title="example page title"}
 
@@ -177,11 +177,11 @@ Global Variables
 Flamework uses and assigns global PHP variables on the grounds that it's really just not that big a 
 deal. A non-exhaustive list of global variables that Flameworks assigns is:
 
-* $GLOBALS['cfg'] -- A great big hash that contains all the various site configs and runtime authentication info.
+* `$GLOBALS['cfg']` -- A great big hash that contains all the various site configs and runtime user authentication info.
 
-* $GLOBALS['smarty'] -- A [Smarty](http://www.smarty.net/) templating object.
+* `$GLOBALS['smarty']` -- A [Smarty](http://www.smarty.net/) templating object.
 
-* $GLOBALS['timings'] -- A hash used to store site performance metrics.
+* `$GLOBALS['timings']` -- A hash used to store site performance metrics.
 
 Some libraries use their own globals internally, usually prefixed with `LIBRARYNAME_` or `_LIBRARYNAME_`.
 Some libraries define globals with other random names, which is something we should probably fix.
