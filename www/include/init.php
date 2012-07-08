@@ -268,13 +268,6 @@
 
 
 	#
-	# Smarty stuff
-	#
-
-	$GLOBALS['error'] = array();
-	$GLOBALS['smarty']->assign_by_ref('error', $error);
-
-	#
 	# Hey look! Running code! Note that db_init will try
 	# to automatically connect to the db_main database
 	# (unless you've disable the 'auto_connect' flag) and
@@ -299,5 +292,5 @@
 	#
 
 	$GLOBALS['timings']['init_end'] = microtime_ms();
-	
+
 ?>
