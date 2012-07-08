@@ -1,16 +1,24 @@
-	</div>
 
-	<div id="footer">
-		Footer
-	</div>
+      <hr>
 
-{if $cfg.admin_flags_show_notices}
-<div style="padding: 2em;">
-	{timings}
-</div>
+      <footer>
+        <p>&copy; Company 2012</p>
+      </footer>
+
+      {if $cfg.admin_flags_show_notices}
+      <div class="row">
+      <div class="span4 offset4" style="padding: 2em;">
+      	{timings}
+      </div>
+	  </div>
 {/if}
 
-</div>
+    </div> <!-- /container -->
 
-</body>
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/javascript/bootstrap.min.js"></script>
+
+  </body>
 </html>
