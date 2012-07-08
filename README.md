@@ -29,16 +29,20 @@ If you'd like to use Flamework as an external library, <a href="/exflickr/flamew
 
 Get the [code from GitHub](https://github.com/straup/flamework).
 
-Decide on whether you'll host this on a sub-domain (something alone the lines of `flame.example.com`) or on a subdirectory (maybe something like `www.example.com/flame`).
+Decide on whether you'll host this on a sub-domain (something alone the lines of `flame.example.com`) or on a subdirectory 
+(maybe something like `www.example.com/flame`).
 
 The rest of this section will assume the following:
 
-* That you'll be hosting on a sub-domain called *flame* on a domain called *example.com*, or, to put it another way, `flame.example.com`. Just mentally substitute your domain and sub-domain when reading, and physically substitute your domain and sub-domain during the installation process. Unless you actually own the example.com.
+* That you'll be hosting on a sub-domain called *flame* on a domain called *example.com*, or, to put it another way, 
+`flame.example.com`. Just mentally substitute your domain and sub-domain when reading, and physically substitute your 
+domain and sub-domain during the installation process. Unless you actually own the example.com.
 * That you want the URL for Flamework to be `flame.example.com` and not `flame.example.com/www`
 * That `<root>` is the path on your webserver where your web server has been configured to find the sub-domain.
 * That you have shell access (probably via SSH) to your web server.
 
-Now ... upload the code, plus all sub-directories to your web-server; don't forget the (hidden) `.htaccess` file in the root of the code's distribution.
+Now ... upload the code, plus all sub-directories to your web-server; don't forget the (hidden) `.htaccess` file in the 
+root of the code's distribution.
 
 Copy `<root>/www/include/config.php.example` to `<root>/www/include/config.php` and edit this new file.
 
@@ -65,7 +69,8 @@ Setup your encryption secrets secrets. SSH to your host and run `php <root>/bin/
 
 (If you don't have shell access to your web-server, you can run this command from the shell on a local machine)
 
-Create the database tables. Load `<root>/schema/db_main.schema` and `<root>/schema/db_users.schema` into the database. You can do this either via phpMyAdmin and the import option or via `mysql` on the shell's command line
+Create the database tables. Load `<root>/schema/db_main.schema` and `<root>/schema/db_users.schema` into the database. 
+You can do this either via phpMyAdmin and the import option or via `mysql` on the shell's command line.
 
 Browse to http://flame.example.com
 
@@ -73,21 +78,29 @@ If you get errors in your Apache error log such as ...
 
 	www/.htaccess: Invalid command 'php_value', perhaps misspelled or defined by a module not included in the server configuration
 
-... then your host is probably running PHP as a CGI and not as a module so you'll want to comment out any line in `<root>/www/.htaccess` that starts with `php_value` or `php_flag` and put these values into a new file, `<root>/www/php.ini`, without the leading `php_value` or `php_flag`.
+... then your host is probably running PHP as a CGI and not as a module so you'll want to comment out any line in 
+`<root>/www/.htaccess` that starts with `php_value` or `php_flag` and put these values into a new file, 
+`<root>/www/php.ini`, without the leading `php_value` or `php_flag`.
 
 Click on *Sign In* and setup your user account.
 
 That's it. Or should be. If I've forgotten something please let me know or submit a pull request.
 
+
 ## Statement(s) of Bias
 
 *"Working on the crumbly edge of future-proofing." -- [Heather Champ](http://www.hchamp.com/)*
 
-If you've never watched [Cal Henderson's](http://www.iamcal.com) "Why I Hate Django" presentation now is probably as good a time as any. It will help you understand a lot about why things were done they were at Flickr and why those of us who've left prefer to keep doing them that way:
+If you've never watched [Cal Henderson's](http://www.iamcal.com) "Why I Hate Django" presentation now is probably 
+as good a time as any. It will help you understand a lot about why things were done they were at Flickr and why 
+those of us who've left prefer to keep doing them that way:
 
 + [http://www.youtube.com/watch?v=i6Fr65PFqfk](http://www.youtube.com/watch?v=i6Fr65PFqfk "Why I Hate Django")
 
-Flamework is not really a framework, at least not by most people's standards. All software development is basically pain management and Flamework assumes that the most important thing is *the speed with which the code running an application can be re-arranged, in order to adapt to circumstances*, even if it's at the cost of "doing things twice" or "repeating ourselves".
+Flamework is not really a framework, at least not by most people's standards. All software development is 
+basically pain management and Flamework assumes that the most important thing is *the speed with which the code 
+running an application can be re-arranged, in order to adapt to circumstances*, even if it's at the cost of 
+"doing things twice" or "repeating ourselves".
 
 (Also, in fairness to the Django kids a lot has changed and gotten better since Cal's talk way back when.)
 
@@ -101,7 +114,8 @@ Flamework is not really a framework, at least not by most people's standards. Al
 * It uses [Smarty](http://www.smarty.net "Smarty") for templating.
 * It uses global variables. Not many of them but it also doesn't make a fuss about the idea of using them.
 * It does not use objects or "protected" variables.
-* It breaks it own rules occasionally and uses objects but only rarely and generally when they are defined by third-party libraries (like [Smarty](http://www.smarty.net/)).
+* It breaks it own rules occasionally and uses objects but only rarely and generally when they are defined 
+by third-party libraries (like [Smarty](http://www.smarty.net/)).
 * That ["normalized data is for sissies"](http://kottke.org/04/10/normalized-data).
 
 **For all intents and purposes, Flamework *is* a model-view-controller (MVC) system:**
@@ -149,8 +163,10 @@ Here is a simple bare-bones example of how it all fits together:
 The only "rules" here are:
 
 1. Making sure you load `include/init.php`
-2. The part where `init.php` handles authentication checking and assigns logged in users to the global `$cfg` variable (it also creates and assigns a global `$smarty` object)
-3. The naming conventions for shared libraries, specifically: `lib_SOMETHING.php` which is imported as `loadlib("SOMETHING")`.
+2. The part where `init.php` handles authentication checking and assigns logged in users to the 
+global `$cfg` variable (it also creates and assigns a global `$smarty` object)
+3. The naming conventions for shared libraries, specifically: `lib_SOMETHING.php` which is 
+imported as `loadlib("SOMETHING")`.
 4. Functions defined in libraries are essentially "namespaced".
 
 Page template names and all that other stuff is, ultimately, your business.
@@ -158,7 +174,8 @@ Page template names and all that other stuff is, ultimately, your business.
 Global Variables
 --
 
-Flamework uses and assigns global PHP variables on the grounds that it's really just not that big a deal. A non-exhaustive list of global variables that Flameworks assigns is:
+Flamework uses and assigns global PHP variables on the grounds that it's really just not that big a 
+deal. A non-exhaustive list of global variables that Flameworks assigns is:
 
 * $GLOBALS['cfg'] -- A great big hash that contains all the various site configs and runtime authentication info.
 
@@ -166,16 +183,15 @@ Flamework uses and assigns global PHP variables on the grounds that it's really 
 
 * $GLOBALS['timings'] -- A hash used to store site performance metrics.
 
-* $GLOBALS['loaded_libs'] -- A hash used to store information about libraries that have been loaded. You should never access this directly, just call `loadlib()`.
+Some libraries use their own globals internally, usually prefixed with `LIBRARYNAME_` or `_LIBRARYNAME_`.
+Some libraries define globals with other random names, which is something we should probably fix.
 
-* $GLOBALS['local_cache'] -- A hash used to store locally cached data. You shoiuld never access this directly, just use the `cache_*()` functions.
-
-* $GLOBALS['error'] -- A (helper) hash used to assign site errors to; this is also automagically assigned to a corresponding Smarty variable.
 
 The database model
 --
 
-Flamework assumes a federated model with all the various user data spread across a series of databases, or "clusters". For each cluster there are a series of corresponding helper functions defined in `lib_db.php`.
+Flamework assumes a federated model with all the various user data spread across a series of databases, 
+or "clusters". For each cluster there are a series of corresponding helper functions defined in `lib_db.php`.
 
 **By default Flamework does not require that it be run under a fully-federated
   database system.** It takes advantage of the ability to run in "poor man's
@@ -183,7 +199,8 @@ Flamework assumes a federated model with all the various user data spread across
   multiple database clusters when there's only really one. Specifically, all the
   various databases are treated as though they live in the `db_main`
   cluster. The goal is to enable (and ensure) that when a given installation of
-  a Flamework project outgrows a simple one or two machine setup that it can easily be migrated to a more robust system with a minimum of fuss.
+  a Flamework project outgrows a simple one or two machine setup that it can easily 
+  be migrated to a more robust system with a minimum of fuss.
 
 As of this writing Flamework defines/expects the following clusters:
 
@@ -193,13 +210,24 @@ This is the database cluster where user accounts and other lookup-style database
 
 + **db_users**
 
-These are the federated tables, sometimes called "shards". This is where the bulk of the data in Dotspotting is stored because it can be spread out, in smaller chunks, across a whole bunch of databases rather than a single monolithic monster database that becomes a single point of failure and it just generally a nuisance to maintain.
+These are the federated tables, sometimes called "shards". This is where the bulk of the data in Dotspotting 
+is stored because it can be spread out, in smaller chunks, across a whole bunch of databases rather than a 
+single monolithic monster database that becomes a single point of failure and it just generally a nuisance 
+to maintain.
 
 + **db_tickets**
 
-One of the things about storing federated user data is that from time to time you may need to "re-balance" your shards, for example moving all of a user's data from shard #5 to shard #23. That means you can no longer rely on an individual database to generate auto-incrementing unique IDs because each database shard creates those IDs in isolation and if you try to move a dot, for example, with ID `123` to a shard with another dot that already has the same ID everything will break and there will be tears.
+One of the things about storing federated user data is that from time to time you may need to "re-balance" 
+your shards, for example moving all of a user's data from shard #5 to shard #23. That means you can no longer 
+rely on an individual database to generate auto-incrementing unique IDs because each database shard creates 
+those IDs in isolation and if you try to move a dot, for example, with ID `123` to a shard with another dot 
+that already has the same ID everything will break and there will be tears.
 
-The way around this is to use "ticketing" servers whose only job is to sit around and assign unique IDs. A discussion of ticketing servers is outside the scope of this document but [Kellan wrote a good blog post about the subject](http://code.flickr.com/blog/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/) if you're interested in learning more. Which is a long way of saying: Flamework uses tickets and they come from the `db_tickets` cluster.
+The way around this is to use "ticketing" servers whose only job is to sit around and assign unique IDs. 
+A discussion of ticketing servers is outside the scope of this document but [Kellan wrote a good blog post 
+about the subject](http://code.flickr.com/blog/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/) 
+if you're interested in learning more. Which is a long way of saying: Flamework uses tickets and they come 
+from the `db_tickets` cluster.
 	   
 ## Other documentation
 
