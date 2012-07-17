@@ -2,12 +2,12 @@
 
 Installation on AppFog.com is pretty simple and offers the advantage of being able to easily scale your app and move between infrastructures and data centers. 
 
-1) To begin, simply log in to your AppFog account and create a PHP App. You can select any available infrastructure. Wait for your app to launch and then add a MySQL service and bind to it via the control panel. This is also fairly trivial to do form the command line.
+1) To begin, simply log in to your AppFog account and create a PHP App. You can select any available infrastructure. Wait for your app to launch and then add a MySQL service and bind to it via the control panel. This is also fairly trivial to do from the command line.
 
 2) Once your app is running be sure you have the following installed:
 
-$ sudo gem install af
-$ sudo gem install caldecott
+	$ sudo gem install af
+	$ sudo gem install caldecott
 
 3) In your www/include/config.php file, add the following:
 
