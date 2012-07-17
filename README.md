@@ -25,6 +25,8 @@ That might be it.
 
 If you'd like to use Flamework as an external library, <a href="/exflickr/flamework/blob/master/docs/install_external.md">read this</a>.
 
+To install Flamework on AppFog.com, <a href="/exflickr/flamework/blob/master/docs/install_appfog.md">read this</a>.
+
 ## Installation - The longer, slightly hand holding, version
 
 Get the [code from GitHub](https://github.com/straup/flamework).
