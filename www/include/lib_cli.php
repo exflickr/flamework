@@ -72,12 +72,13 @@
 		foreach ($_opts as $key => $stuff){
 
 			if (isset($spec[$key])){
-				$opts[$key] = $stuff;
+				$opts[$key] = ($spec[$key]['boolean']) ? 1 : $stuff;
 			}
 
 			else if (isset($flags[$key])){
+
 				$name = $flags[$key];
-				$opts[$name] = $stuff;
+				$opts[$name] = ($spec[$name]['boolean']) ? 1 : $stuff;
 			}
 		}
 
