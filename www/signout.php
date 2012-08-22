@@ -5,6 +5,8 @@
 
 	include("include/init.php");
 
+	features_ensure_enabled("signin");
+
 	login_ensure_loggedin();
 
 
@@ -24,14 +26,11 @@
 
 		login_do_logout();
 
-		$smarty->display('page_signout_done.txt');
-		exit;
+		$GLOBALS['smarty']->display('page_signout_done.txt');
+		exit();
 	}
 
+	$GLOBALS['smarty']->display("page_signout.txt");
+	exit();
 
-	#
-	# output
-	#
-
-	$smarty->display("page_signout.txt");
 ?>

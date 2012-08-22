@@ -23,7 +23,6 @@
 		log_notice("cache", "fetch cache key {$cache_key}");
 
 		if (isset($GLOBALS['cache_local'][$cache_key])){
-
 			return array(
 				'ok' => 1,
 				'cache' => 'local',
@@ -41,10 +40,16 @@
 
 	function cache_set($cache_key, $data, $more=array()){
 
+		$defaults = array(
+			'cache_locally' => 1,
+		);
+
+		$more = (! is_array($more)) ? $defaults : array_merge($defaults, $more);
+
 		$cache_key = _cache_prepare_cache_key($cache_key);
 		log_notice("cache", "set cache key {$cache_key}");
 
-		if (isset($more['store_locally'])){
+		if ($more['cache_locally']){
 			$GLOBALS['cache_local'][$cache_key] = $data;
 		}
 

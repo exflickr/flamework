@@ -1,16 +1,12 @@
 <?
-	#
-	# $Id$
-	#
 
 	include("include/init.php");
 
-	login_ensure_loggedin("/account");
+	features_ensure_enabled("signin");
 
+	login_ensure_loggedin();
 
-	#
-	# output
-	#
+	$GLOBALS['smarty']->display("page_account.txt");
+	exit();
 
-	$smarty->display("page_account.txt");
 ?>
