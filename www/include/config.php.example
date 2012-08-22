@@ -34,7 +34,6 @@
 		'auto_connect' => 0,
 	);
 
-
 	$GLOBALS['cfg']['db_users'] = array(
 
 		'host' => array(
@@ -77,6 +76,15 @@
 	#
 	# Things you may need to tweak
 	#
+
+	# Caching stuff
+
+	$GLOBALS['cfg']['cache_remote_engine'] = '';
+	$GLOBALS['cfg']['cache_prefix'] = '';
+	$GLOBALS['cfg']['cache_force_refresh'] = 0;
+
+	$GLOBALS['cfg']['memcache_host'] = 'localhost';
+	$GLOBALS['cfg']['memcache_port'] = '11211';
 
 	$GLOBALS['cfg']['auth_cookie_domain'] = parse_url($GLOBALS['cfg']['abs_root_url'], 1);
 	$GLOBALS['cfg']['auth_cookie_name'] = 'a';
