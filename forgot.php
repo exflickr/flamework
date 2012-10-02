@@ -5,13 +5,13 @@
 
 	include("include/init.php");
 
-	$GLOBALS['cfg']['nav_tab'] = 'signin'; // for the navbar
-
 	if (! $GLOBALS['cfg']['enable_feature_password_retrieval']){
 		error_404();
 	}
 
 	login_ensure_loggedout();
+
+	$GLOBALS['cfg']['nav_tab'] = 'signin'; // for the navbar
 
 
 	#

@@ -5,7 +5,6 @@
 
 	include("include/init.php");
 
-	$GLOBALS['cfg']['nav_tab'] = 'signin'; // for the navbar
 
 	if (!$GLOBALS['cfg']['enable_feature_signin']){
 		$smarty->display('page_signin_disabled.txt');
@@ -13,6 +12,8 @@
 	}
 
 	login_ensure_loggedout();
+	
+	$GLOBALS['cfg']['nav_tab'] = 'signin'; // for the navbar
 
 
 	#

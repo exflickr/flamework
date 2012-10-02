@@ -6,7 +6,9 @@
 	include("include/init.php");
 
 	login_ensure_loggedin();
-
+	
+	$GLOBALS['cfg']['nav_tab'] = 'account'; // for the navbar
+	
 
 	#
 	# crumb key

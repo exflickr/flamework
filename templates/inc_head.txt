@@ -47,7 +47,7 @@
 
             <ul class="nav pull-right">
 {if $cfg.user.id}
-            <li class="dropdown">
+            <li class="dropdown{if $cfg.nav_tab == 'account'} active{/if}">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hello {$cfg.user.username|escape} <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="/account/">Account</a></li>
