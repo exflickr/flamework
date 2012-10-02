@@ -14,7 +14,7 @@
 	        <div class="control-group">
 	        	<label class="control-label" for="email">Email:</label>
 	        	<div class="controls">
-	        		<input type="text" name="email" size="40" value="" />
+	        		<input type="email" name="email" size="40" value="" />
 				</div>
 			</div>
 

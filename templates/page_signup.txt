@@ -22,7 +22,7 @@
 	        <div class="control-group">
 				<label class="control-label" for="email">email address</label>
 				<div class="controls">
-					<input type="text" name="email" size="40" value="{$email|escape}" />
+					<input type="email" name="email" size="40" value="{$email|escape}" />
 				</div>
 			</div>
 
