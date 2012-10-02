@@ -24,6 +24,7 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
+    <link href="/css/main.css" rel="stylesheet">
   </head>
 
   <body>
@@ -66,5 +67,3 @@
         </div>
       </div>
     </div>
-
-    <div class="container">

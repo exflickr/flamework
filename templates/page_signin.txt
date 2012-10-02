@@ -1,38 +1,40 @@
 {assign var='page_title' value='Sign in'}
 {include file='inc_head.txt'}
 
-{if $error_missing}	<p class="alert alert-error">Please enter your email address and password.</p>{/if}
-{if $error_nouser}	<p class="alert alert-error">Sorry, we can't find an account with that email address.</p>{/if}
-{if $error_deleted}	<p class="alert alert-error">Account has been deleted.</p>{/if}
-{if $error_password}	<p class="alert alert-error">Incorrect password.</p>{/if}
+<div class="container">
+	{if $error_missing}	<p class="alert alert-error">Please enter your email address and password.</p>{/if}
+	{if $error_nouser}	<p class="alert alert-error">Sorry, we can't find an account with that email address.</p>{/if}
+	{if $error_deleted}	<p class="alert alert-error">Account has been deleted.</p>{/if}
+	{if $error_password}	<p class="alert alert-error">Incorrect password.</p>{/if}
 
-<form action="/signin/" method="post" accept-encoding="UTF-8" class="form-horizontal">
-	<input type="hidden" name="signin" value="1" />
-	<input type="hidden" name="redir" value="{$redir|escape}" />
+	<form action="/signin/" method="post" accept-encoding="UTF-8" class="form-horizontal">
+		<input type="hidden" name="signin" value="1" />
+		<input type="hidden" name="redir" value="{$redir|escape}" />
 
-	<fieldset>
-        <div class="control-group">
-			<label class="control-label" for="email">email address</label>
-			<div class="controls">
-				<input type="text" name="email" size="40" value="{$email|escape}" />
+		<fieldset>
+	        <div class="control-group">
+				<label class="control-label" for="email">email address</label>
+				<div class="controls">
+					<input type="text" name="email" size="40" value="{$email|escape}" />
+				</div>
 			</div>
-		</div>
 
-        <div class="control-group">
-			<label class="control-label" for="password">password</label>
-			<div class="controls">
-				<input type="password" name="password" size="40" />
+	        <div class="control-group">
+				<label class="control-label" for="password">password</label>
+				<div class="controls">
+					<input type="password" name="password" size="40" />
+				</div>
 			</div>
-		</div>
 
-        <div class="form-actions">
-			<input type="submit" class="btn btn-primary" value="SIGN IN" />
-		</div>
-	</fieldset>
-</form>
+	        <div class="form-actions">
+				<input type="submit" class="btn btn-primary" value="SIGN IN" />
+			</div>
+		</fieldset>
+	</form>
 
-{if $cfg.enable_feature_password_retrieval}
-<p><a href="/forgot/">Forgotten your password?</a></p>
-{/if}
+	{if $cfg.enable_feature_password_retrieval}
+	<p><a href="/forgot/">Forgotten your password?</a></p>
+	{/if}
+</div>
 
 {include file='inc_foot.txt'}

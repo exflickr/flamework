@@ -1,7 +1,11 @@
 {include file='inc_head.txt'}
 
-<h1>Hello World</h1>
-
-<p>Ok. Looks like you got flamework installed.</p>
+<div class="jumbotron">
+  <div class="container">
+    <h1>Flamework</h1>
+    <p>OK, looks like you got it installed. You win one (1) Internets.</p>
+    <p><a href="https://github.com/exflickr/flamework">Flamework on GitHub</a></p>
+  </div>
+</div>
 
 {include file='inc_foot.txt'}
