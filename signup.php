@@ -5,6 +5,8 @@
 
 	include("include/init.php");
 
+	$GLOBALS['cfg']['nav_tab'] = 'signup'; // for the navbar
+
 	if (!$GLOBALS['cfg']['enable_feature_signup']){
 		$smarty->display('page_signup_disabled.txt');
 		exit;
