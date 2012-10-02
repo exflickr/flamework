@@ -52,3 +52,13 @@ pre.admin-debug {
   color: #fff;
   text-shadow: 0 0 10px rgba(255,255,255,.25);
 }
+
+.masthead-links {
+  margin: 0;
+  list-style: none;
+}
+.masthead-links li {
+  display: inline;
+  padding: 0 10px;
+  color: rgba(255,255,255,.25);
+}
