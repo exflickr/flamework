@@ -1,0 +1,7 @@
+{include file='inc_head.txt'}
+
+<h1>About</h1>
+
+<p>About page is happy now.</p>
+
+{include file='inc_foot.txt'}
