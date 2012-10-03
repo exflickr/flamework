@@ -12,21 +12,21 @@
 		<input type="hidden" name="redir" value="{$redir|escape}" />
 
 		<fieldset>
-	        <div class="control-group">
+	        <div class="control-group{if $error_missing && !$username} error{/if}">
 				<label class="control-label" for="username">username</label>
 				<div class="controls">
 					<input type="text" name="username" size="40" value="{$username|escape}" />
 				</div>
 			</div>
 			
-	        <div class="control-group">
+	        <div class="control-group{if $error_missing && !$email} error{/if}">
 				<label class="control-label" for="email">email address</label>
 				<div class="controls">
 					<input type="email" name="email" size="40" value="{$email|escape}" />
 				</div>
 			</div>
 
-	        <div class="control-group">
+	        <div class="control-group{if $error_missing && !$password} error{/if}">
 				<label class="control-label" for="password">password</label>
 				<div class="controls">
 					<input type="password" name="password" size="40" value="{$password|escape}" />
