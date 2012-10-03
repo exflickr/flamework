@@ -63,3 +63,4 @@ RewriteRule  ^account/delete/?$		/account_delete.php	[L]
 # General pages
 
 RewriteRule ^about/?$			/about.php 			[L,QSA]
+RewriteRule ^contact/?$			/contact.php 		[L,QSA]
