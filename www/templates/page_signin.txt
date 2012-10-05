@@ -1,21 +1,40 @@
 {assign var='page_title' value='Sign in'}
 {include file='inc_head.txt'}
 
-{if $error_missing}	<p class="error">Please enter your email address and password.</p>{/if}
-{if $error_nouser}	<p class="error">Sorry, we can't find an account with that email address.</p>{/if}
-{if $error_deleted}	<p class="error">Account has been deleted.</p>{/if}
-{if $error_password}	<p class="error">Incorrect password.</p>{/if}
+<div class="container">
+	{if $error_missing}	<p class="alert alert-error">Please enter your email address and password.</p>{/if}
+	{if $error_nouser}	<p class="alert alert-error">Sorry, we can't find an account with that email address.</p>{/if}
+	{if $error_deleted}	<p class="alert alert-error">Account has been deleted.</p>{/if}
+	{if $error_password}	<p class="alert alert-error">Incorrect password.</p>{/if}
 
-<form action="{$cfg.abs_root_url}signin/" method="post" accept-encoding="UTF-8">
-	<input type="text" name="email" size="40" value="{$email|escape}" /><label for="email">email address</label><br />
-	<input type="password" name="password" size="40" /><label for="password">password</label><br />
-	<input type="hidden" name="signin" value="1" />
-	<input type="hidden" name="redir" value="{$redir|escape}" />
-	<input type="submit" value="SIGN IN" />
-</form>
+	<form action="/signin/" method="post" accept-encoding="UTF-8" class="form-horizontal">
+		<input type="hidden" name="signin" value="1" />
+		<input type="hidden" name="redir" value="{$redir|escape}" />
 
-{if $cfg.enable_feature_password_retrieval}
-<p><a href="{$cfg.abs_root_url}forgot/">Forgotten your password?</a></p>
-{/if}
+		<fieldset>
+	        <div class="control-group{if $error_missing && !$email} error{/if}">
+				<label class="control-label" for="email">email address</label>
+				<div class="controls">
+					<input type="email" name="email" size="40" value="{$email|escape}" />
+				</div>
+			</div>
+
+	        <div class="control-group{if $error_missing && !$password} error{/if}">
+				<label class="control-label" for="password">password</label>
+				<div class="controls">
+					<input type="password" name="password" size="40" />
+				</div>
+			</div>
+
+	        <div class="form-actions">
+				<input type="submit" class="btn btn-primary" value="SIGN IN" />
+			</div>
+		</fieldset>
+	</form>
+
+	{if $cfg.enable_feature_password_retrieval}
+	<p><a href="/forgot/">Forgotten your password?</a></p>
+	{/if}
+</div>
 
 {include file='inc_foot.txt'}

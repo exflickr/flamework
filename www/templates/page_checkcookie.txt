@@ -1,5 +1,7 @@
 {include file="inc_head.txt"}
 
-There is a problem with your cookies. Bah.
+<div class="container">
+	<p>There is a problem with your cookies. Bah.</p>
+</div>
 
 {include file="inc_foot.txt"}

@@ -1,17 +1,29 @@
 {assign var="page_title" value="Forgot your password?"}
 {include file="inc_head.txt"}
 
+<div class="container">
+	{if $error_nouser}	<p class="alert alert-error">We can't find an account registered with that address.</p>{/if}
+	{if $error_deleted}	<p class="alert alert-error">Your account has been deleted.</p>{/if}
+	{if $error_notsent}	<p class="alert alert-error">Something went wrong :(</p>{/if}
 
-{if $error_nouser}	<p class="error">We can't find an account registered with that address.</p>{/if}
-{if $error_deleted}	<p class="error">Your account has been deleted.</p>{/if}
-{if $error_notsent}	<p class="error">Something went wrong :(</p>{/if}
 
+	<form action="/forgot/" method="post" accept-encoding="UTF-8" class="form-horizontal">
+		<input type="hidden" name="remind" value="1" />
 
-<form action="{$cfg.abs_root_url}forgot/" method="post" accept-encoding="UTF-8">
-	<input type="hidden" name="remind" value="1" />
-	<label for="email">Email:</label> <input type="text" name="email" size="40" value="" /><br />
-	<input type="SUBMIT" value="SEND PASSWORD REMINDER" />
-</form>
+		<fieldset>
+	        <div class="control-group">
+	        	<label class="control-label" for="email">Email:</label>
+	        	<div class="controls">
+	        		<input type="email" name="email" size="40" value="" />
+				</div>
+			</div>
+
+	        <div class="form-actions">
+	        	<input type="submit" class="btn btn-primary" value="SEND PASSWORD REMINDER" />
+			</div>
+		</fieldset>
+	</form>
+</div>
 
 
 {include file="inc_foot.txt"}
