@@ -28,6 +28,7 @@
 		exit;
 	}
 
+	$GLOBALS['cfg']['nav_tab'] = 'account'; // for the navbar
 
 	#
 	# output

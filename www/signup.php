@@ -7,6 +7,8 @@
 
 	features_ensure_enabled("signup");
 
+	$GLOBALS['cfg']['nav_tab'] = 'signup'; // for the navbar
+
 	login_ensure_loggedout();
 
 

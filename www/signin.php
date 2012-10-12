@@ -9,6 +9,8 @@
 
 	login_ensure_loggedout();
 
+	$GLOBALS['cfg']['nav_tab'] = 'signin'; // for the navbar
+
 
 	#
 	# pass through
