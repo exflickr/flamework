@@ -5,7 +5,7 @@
 
 	include('include/init.php');
 
-	$GLOBALS['cfg']['nav_tab'] = 'contact'; // for the navbar
+	$GLOBALS['smarty']->assign('nav_tab', 'contact');
 
 	#
 	# are we submitting the form?

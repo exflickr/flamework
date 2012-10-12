@@ -7,7 +7,7 @@
 
 	features_ensure_enabled("signup");
 
-	$GLOBALS['cfg']['nav_tab'] = 'signup'; // for the navbar
+	$GLOBALS['smarty']->assign('nav_tab', 'signup');
 
 	login_ensure_loggedout();
 

@@ -7,7 +7,7 @@
 
 	login_ensure_loggedin("/account");
 	
-	$GLOBALS['cfg']['nav_tab'] = 'account'; // for the navbar
+	$GLOBALS['smarty']->assign('nav_tab', 'account');
 
 
 	#

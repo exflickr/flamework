@@ -11,7 +11,7 @@
 
 	login_ensure_loggedout();
 
-	$GLOBALS['cfg']['nav_tab'] = 'signin'; // for the navbar
+	$GLOBALS['smarty']->assign('nav_tab', 'signin');
 
 	#
 	# send the reminder?

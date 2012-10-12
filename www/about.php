@@ -5,7 +5,7 @@
 
 	include('include/init.php');
 
-	$GLOBALS['cfg']['nav_tab'] = 'about'; // for the navbar
+	$GLOBALS['smarty']->assign('nav_tab', 'about');
 
 	#
 	# output
