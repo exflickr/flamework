@@ -40,7 +40,7 @@
           <a class="brand" href="/">{$cfg.site_name|escape}</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li{if $nav_tab == 'home' || !$nav_tab} class="active"{/if}><a href="/">Home</a></li>
+              <li{if $nav_tab == 'home'} class="active"{/if}><a href="/">Home</a></li>
               <li{if $nav_tab == 'about'} class="active"{/if}><a href="/about/">About</a></li>
               <li{if $nav_tab == 'contact'} class="active"{/if}><a href="/contact/">Contact</a></li>
             </ul>
