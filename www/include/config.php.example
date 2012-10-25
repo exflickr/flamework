@@ -50,7 +50,10 @@
 		),
 	);
 
-	$GLOBALS['cfg']['abs_root_url']		= 'http://'.($_SERVER['SERVER_NAME'] ? $_SERVER['SERVER_NAME'] : 'fake.com').'/';
+	$GLOBALS['cfg']['server_scheme'] = ($_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
+	$GLOBALS['cfg']['server_name'] = ($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'fake.com';
+
+	$GLOBALS['cfg']['abs_root_url']		= "{$GLOBALS['cfg']['server_scheme']}://{$GLOBALS['cfg']['server_name']}/";
 	$GLOBALS['cfg']['safe_abs_root_url']	= $GLOBALS['cfg']['abs_root_url'];
 
 	$GLOBALS['cfg']['smarty_template_dir'] = realpath(dirname(__FILE__) . '/../templates/');
