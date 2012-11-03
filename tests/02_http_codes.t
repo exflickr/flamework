@@ -1,7 +1,7 @@
 <?
 	include(dirname(__FILE__).'/wrapper.php');
 
-	plan(3);
+	plan(150);
 
 	loadlib('http');
 
