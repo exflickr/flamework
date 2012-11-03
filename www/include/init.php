@@ -84,7 +84,7 @@
 	# load config
 	#
 
-	if (!$GLOBALS['cfg']['flamework_skip_init_config']){
+	if (!isset($GLOBALS['cfg']['flamework_skip_init_config'])){
 		include(FLAMEWORK_INCLUDE_DIR."config.php");
 	}
 
