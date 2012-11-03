@@ -61,3 +61,8 @@ RewriteRule ^reset/([a-zA-Z0-9]+)/?$	reset.php?reset=$1	[L,QSA]
 RewriteRule  ^account/?$		account.php		[L]
 RewriteRule  ^account/password/?$	account_password.php	[L]
 RewriteRule  ^account/delete/?$		account_delete.php	[L]
+
+# General pages
+
+RewriteRule ^about/?$			about.php 			[L,QSA]
+RewriteRule ^contact/?$			contact.php 		[L,QSA]

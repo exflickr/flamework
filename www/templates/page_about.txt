@@ -1,8 +1,9 @@
-{assign var='page_title' value='Sign out'}
 {include file='inc_head.txt'}
 
 <div class="container">
-	<p>You are signed out!</p>
+	<h1>About</h1>
+
+	<p>About page is happy now.</p>
 </div>
 
 {include file='inc_foot.txt'}

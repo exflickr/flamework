@@ -1,5 +1,7 @@
 {include file="inc_head.txt"}
 
-<p>This website is currently disabled and will return shortly.</p>
+<div class="container">
+	<p>This website is currently disabled and will return shortly.</p>
+</div>
 
 {include file="inc_foot.txt"}
