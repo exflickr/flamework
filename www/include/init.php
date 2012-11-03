@@ -85,7 +85,7 @@
 	#
 
 	if (!$GLOBALS['cfg']['flamework_skip_init_config']){
-		include(FLAMEWORK_INCLUDE_DIR."/config.php");
+		include(FLAMEWORK_INCLUDE_DIR."config.php");
 	}
 
 	# First, ensure that 'abs_root_url' is both assigned and properly
