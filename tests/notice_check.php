@@ -13,8 +13,8 @@
 	}
 
 
-	include('../include/init.php');
+	include('../www/include/init.php');
 
-	echo "loaded init ok.<br />";
-	echo "if there are no error messages above, all is well.";
+	echo "loaded init ok.\n";
+	echo "if there are no error messages above, all is well.\n";
 ?>
