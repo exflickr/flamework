@@ -4,7 +4,6 @@ php:
   - 5.3
   - 5.4
 before_script:
-  - mkdir www/templates_c
   - chmod 755 www/templates_c
   - cp www/include/config.php.example www/include/config.php
 script:
