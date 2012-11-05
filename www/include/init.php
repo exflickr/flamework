@@ -84,8 +84,8 @@
 	# load config
 	#
 
-	if (!$GLOBALS['cfg']['flamework_skip_init_config']){
-		include(FLAMEWORK_INCLUDE_DIR."/config.php");
+	if (!isset($GLOBALS['cfg']['flamework_skip_init_config'])){
+		include(FLAMEWORK_INCLUDE_DIR."config.php");
 	}
 
 	# First, ensure that 'abs_root_url' is both assigned and properly
@@ -93,7 +93,7 @@
 
 	$server_url = $GLOBALS['cfg']['abs_root_url'];
 
-	if ($_SERVER['SERVER_PORT']) {
+	if (isset($_SERVER['SERVER_PORT'])) {
 		$server_port = null;
 		if ($_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 443) {
 			$server_port = $_SERVER['SERVER_PORT'];
@@ -266,36 +266,6 @@
 		return $filter->go($str);
 	}
 
-	# 'ok' and 'not_ok' conflict with testmore (20111219/straup)
-
-	function okay($more=null){
-
-		$out = array('ok' => 1);
-
-		if (is_array($more)){
-			$out = array_merge($more, $out);
-		}
-
-		return $out;
-	}
-
-	function not_okay($msg='Your call could not be completed as dialed', $code=null){
-
-		$out = array('ok' => 0,	'error' => $msg);
-
-		if ($code){
-			$out['error_code'] = $code;
-		}
-
-		return $out;
-	}
-
-	#
-	# Smarty stuff
-	#
-
-	$GLOBALS['error'] = array();
-	$GLOBALS['smarty']->assign_by_ref('error', $error);
 
 	#
 	# Hey look! Running code! Note that db_init will try
@@ -322,5 +292,5 @@
 	#
 
 	$GLOBALS['timings']['init_end'] = microtime_ms();
-	
+
 ?>
