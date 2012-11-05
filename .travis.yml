@@ -7,4 +7,4 @@ before_script:
   - chmod 755 www/templates_c
   - cp www/include/config.php.example www/include/config.php
 script:
-  - "prove -v --exec 'php' ./tests/*.t"
+  - "prove -v --php-ini ./tests/php.ini --exec 'php' ./tests/*.t"
