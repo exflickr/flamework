@@ -21,3 +21,6 @@ templates:
 
 secret:
 	php -q ./bin/generate_secret.php
+
+test:
+	prove --exec 'php' tests/*.t

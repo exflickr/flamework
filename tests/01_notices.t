@@ -19,8 +19,24 @@
 	# now load the wrapper, which calls init
 	#
 
-	include(dirname(__FILE__).'/wrapper.php');
+	$dirname = dirname(__FILE__);
+	include($dirname.'/wrapper.php');
 
 	plan(1);
 
-	is($GLOBALS['TESTING_notice_buffer'], "");
+	# A couple things (20121105/straup):
+	#
+	# 1) This is mostly here to make the Travis CI robots (at Github) stop
+	#    losing their minds. This test will basically always fail because
+	#    the config file is prevented from being checked in, by design.
+	#
+	# 2) Something (else) appears to be trapping STDOUT so the message below
+	#    is not actually displayed. This is not ideal...
+
+	if (! file_exists($dirname.'/../www/include/config.php')){
+		skip("You don't have a config file! How can you have any pudding if you don't have a config file?!", 1);
+	}
+
+	else {
+		is($GLOBALS['TESTING_notice_buffer'], "");
+	}
