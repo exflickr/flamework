@@ -4,9 +4,11 @@
 	# $Id$
 	#
 
-	#################################################################
+	if (defined('MCRYPT_RIJNDAEL_256')){
+		$GLOBALS['crypto_td'] = MCRYPT_RIJNDAEL_256;
+	}
 
-	$GLOBALS['crypto_td'] = MCRYPT_RIJNDAEL_256;
+	#################################################################
 
 	function crypto_create_iv(){
 

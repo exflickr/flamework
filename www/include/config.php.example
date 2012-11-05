@@ -50,8 +50,8 @@
 		),
 	);
 
-	$GLOBALS['cfg']['server_scheme'] = ($_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
-	$GLOBALS['cfg']['server_name'] = ($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : 'fake.com';
+	$GLOBALS['cfg']['server_scheme'] = ((isset($_SERVER['HTTPS'])) && ($_SERVER['HTTP'] == 'on')) ? 'https' : 'http';
+	$GLOBALS['cfg']['server_name'] = (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME'] : 'fake.com';
 
 	$GLOBALS['cfg']['abs_root_url']	= "{$GLOBALS['cfg']['server_scheme']}://{$GLOBALS['cfg']['server_name']}/";
 
