@@ -1,0 +1,5 @@
+{assign var="email_subject" value="Contact form submission"}
+
+Name: {$name|escape}
+Email: {$email|escape}
+Message: {$message|escape}
