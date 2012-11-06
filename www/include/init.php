@@ -84,8 +84,8 @@
 	# load config
 	#
 
-	if (!$GLOBALS['cfg']['flamework_skip_init_config']){
-		include(FLAMEWORK_INCLUDE_DIR."/config.php");
+	if (!isset($GLOBALS['cfg']['flamework_skip_init_config'])){
+		include(FLAMEWORK_INCLUDE_DIR."config.php");
 	}
 
 	# First, ensure that 'abs_root_url' is both assigned and properly
@@ -93,7 +93,7 @@
 
 	$server_url = $GLOBALS['cfg']['abs_root_url'];
 
-	if ($_SERVER['SERVER_PORT']) {
+	if (isset($_SERVER['SERVER_PORT'])) {
 		$server_port = null;
 		if ($_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 443) {
 			$server_port = $_SERVER['SERVER_PORT'];

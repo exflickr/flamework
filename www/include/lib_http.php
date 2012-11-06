@@ -280,7 +280,7 @@
 
 			return array(
 				'ok'		=> 0,
-				'error'	=> 'http_failed',
+				'error'		=> 'http_failed',
 				'code'		=> $info['http_code'],
 				'method'	=> $method,
 				'url'		=> $info['url'],
@@ -293,9 +293,10 @@
 
 		return array(
 			'ok'		=> 1,
+			'code'		=> $info['http_code'],
+			'method'	=> $method,
 			'url'		=> $info['url'],
 			'info'		=> $info,
-			'method'	=> $method,
 			'req_headers'	=> $headers_out,
 			'headers'	=> $headers_in,
 			'body'		=> $body,
