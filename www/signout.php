@@ -28,6 +28,7 @@
 		exit;
 	}
 
+	$GLOBALS['smarty']->assign('nav_tab', 'account');
 
 	#
 	# output
