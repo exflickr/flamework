@@ -7,7 +7,8 @@
 #
 # In an ideal world, you'd stick it in here on dev and your build
 # system would bundle the changes into (a file included in) httpd.conf
-# for your production deployment. Yeah. Do that.
+# for your production deployment, perhaps wrapped in a <VirtualHost>
+# block.
 #
 
 # ETags are a bad idea if you have multiple web servers. We'll do
@@ -29,7 +30,9 @@ php_value track_errors 1
 php_value last_modified off
 php_value short_open_tag on
 
-php_flag display_errors off
+# This value is very useful for development, but should be disabled
+# on production deployments (by setting the value to 'off')
+php_flag display_errors on
 
 # this sets all current and future error flags on, except for E_NOTICE
 # which can go fuck itself. we have some separate code for checking the

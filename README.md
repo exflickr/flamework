@@ -1,6 +1,8 @@
 Flamework
 =========
 
+[![Build Status](https://secure.travis-ci.org/exflickr/flamework.png)](http://travis-ci.org/exflickr/flamework)
+
 Flamework is a PHP web-application framework, born out of the processes
 and house-style developed at Flickr.com.
 
