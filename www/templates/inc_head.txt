@@ -1,46 +1,69 @@
-{utf8_headers}<!DOCTYPE html> 
-<html>
-<head>
-	<title>{$cfg.site_name|escape}{if $page_title} | {$page_title|escape}{/if}</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="stylesheet" type="text/css" media="all" href="{$cfg.abs_root_url}css/main.css" />
-	{* these are required for the pagination keyboard/touch shortcuts (at least) *}
-	{* trying to account for all the possibilities of why you might include them *} 
-	{* seems like a waste of time so, for now anyway, they're just included always *}
-	{* (20120522/straup) *}
-	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/jquery-1.7.1.min.js"></script>
-	<script type="text/javascript" src="{$cfg.abs_root_url}javascript/jquery.touchwipe.min.js"></script>
-	{$extra_head}
-</head>
-<body>
+{utf8_headers}<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{$cfg.site_name|escape}{if $page_title} | {$page_title|escape}{/if}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<div id="main">
+    <!-- Le styles -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    {literal}
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    {/literal}
+    <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
 
-{if $cfg.display_message}
-	<div id="message">{$cfg.display_message_text|escape}</div>
-{/if}
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-	<div id="nav">
-		<div id="login" style="float: left;">
-			<a href="{$cfg.abs_root_url}">Home</a>
-		</div>
-		<div id="login" style="float: right;">
+    <link href="/css/main.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="/">{$cfg.site_name|escape}</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li{if $nav_tab == 'home'} class="active"{/if}><a href="/">Home</a></li>
+              <li{if $nav_tab == 'about'} class="active"{/if}><a href="/about/">About</a></li>
+              <li{if $nav_tab == 'contact'} class="active"{/if}><a href="/contact/">Contact</a></li>
+            </ul>
+
+            <ul class="nav pull-right">
 {if $cfg.user.id}
-			Hello {$cfg.user.username|escape}.
-			<a href="{$cfg.abs_root_url}account/">Account</a>
-			|
-			<a href="{$cfg.abs_root_url}signout/">Logout</a>
+            <li class="dropdown{if $nav_tab == 'account'} active{/if}">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hello {$cfg.user.username|escape} <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/account/">Account</a></li>
+                <li><a href="/signout/">Logout</a></li>
+              </ul>
+            </li>
 {else}
 	{if $cfg.enable_feature_signin}
 		{if $cfg.enable_feature_signup}
-			<a href="{$cfg.abs_root_url}signup/">Create New Account</a>
-			|
+			<li{if $nav_tab == 'signup'} class="active"{/if}><a href="/signup/">Create New Account</a></li>
 		{/if}
-			<a href="{$cfg.abs_root_url}signin/">Sign In</a>
+			<li{if $nav_tab == 'signin'} class="active"{/if}><a href="/signin/">Sign In</a></li>
 	{/if}
 {/if}
-		</div>
-		&nbsp;
-	</div>
-
-	<div id="content">
+          </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
