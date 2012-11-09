@@ -5,8 +5,6 @@
 
 	include('include/init.php');
 
-	$GLOBALS['smarty']->assign('nav_tab', 'home');
-
 
 	#
 	# this is so we can test the logging output
