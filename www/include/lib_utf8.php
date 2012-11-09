@@ -7,7 +7,7 @@
 
 		header("Content-Type: $mimetype; charset=utf-8");
 
-		if ($GLOBALS['no_cache']){
+		if ($GLOBALS['cfg']['no_cache']){
 
 			# Date in the past
 			header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");

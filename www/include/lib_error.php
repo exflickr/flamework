@@ -45,7 +45,7 @@
 		# give up
 		#
 
-		$GLOBALS['no_cache'] = 1;
+		$GLOBALS['cfg']['no_cache'] = 1;
 
 
 		#
@@ -83,7 +83,7 @@
 
 	function error_403($msg=null){
 
-		$GLOBALS['no_cache'] = 1;
+		$GLOBALS['cfg']['no_cache'] = 1;
 
 
 		#
@@ -130,7 +130,7 @@
 
 	function error_500($msg=null){
 
-		$GLOBALS['no_cache'] = 1;
+		$GLOBALS['cfg']['no_cache'] = 1;
 
 
 		#
