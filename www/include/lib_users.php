@@ -46,7 +46,7 @@
 
 		$user['id'] = $ret['insert_id'];
 
-		cache_set_local("USER-{$user['id']}", $user);
+		cache_set("USER-{$user['id']}", $user);
 
 		return array(
 			'ok'	=> 1,
@@ -72,7 +72,7 @@
 
 		if (!$ret['ok']) return $ret;
 
-		cache_unset_local("USER-{$user['id']}");
+		cache_unset("USER-{$user['id']}");
 
 		return array(
 			'ok' => 1,
@@ -115,7 +115,7 @@
 
 		$user = db_single(db_fetch("SELECT * FROM users WHERE id=".intval($id)));
 
-		cache_set_local("USER-{$user['id']}", $user);
+		cache_set("USER-{$user['id']}", $user);
 
 		return $user;
 	}
