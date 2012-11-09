@@ -29,6 +29,7 @@
 
 		$user['cluster_id'] = users_assign_cluster_id();
 
+
 		#
 		# now create the escaped version
 		#
@@ -38,21 +39,23 @@
 			$hash[$k] = AddSlashes($v);
 		}
 
-		$rsp = db_insert('users', $hash);
+		$ret = db_insert('users', $hash);
 
-		if (!$rsp['ok']){
-			return null;
-		}
+		if (!$ret['ok']) return $ret;
 
 
 		#
 		# cache the unescaped version
 		#
 
-		$user['id'] = $rsp['insert_id'];
+		$user['id'] = $ret['insert_id'];
 
 		$GLOBALS['user_local_cache'][$user['id']] = $user;
-		return $user;
+
+		return array(
+			'ok'	=> 1,
+			'user'	=> $user,
+		);
 	}
 
 	#################################################################
