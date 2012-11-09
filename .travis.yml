@@ -4,7 +4,6 @@ php:
   - 5.3
   - 5.4
 before_script:
-  - chmod 755 www/templates_c
-  - cp www/include/config.php.example www/include/config.php
+  - /bin/sh tests/travis/setup.sh
 script:
   - "prove -v --exec 'php --php-ini ./tests/php.ini' ./tests/*.t"
