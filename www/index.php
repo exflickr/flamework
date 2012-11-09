@@ -30,4 +30,3 @@
 	#
 
 	$smarty->display('page_index.txt');
-?>
