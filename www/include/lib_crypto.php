@@ -6,4 +6,3 @@
 
 	loadlib("crypto_mcrypt");
 
-?>
