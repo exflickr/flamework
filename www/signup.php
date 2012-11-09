@@ -103,4 +103,3 @@
 	#
 
 	$smarty->display('page_signup.txt');
-?>

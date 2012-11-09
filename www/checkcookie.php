@@ -5,6 +5,7 @@
 
 	include("include/init.php");
 
+
 	#
 	# do we have a valid cookie set?
 	#
@@ -14,6 +15,7 @@
 		$smarty->display("page_checkcookie.txt");
 		exit;
 	}
+
 
 	#
 	# where shall we bounce to?
@@ -25,10 +27,10 @@
 		$redir .= $_redir;
 	}
 
+
 	#
 	# go!
 	#
 
 	header("location: {$redir}");
 	exit;
-?>

@@ -76,4 +76,3 @@
 	#
 
 	$smarty->display("page_account_password.txt");
-?>

@@ -73,4 +73,3 @@
 	#
 
 	$smarty->display('page_reset.txt');
-?>

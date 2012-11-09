@@ -51,5 +51,3 @@
 	#
 
 	$smarty->display("page_account_delete.txt");
-	exit;
-?>

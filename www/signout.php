@@ -35,4 +35,3 @@
 	#
 
 	$smarty->display("page_signout.txt");
-?>
