@@ -5,7 +5,6 @@
 
 	include('include/init.php');
 
-	$GLOBALS['smarty']->assign('nav_tab', 'contact');
 
 	#
 	# are we submitting the form?
@@ -44,14 +43,14 @@
 			loadlib('email');
 
 			email_send(array(
-				'from_name'		=> $name,
+				'from_name'	=> $name,
 				'from_email'	=> $email,
-				'to_email'		=> $GLOBALS['cfg']['email_from_email'],
-				'template'		=> 'email_contact.txt',
+				'to_email'	=> $GLOBALS['cfg']['email_from_email'],
+				'template'	=> 'email_contact.txt',
 			));
 
-			header('Location: /contact/?sent=1');
-			exit();
+			header('location: /contact/?sent=1');
+			exit;
 		}
 	}
 
@@ -60,4 +59,3 @@
 	#
 
 	$smarty->display('page_contact.txt');
-?>
