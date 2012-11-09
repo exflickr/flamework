@@ -8,7 +8,7 @@
 
 	function auth_has_role($role, $who=0){
 
-		# return 1;
+		return 1;
 
 		# Currently, this is the only thing that works. It is
 		# disabled by default (20101122/straup)
