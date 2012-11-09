@@ -6,10 +6,6 @@
 
 	#################################################################
 
-	$GLOBALS['users_local_cache'] = array();
-
-	#################################################################
-
 	#
 	# create a user record. the fields pass in $user
 	# ARE NOT ESCAPED.
@@ -50,7 +46,7 @@
 
 		$user['id'] = $ret['insert_id'];
 
-		$GLOBALS['user_local_cache'][$user['id']] = $user;
+		cache_set_local("USER-{$user['id']}", $user);
 
 		return array(
 			'ok'	=> 1,
@@ -67,18 +63,20 @@
 
 	function users_update_user(&$user, $update){
 
+		$hash = array();
 		foreach ($update as $k => $v){
-			$update[$k] = AddSlashes($v);
+			$hash[$k] = AddSlashes($v);
 		}
 
-		$rsp = db_update('users', $update, "id=$user[id]");
+		$ret = db_update('users', $hash, "id={$user['id']}");
 
-		if (!$rsp['ok']){
-			return null;
-		}
+		if (!$ret['ok']) return $ret;
 
-		unset($GLOBALS['user_local_cache'][$user['id']]);
-		return 1;
+		cache_unset_local("USER-{$user['id']}");
+
+		return array(
+			'ok' => 1,
+		);
 	}
 
 	#################################################################
@@ -117,7 +115,7 @@
 
 		$user = db_single(db_fetch("SELECT * FROM users WHERE id=".intval($id)));
 
-		$GLOBALS['user_local_cache'][$id] = $user;
+		cache_set_local("USER-{$user['id']}", $user);
 
 		return $user;
 	}
@@ -271,5 +269,3 @@
 	}
 
 	#################################################################
-
-?>

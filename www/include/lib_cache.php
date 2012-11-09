@@ -44,9 +44,7 @@
 		$cache_key = _cache_prepare_cache_key($cache_key);
 		log_notice("cache", "set cache key {$cache_key}");
 
-		if (isset($more['store_locally'])){
-			$GLOBALS['cache_local'][$cache_key] = $data;
-		}
+		cache_set_local($cache_key, $data);
 
 		$remote_rsp = _cache_do_remote('set', $cache_key, $data);
 
@@ -62,9 +60,7 @@
 		$cache_key = _cache_prepare_cache_key($cache_key);
 		log_notice("cache", "unset cache key {$cache_key}");
 
-		if (isset($GLOBALS['cache_local'][$cache_key])){
-			unset($GLOBALS['cache_local'][$cache_key]);
-		}
+		cache_unset_local($cache_key);
 
 		$remote_rsp = _cache_do_remote('unset', $cache_key);
 
@@ -109,4 +105,18 @@
 	}
 
 	#################################################################
-?>
+
+	function cache_set_local($key, $data){
+
+		$GLOBALS['cache_local'][$key] = $data;
+	}
+
+	function cache_unset_local($key){
+
+		unset($GLOBALS['cache_local'][$key]);
+	}
+
+	function cache_get_local($key){
+
+		return $GLOBALS['cache_local'][$key];
+	}
