@@ -1,92 +1,125 @@
 <?php
+	#
+	# this library works by hooking into lib_cache - load it after
+	# lib_cache to enable remote caching.
+	#
+
+	$GLOBALS['_cache_hooks']['set'] = 'cache_memcache_set';
+	$GLOBALS['_cache_hooks']['get'] = 'cache_memcache_get';
+	$GLOBALS['_cache_hooks']['unset'] = 'cache_memcache_unset';
+
+	$GLOBALS['_cache_memcache_conn'] = null;
 
 	#################################################################
 
 	function cache_memcache_connect(){
 
-		if (! isset($GLOBALS['remote_cache_conns']['memcache'])){
+		#
+		# existing connection?
+		#
 
-			$host = $GLOBALS['cfg']['memcache_host'];
-			$port = $GLOBALS['cfg']['memcache_port'];
+		if ($GLOBALS['_cache_memcache_conn']){
 
-			$start = microtime_ms();
-
-			$memcache = new Memcache();
-
-			if (! $memcache->connect($host, $port)){
-				$memcache = null;
-			}
-
-			if (! $memcache){
-				log_fatal("Connection to memcache {$host}:{$port} failed");
-			}
-
-			$end = microtime_ms();
-			$time = $end - $start;
-
-			log_notice("cache", "connect to memcache {$host}:{$port} ({$time}ms)");
-			$GLOBALS['remote_cache_conns']['memcache'] = $memcache;
-
-			$GLOBALS['timings']['memcache_conns_count']++;
-			$GLOBALS['timings']['memcache_conns_time'] += $time;
+			return $GLOBALS['_cache_memcache_conn'];
 		}
 
-		return $GLOBALS['remote_cache_conns']['memcache'];
+
+		#
+		# set up a new one
+		#
+
+		$host = $GLOBALS['cfg']['memcache_host'];
+		$port = $GLOBALS['cfg']['memcache_port'];
+
+		$start = microtime_ms();
+
+		$memcache = new Memcache();
+
+		if (!$memcache->connect($host, $port)){
+			$memcache = null;
+		}
+
+		if (!$memcache){
+			log_error("Connection to memcache {$host}:{$port} failed");
+			return null;
+		}
+
+		$end = microtime_ms();
+		$time = $end - $start;
+
+		log_notice("cache", "connect to memcache {$host}:{$port} ({$time}ms)");
+
+
+		$GLOBALS['timings']['memcache_conns_count']++;
+		$GLOBALS['timings']['memcache_conns_time'] += $time;
+
+
+		$GLOBALS['_cache_memcache_conn'] = $memcache;
+		return $memcache;
 	}
 
 	#################################################################
 
-	function cache_memcache_get($cache_key){
+	function cache_memcache_get($key){
 
 		$memcache = cache_memcache_connect();
 
-		if (! $memcache){
-			return array( 'ok' => 0, 'error' => 'failed to connect to memcache' );
+		if (!$memcache){
+			log_error('failed to connect to memcache');
+			return null;
 		}
 
-		$rsp = $memcache->get($cache_key);
+		$rsp = $memcache->get($key);
 
-		if (! $rsp){
-			return array( 'ok' => 0 );
+		if (!$rsp){
+			log_notice("cache", "remote get {$key} - miss");
+			return null;
 		}
 
-		return array(
-			'ok' => 1,
-			'data' => unserialize($rsp),
-		);
+		log_notice("cache", "remote get {$key} - hit");
+		return unserialize($rsp);
 	}
 
 	#################################################################
 
-	function cache_memcache_set($cache_key, $data){
-
-		if (! $data){
-			log_notice("cache", "missing data to set key {$cache_key}");
-			return array( 'ok' => 0, 'error' => 'missing data' );
-		}
+	function cache_memcache_set($key, $data){
 
 		$memcache = cache_memcache_connect();
 
-		if (! $memcache){
-			return array( 'ok' => 0, 'error' => 'failed to connect to memcache' );
+		if (!$memcache){
+			log_error('failed to connect to memcache');
+			return;
 		}
 
-		$ok = $memcache->set($cache_key, serialize($data));
-		return array( 'ok' => $ok );
+		$ok = $memcache->set($key, serialize($data));
+
+		if (!$ok){
+			log_error("failed to set memcache key {$key}");
+			return;
+		}
+
+		log_notice("cache", "remote set {$key}");
 	}
 
 	#################################################################
 
-	function cache_memcache_unset($cache_key){
+	function cache_memcache_unset($key){
 
 		$memcache = cache_memcache_connect();
 
-		if (! $memcache){
-			return array( 'ok' => 0, 'error' => 'failed to connect to memcache' );
+		if (!$memcache){
+			log_error('failed to connect to memcache');
+			return;
 		}
 
-		$ok = $memcache->delete($cache_key);
-		return array( 'ok' => $ok );
+		$ok = $memcache->delete($key);
+
+		if (!$ok){
+			log_error("failed to unset memcache key {$key}");
+			return;
+		}
+
+		log_notice("cache", "remote unset {$key}");
 	}
 
 	#################################################################
