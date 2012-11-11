@@ -22,7 +22,9 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <link href="/css/main.css" rel="stylesheet">
+{if $cfg.auth_roles.staff}
+    <link href="/css/dev.css" rel="stylesheet">
+{/if}
   </head>
 
   <body>
