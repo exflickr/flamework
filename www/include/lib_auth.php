@@ -1,41 +1,41 @@
 <?php
-
 	#
-	# $Id$
+	# This library handles administrative authentication for the application,
+	# which is separated from user-authentication.
+	#
+	# By default, we simply treat all users as admins when the environment is
+	# set to dev, or calls are being made from the command line.
+	#
+	# This is an apporpriate place to plug in something like GodAuth
+	# to handle actual role-based authentication.
+	# https://github.com/exflickr/GodAuth/
  	#
+
+	auth_init();
 
 	########################################################################
 
-	function auth_has_role($role, $who=0){
+	function auth_init(){
 
-		return 1;
+		$GLOBALS['cfg']['auth_roles'] = array();
 
-		# Currently, this is the only thing that works. It is
-		# disabled by default (20101122/straup)
+		if ($GLOBALS['cfg']['environment'] == 'dev'){
 
-		# See also: https://github.com/exflickr/GodAuth/
-
-		if (! $GLOBALS['cfg']['auth_enable_poormans_god_auth']){
-			return 0;
+			$GLOBALS['cfg']['auth_roles']['staff'] = 1;
 		}
 
-		if (! is_array($GLOBALS['cfg']['auth_poormans_god_auth'])){
-			return 0;
+		if ($GLOBALS['this_is_shell']){
+
+			$GLOBALS['cfg']['auth_roles']['staff'] = 1;
 		}
 
-		$who = ($who) ? $who : $GLOBALS['cfg']['user']['id'];
+	}
 
-		if (! $who){
-			return 0;
-		}
+	########################################################################
 
-		if (! isset($GLOBALS['cfg']['auth_poormans_god_auth'][$who])){
-			return 0;
-		}
+	function auth_has_role($role){
 
-		$perms = $GLOBALS['cfg']['auth_poormans_god_auth'][$who];
-
-		return (in_array($role, $perms['roles'])) ? 1 : 0;
+		return !!$GLOBALS['cfg']['auth_roles'][$role];
 	}
 
 	########################################################################
