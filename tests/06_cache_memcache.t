@@ -90,7 +90,7 @@
 	$ret = cache_get($key);
 
 	is($ret['ok'], 1, "Remote cache get");
-	is($ret['source'], 'remote', "Cache get came from remote cache");
+	is($ret['source'], 'memcache', "Cache get came from remote cache");
 	is_deeply($ret['data'], $a, "Data matches original");
 
 
