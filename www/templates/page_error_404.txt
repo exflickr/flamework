@@ -5,9 +5,12 @@
 
 	<p>We can't find the page you requested. Sorry :(</p>
 
+{if $cfg.auth_roles.staff}
 	<div class="admin-section">
 		<pre class="admin-debug">{$debug_block}</pre>
 	</div>
+{/if}
+
 </div>
 
 {include file='inc_foot.txt'}
