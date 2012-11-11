@@ -31,18 +31,30 @@
 		$host = $GLOBALS['cfg']['memcache_host'];
 		$port = $GLOBALS['cfg']['memcache_port'];
 
+		if (!$host){
+			log_error("No host for memcache server");
+			return null;
+		}
+
+		if (!$port){
+			log_error("No port for memcache server");
+			return null;
+		}
+
 		$start = microtime_ms();
 
 		$memcache = new Memcache();
 
-		if (!$memcache->connect($host, $port)){
-			$memcache = null;
-		}
-
 		if (!$memcache){
-			log_error("Connection to memcache {$host}:{$port} failed");
+			log_error("Failed to create Memcache object");
 			return null;
 		}
+
+		if (!@$memcache->connect($host, $port)){
+			log_error("Connection to memcache server {$host}:{$port} failed - $php_errormsg");
+			return null;
+		}
+
 
 		$end = microtime_ms();
 		$time = $end - $start;
@@ -65,7 +77,7 @@
 		$memcache = cache_memcache_connect();
 
 		if (!$memcache){
-			log_error('failed to connect to memcache');
+			log_error('Failed to connect to memcache for get');
 			return array(
 				'ok'	=> 0,
 				'error'	=> 'memcache_cant_connect',
@@ -98,7 +110,7 @@
 		$memcache = cache_memcache_connect();
 
 		if (!$memcache){
-			log_error('failed to connect to memcache');
+			log_error('Failed to connect to memcache for set');
 			return array(
 				'ok'		=> 0,
 				'local'		=> 1,
@@ -110,7 +122,7 @@
 		$ok = $memcache->set($key, serialize($data));
 
 		if (!$ok){
-			log_error("failed to set memcache key {$key}");
+			log_error("Failed to set memcache key {$key}");
 			return array(
 				'ok'		=> 0,
 				'local'		=> 1,
@@ -134,7 +146,7 @@
 		$memcache = cache_memcache_connect();
 
 		if (!$memcache){
-			log_error('failed to connect to memcache');
+			log_error('Failed to connect to memcache for unset');
 			return array(
 				'ok'		=> 0,
 				'local'		=> 1,
@@ -146,7 +158,7 @@
 		$ok = $memcache->delete($key);
 
 		if (!$ok){
-			log_error("failed to unset memcache key {$key}");
+			log_error("Failed to unset memcache key {$key}");
 			return array(
 				'ok'		=> 0,
 				'local'		=> 1,
