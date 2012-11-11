@@ -27,7 +27,11 @@
 
 			log_notice("cache", "get {$key} - local hit");
 
-			return $GLOBALS['_cache_local'][$key];
+			return array(
+				'ok'		=> 1,
+				'source'	=> 'local',
+				'data'		=> $GLOBALS['_cache_local'][$key],
+			);
 		}
 
 
@@ -42,7 +46,9 @@
 
 		log_notice("cache", "get {$key} - local miss");
 
-		return null;
+		return array(
+			'ok' => 1,
+		);
 	}
 
 	#################################################################
@@ -53,10 +59,15 @@
 
 		if ($GLOBALS['_cache_hooks']['set']){
 
-			call_user_func($GLOBALS['_cache_hooks']['set'], $key, $data);
-		}else{
-			log_notice("cache", "set {$key}");
+			return call_user_func($GLOBALS['_cache_hooks']['set'], $key, $data);
 		}
+
+		log_notice("cache", "set {$key}");
+
+		return array(
+			'ok'	=> 1,
+			'local'	=> 1,
+		);
 	}
 
 	#################################################################
@@ -67,10 +78,15 @@
 
 		if ($GLOBALS['_cache_hooks']['unset']){
 
-			call_user_func($GLOBALS['_cache_hooks']['unset'], $key);
-		}else{
-			log_notice("cache", "unset {$key}");
+			return call_user_func($GLOBALS['_cache_hooks']['unset'], $key);
 		}
+
+		log_notice("cache", "unset {$key}");
+
+		return array(
+			'ok'	=> 1,
+			'local'	=> 1,
+		);
 	}
 
 	#################################################################

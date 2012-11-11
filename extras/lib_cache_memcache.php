@@ -66,18 +66,29 @@
 
 		if (!$memcache){
 			log_error('failed to connect to memcache');
-			return null;
+			return array(
+				'ok'	=> 0,
+				'error'	=> 'memcache_cant_connect',
+			);
 		}
 
 		$rsp = $memcache->get($key);
 
 		if (!$rsp){
 			log_notice("cache", "remote get {$key} - miss");
-			return null;
+			return array(
+				'ok'	=> 0,
+				'error'	=> 'memcache_miss',
+			);
 		}
 
 		log_notice("cache", "remote get {$key} - hit");
-		return unserialize($rsp);
+
+		return array(
+			'ok'		=> 1,
+			'source'	=> 'memcache',
+			'data'		=> unserialize($rsp),
+		);
 	}
 
 	#################################################################
@@ -88,17 +99,32 @@
 
 		if (!$memcache){
 			log_error('failed to connect to memcache');
-			return;
+			return array(
+				'ok'		=> 0,
+				'local'		=> 1,
+				'remote'	=> 0,
+				'error'		=> 'memcache_cant_connect',
+			);
 		}
 
 		$ok = $memcache->set($key, serialize($data));
 
 		if (!$ok){
 			log_error("failed to set memcache key {$key}");
-			return;
+			return array(
+				'ok'		=> 0,
+				'local'		=> 1,
+				'remote'	=> 0,
+				'error'		=> 'memcache_set_failed',
+			);
 		}
 
 		log_notice("cache", "remote set {$key}");
+		return array(
+			'ok'		=> 1,
+			'local'		=> 1,
+			'remote'	=> 1,
+		);
 	}
 
 	#################################################################
@@ -109,17 +135,32 @@
 
 		if (!$memcache){
 			log_error('failed to connect to memcache');
-			return;
+			return array(
+				'ok'		=> 0,
+				'local'		=> 1,
+				'remote'	=> 0,
+				'error'		=> 'memcache_cant_connect',
+			);
 		}
 
 		$ok = $memcache->delete($key);
 
 		if (!$ok){
 			log_error("failed to unset memcache key {$key}");
-			return;
+			return array(
+				'ok'		=> 0,
+				'local'		=> 1,
+				'remote'	=> 0,
+				'error'		=> 'memcache_unset_failed',
+			);
 		}
 
 		log_notice("cache", "remote unset {$key}");
+		return array(
+			'ok'		=> 1,
+			'local'		=> 1,
+			'remote'	=> 1,
+		);
 	}
 
 	#################################################################
