@@ -48,8 +48,8 @@
 	function db_insert($tbl, $hash){		return _db_insert($tbl, $hash, 'main'); }
 	function db_insert_users($k, $tbl, $hash){	return _db_insert($tbl, $hash, 'users', $k); }
 
-	function db_insert_many($tbl, $rows){		return _db_insert_many($tbl, $rows, 'main'); }
-	function db_insert_many_users($tbl, $rows){	return _db_insert_many($tbl, $rows, 'users', $k); }
+	function db_insert_bulk($tbl, $rows, $batch=100){	return _db_insert_bulk($tbl, $rows, $batch, 'main'); }
+	function db_insert_bulk_users($tbl, $rows, $batch=100){	return _db_insert_bulk($tbl, $rows, $batch, 'users', $k); }
 
 	function db_insert_dupe($tbl, $hash, $hash2){		return _db_insert_dupe($tbl, $hash, $hash2, 'main'); }
 	function db_insert_dupe_users($k, $tbl, $hash, $hash2){	return _db_insert_dupe($tbl, $hash, $hash2, 'users', $k); }
@@ -226,17 +226,44 @@
 
 	#################################################################
 
-	function _db_insert_many($tbl, $rows, $cluster, $shard=null){
+	function _db_insert_bulk($tbl, $hashes, $batch_size, $cluster, $shard=null){
 
-		$fields = array_keys($rows[0]);
-		$values = array();
+		$a = array_keys($hashes);
+		$a = array_shift($a);
 
-		foreach ($rows as $row){
+		$first_row = $hashes[$a];
+		$fields = array_keys($first_row);
 
-			$values[] = "('" . implode("','", $row) . "')";
+		$flags = $GLOBALS['db_flags']['insert_ignore'] ? ' IGNORE' : '';
+
+		$acc_rows = 0;
+
+		while (count($hashes)){
+
+			$use = array_slice($hashes, 0, $batch_size);
+			$hashes = array_slice($hashes, $batch_size);
+
+			$all_values = array();
+
+			foreach ($use as $hash){
+				$values = array();
+				foreach ($fields as $k) $values[] = "'" . $hash[$k] . "'";
+				$all_values[] = '('.implode(',', $values).')';
+			}
+
+			$all_values = implode(', ', $all_values);
+
+			$ret = _db_write("INSERT{$flags} INTO $tbl (`".implode('`,`',$fields)."`) VALUES $all_values", $cluster, $shard);
+
+			if (!$ret['ok']) return $ret;
+
+			$acc_rows += $ret['affected_rows'];
 		}
 
-		return _db_write("INSERT INTO $tbl (`".implode('`,`',$fields)."`) VALUES " . implode(",", $values), $cluster, $k);
+		return array(
+			'ok'		=> 1,
+			'affected_rows'	=> $acc_rows,
+		);
 	}
 
 	#################################################################
