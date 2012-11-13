@@ -446,20 +446,6 @@
 
 	#################################################################
 
-	function db_get_shard($cluster){
-
-		if ($cluster == 'users') return rand(1,2);
-
-		return 0;
-	}
-
-	function db_shards($cluster){
-
-		return array_keys($GLOBALS['cfg']["db_{$cluster}"]['host']);
-	}
-
-	#################################################################
-
 	#
 	# [iamcal] I'm still not convinced that this is needed, instead of AddSlashes().
 	# The difference is that it doesn't escape \r or \n (which don't matter at all)
