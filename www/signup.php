@@ -78,17 +78,17 @@
 
 		if ($ok){
 
-			$user = users_create_user(array(
+			$ret = users_create_user(array(
 				'username'	=> $username,
 				'email'		=> $email,
 				'password'	=> $password,
 			));
 
-			if ($user['id']){
+			if ($ret['ok']){
 
 				$redir = strlen($redir) ? $redir : '/';
 
-				login_do_login($user, $redir);
+				login_do_login($ret['user'], $redir);
 				exit;
 			}
 
@@ -103,4 +103,3 @@
 	#
 
 	$smarty->display('page_signup.txt');
-?>

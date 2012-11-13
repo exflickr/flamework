@@ -56,4 +56,3 @@
 	#
 
 	$smarty->display('page_forgot.txt');
-?>

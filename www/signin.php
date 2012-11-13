@@ -102,4 +102,3 @@
 	#
 
 	$smarty->display('page_signin.txt');
-?>

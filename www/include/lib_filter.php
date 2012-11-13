@@ -329,7 +329,7 @@
 
 			foreach($this->remove_blanks as $tag){
 
-				$data = preg_replace("/<{$tag}(\s[^>]*)?><\\/{$tag}>/", '', $data);
+				$data = preg_replace("/<{$tag}(\s[^>]*)?"."><\\/{$tag}>/", '', $data);
 				$data = preg_replace("/<{$tag}(\s[^>]*)?\\/>/", '', $data);
 			}
 			return $data;
@@ -639,4 +639,3 @@
 
 	}
 
-?>

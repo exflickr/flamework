@@ -2,7 +2,7 @@
 {include file="inc_head.txt"}
 
 <div class="container">
-	{if $error_deleting}<p class="error">Something went wrong. Try again later pls.</p>{/if}
+	{if $error_deleting}<p class="alert alert-error">Something went wrong. Try again later pls.</p>{/if}
 
 	<p>Are you sure you want to delete your account?</p>
 

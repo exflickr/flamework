@@ -6,10 +6,6 @@
 
 	#################################################################
 
-	$GLOBALS['users_local_cache'] = array();
-
-	#################################################################
-
 	#
 	# create a user record. the fields pass in $user
 	# ARE NOT ESCAPED.
@@ -29,6 +25,7 @@
 
 		$user['cluster_id'] = users_assign_cluster_id();
 
+
 		#
 		# now create the escaped version
 		#
@@ -38,21 +35,23 @@
 			$hash[$k] = AddSlashes($v);
 		}
 
-		$rsp = db_insert('users', $hash);
+		$ret = db_insert('users', $hash);
 
-		if (!$rsp['ok']){
-			return null;
-		}
+		if (!$ret['ok']) return $ret;
 
 
 		#
 		# cache the unescaped version
 		#
 
-		$user['id'] = $rsp['insert_id'];
+		$user['id'] = $ret['insert_id'];
 
-		$GLOBALS['user_local_cache'][$user['id']] = $user;
-		return $user;
+		cache_set("USER-{$user['id']}", $user);
+
+		return array(
+			'ok'	=> 1,
+			'user'	=> $user,
+		);
 	}
 
 	#################################################################
@@ -64,18 +63,20 @@
 
 	function users_update_user(&$user, $update){
 
+		$hash = array();
 		foreach ($update as $k => $v){
-			$update[$k] = AddSlashes($v);
+			$hash[$k] = AddSlashes($v);
 		}
 
-		$rsp = db_update('users', $update, "id=$user[id]");
+		$ret = db_update('users', $hash, "id={$user['id']}");
 
-		if (!$rsp['ok']){
-			return null;
-		}
+		if (!$ret['ok']) return $ret;
 
-		unset($GLOBALS['user_local_cache'][$user['id']]);
-		return 1;
+		cache_unset("USER-{$user['id']}");
+
+		return array(
+			'ok' => 1,
+		);
 	}
 
 	#################################################################
@@ -114,7 +115,7 @@
 
 		$user = db_single(db_fetch("SELECT * FROM users WHERE id=".intval($id)));
 
-		$GLOBALS['user_local_cache'][$id] = $user;
+		cache_set("USER-{$user['id']}", $user);
 
 		return $user;
 	}
@@ -268,5 +269,3 @@
 	}
 
 	#################################################################
-
-?>

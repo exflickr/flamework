@@ -6,12 +6,8 @@
         <p>&copy; Company 2012</p>
       </footer>
 
-      {if $cfg.admin_flags_show_notices}
-      <div class="row">
-      <div class="span4 offset4" style="padding: 2em;">
+{if $cfg.auth_roles.staff}
       	{timings}
-      </div>
-	  </div>
 {/if}
 
     </div> <!-- /container -->
