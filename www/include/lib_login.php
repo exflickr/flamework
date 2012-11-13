@@ -123,7 +123,8 @@
 
 	function login_set_cookie($name, $value, $expire=0, $path='/'){
 		$domain = ($GLOBALS['cfg']['environment'] == 'localhost') ? false : $GLOBALS['cfg']['auth_cookie_domain'];
-		$res = setcookie($name, $value, $expire, $path, $domain);
+		$securify = (($GLOBALS['cfg']['auth_cookie_require_https']) && (isset($_SERVER['HTTPS'])) && ($_SERVER['HTTPS'] == 'on')) ? 1 : 0;
+		$res = setcookie($name, $value, $expire, $path, $domain, $securify);
 	}
 
 	#################################################################
