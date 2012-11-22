@@ -41,8 +41,8 @@
           <div class="nav-collapse">
             <ul class="nav">
               <li{if $nav_tab == 'home'} class="active"{/if}><a href="/">Home</a></li>
-              <li{if $nav_tab == 'about'} class="active"{/if}><a href="/about/">About</a></li>
-              <li{if $nav_tab == 'contact'} class="active"{/if}><a href="/contact/">Contact</a></li>
+              <li{if $nav_tab == 'about'} class="active"{/if}><a href="/about">About</a></li>
+              <li{if $nav_tab == 'contact'} class="active"{/if}><a href="/contact">Contact</a></li>
             </ul>
 
             <ul class="nav pull-right">
@@ -50,16 +50,16 @@
             <li class="dropdown{if $nav_tab == 'account'} active{/if}">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hello {$cfg.user.username|escape} <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="/account/">Account</a></li>
-                <li><a href="/signout/">Logout</a></li>
+                <li><a href="/account">Account</a></li>
+                <li><a href="/signout">Logout</a></li>
               </ul>
             </li>
 {else}
 	{if $cfg.enable_feature_signin}
 		{if $cfg.enable_feature_signup}
-			<li{if $nav_tab == 'signup'} class="active"{/if}><a href="/signup/">Create New Account</a></li>
+			<li{if $nav_tab == 'signup'} class="active"{/if}><a href="/signup">Create New Account</a></li>
 		{/if}
-			<li{if $nav_tab == 'signin'} class="active"{/if}><a href="/signin/">Sign In</a></li>
+			<li{if $nav_tab == 'signin'} class="active"{/if}><a href="/signin">Sign In</a></li>
 	{/if}
 {/if}
           </ul>

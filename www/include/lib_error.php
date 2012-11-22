@@ -15,17 +15,14 @@
 
 
 		#
-		# try adding a slash at the end if:
+		# try removing a slash at the end if:
 		# 1) we've not already mapped it through a RewriteRule
-		# 2) it doesn't look like a filename
-		# 3) it doesn't already have a slash at the end
+		# 2) it crrently has a slash at the end
 		#
 
 		if ($url == $orig){
-			$last_part = array_pop((explode('/', $url)));
-			if (preg_match('!^[^\.]+$!', $last_part)){
-
-				header("location: $url/");
+			if (substr($url, -1) == '/'){
+				header("location: ".substr($url, 0, -1));
 				exit;
 			}
 		}
