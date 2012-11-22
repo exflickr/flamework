@@ -17,12 +17,15 @@
 		#
 		# try removing a slash at the end if:
 		# 1) we've not already mapped it through a RewriteRule
-		# 2) it crrently has a slash at the end
+		# 2) it currently has a slash at the end
 		#
 
-		if ($url == $orig){
-			if (substr($url, -1) == '/'){
-				header("location: ".substr($url, 0, -1));
+		list($url_path, $url_qs) = explode('?', $url, 2);
+
+		if ($url_path == $orig){
+			if (substr($url_path, -1) == '/'){
+				if (strlen($url_qs)) $url_qs = '?'.$url_qs;
+				header("location: ".substr($url_path, 0, -1).$url_qs);
 				exit;
 			}
 		}
