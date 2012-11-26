@@ -12,7 +12,7 @@
 
 	if (!login_check_login()){
 
-		$smarty->display("page_checkcookie.txt");
+		$smarty->display("page_error_cookie.txt");
 		exit;
 	}
 
