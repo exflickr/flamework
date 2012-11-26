@@ -35,7 +35,7 @@
 
 		if ($force_logout) login_do_logout();
 
-		header("location: {$GLOBALS['cfg']['abs_root_url']} . {$redir}");
+		header("location: {$GLOBALS['cfg']['abs_root_url']}{$redir}");
 		exit;
 	}
 
