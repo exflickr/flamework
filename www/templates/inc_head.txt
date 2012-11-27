@@ -9,22 +9,17 @@
 
     <!-- Le styles -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-    {literal}
-    <style type="text/css">
-      body { padding-bottom: 40px; }
-      .navbar-static-top { margin-bottom: 20px; }
-    </style>
-    {/literal}
     <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/css/main.source.css" rel="stylesheet">
+{if $cfg.auth_roles.staff}
+    <link href="/css/dev.css" rel="stylesheet">
+{/if}
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-{if $cfg.auth_roles.staff}
-    <link href="/css/dev.css" rel="stylesheet">
-{/if}
   </head>
 
   <body>
