@@ -191,25 +191,27 @@
 
 		foreach ($trace as $item){
 
-			$function = "$item[function]($args)";
+			$args = array();
+			foreach ($item['args'] as $arg){
+				if (is_object($arg)){
+					$args[] = "Object()";
+				}else{
+					# this will just string-ify the arg.
+					# var_export() would be great here if it didn't crash on
+					# circular references :(
+					$args[] = "$arg";
+				}
+			}
+			$args = implode(', ', $args);
+
+			$function = "{$item['function']}($args)";
 
 			if (preg_match('!^error_!', $item['function'])){
 				$pairs = array();
 				$function = "ERROR";
 			}
 
-
 			$file = str_replace($root_path, '', $item['file']);
-
-			$args = array();
-			foreach ($item['args'] as $arg){
-				if (is_object($arg)){
-					$args[] = "Object()";
-				}else{
-					$args[] = "$arg"; # this will just string-ify the arg
-				}
-			}
-			$args = implode(', ', $args);
 
 			$pairs[] = array(
 				$function,
