@@ -4,7 +4,7 @@
 <div class="container">
 	<p>This is an intermediate page so that we can generate and check a crumb. We will inline this into the URL shortly.</p>
 
-	<form action="/signout/" method="post" accept-encoding="UTF-8">
+	<form action="/signout" method="post" accept-encoding="UTF-8">
 		{$crumb_key|crumb_input}
 		<input type="hidden" name="done" value="1" />
 		<input type="submit" class="btn btn-primary" value="SIGN OUT" />

@@ -7,7 +7,7 @@
 	{if $error_deleted}	<p class="alert alert-error">Account has been deleted.</p>{/if}
 	{if $error_password}	<p class="alert alert-error">Incorrect password.</p>{/if}
 
-	<form action="/signin/" method="post" accept-encoding="UTF-8" class="form-horizontal">
+	<form action="/signin" method="post" accept-encoding="UTF-8" class="form-horizontal">
 		<input type="hidden" name="signin" value="1" />
 		<input type="hidden" name="redir" value="{$redir|escape}" />
 
@@ -33,7 +33,7 @@
 	</form>
 
 	{if $cfg.enable_feature_password_retrieval}
-	<p><a href="/forgot/">Forgotten your password?</a></p>
+	<p><a href="/forgot">Forgotten your password?</a></p>
 	{/if}
 </div>
 

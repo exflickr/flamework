@@ -4,7 +4,7 @@
 <div class="container">
 	<p>Are you <strong>really sure</strong> you want to delete your account?</p>
 
-	<form action="/account/delete/" method="post" accept-encoding="UTF-8" class="form-horizontal">
+	<form action="/account/delete" method="post" accept-encoding="UTF-8" class="form-horizontal">
 		<input type="hidden" name="delete" value="1" />
 		{$crumb_key|crumb_input}
 	    

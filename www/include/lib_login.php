@@ -15,9 +15,9 @@
 		if ($GLOBALS['cfg']['user']['id']) return;
 
 		if ($redir){
-			header("location: {$GLOBALS['cfg']['abs_root_url']}signin/?redir=".urlencode($redir));
+			header("location: {$GLOBALS['cfg']['abs_root_url']}signin?redir=".urlencode($redir));
 		}else{
-			header("location: {$GLOBALS['cfg']['abs_root_url']}signin/");
+			header("location: {$GLOBALS['cfg']['abs_root_url']}signin");
 		}
 		exit;
 	}
@@ -35,7 +35,7 @@
 
 		if ($force_logout) login_do_logout();
 
-		header("location: {$GLOBALS['cfg']['abs_root_url']} . {$redir}");
+		header("location: {$GLOBALS['cfg']['abs_root_url']}{$redir}");
 		exit;
 	}
 
@@ -96,7 +96,7 @@
 		$redir = $redir;
 		$redir = urlencode($redir);
 
-		header("location: {$GLOBALS['cfg']['abs_root_url']}checkcookie/?redir={$redir}");
+		header("location: {$GLOBALS['cfg']['abs_root_url']}checkcookie?redir={$redir}");
 		exit;
 	}
 

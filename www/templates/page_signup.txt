@@ -7,7 +7,7 @@
 	{if $error_username_taken}	<p class="alert alert-error">Username is taken.</p>{/if}
 	{if $error_failed}		<p class="alert alert-error">Failed for an unknown reason :(</p>{/if}
 
-	<form action="/signup/" method="post" accept-encoding="UTF-8" class="form-horizontal">
+	<form action="/signup" method="post" accept-encoding="UTF-8" class="form-horizontal">
 		<input type="hidden" name="signup" value="1" />
 		<input type="hidden" name="redir" value="{$redir|escape}" />
 

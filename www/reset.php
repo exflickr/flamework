@@ -63,7 +63,7 @@
 
 		$user = users_get_by_id($user['id']);
 
-		login_do_login($user, "/account/?password=1");
+		login_do_login($user, "/account?password=1");
 		exit();	
 	}
 

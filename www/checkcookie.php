@@ -12,7 +12,7 @@
 
 	if (!login_check_login()){
 
-		$smarty->display("page_checkcookie.txt");
+		$smarty->display("page_error_cookie.txt");
 		exit;
 	}
 
@@ -24,6 +24,7 @@
 	$redir = $GLOBALS['cfg']['abs_root_url'];
 
 	if ($_redir = get_str("redir")){
+		if (substr($_redir, 0, 1) == '/') $_redir = substr($_redir, 1);
 		$redir .= $_redir;
 	}
 

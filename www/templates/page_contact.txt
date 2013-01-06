@@ -8,7 +8,7 @@
 
 	<p>Here is a form that sends an email when it is submitted.</p>
 
-	<form action="/contact/" method="post" accept-encoding="UTF-8" class="form-horizontal">
+	<form action="/contact" method="post" accept-encoding="UTF-8" class="form-horizontal">
 		<input type="hidden" name="contact" value="1" />
 
 		<fieldset>

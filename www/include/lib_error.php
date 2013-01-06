@@ -15,17 +15,17 @@
 
 
 		#
-		# try adding a slash at the end if:
+		# try removing a slash at the end if:
 		# 1) we've not already mapped it through a RewriteRule
-		# 2) it doesn't look like a filename
-		# 3) it doesn't already have a slash at the end
+		# 2) it currently has a slash at the end
 		#
 
-		if ($url == $orig){
-			$last_part = array_pop((explode('/', $url)));
-			if (preg_match('!^[^\.]+$!', $last_part)){
+		list($url_path, $url_qs) = explode('?', $url, 2);
 
-				header("location: $url/");
+		if ($url_path == $orig){
+			if (substr($url_path, -1) == '/'){
+				if (strlen($url_qs)) $url_qs = '?'.$url_qs;
+				header("location: ".substr($url_path, 0, -1).$url_qs);
 				exit;
 			}
 		}
@@ -191,25 +191,27 @@
 
 		foreach ($trace as $item){
 
-			$function = "$item[function]($args)";
+			$args = array();
+			foreach ($item['args'] as $arg){
+				if (is_object($arg)){
+					$args[] = "Object()";
+				}else{
+					# this will just string-ify the arg.
+					# var_export() would be great here if it didn't crash on
+					# circular references :(
+					$args[] = "$arg";
+				}
+			}
+			$args = implode(', ', $args);
+
+			$function = "{$item['function']}($args)";
 
 			if (preg_match('!^error_!', $item['function'])){
 				$pairs = array();
 				$function = "ERROR";
 			}
 
-
 			$file = str_replace($root_path, '', $item['file']);
-
-			$args = array();
-			foreach ($item['args'] as $arg){
-				if (is_object($arg)){
-					$args[] = "Object()";
-				}else{
-					$args[] = "$arg"; # this will just string-ify the arg
-				}
-			}
-			$args = implode(', ', $args);
 
 			$pairs[] = array(
 				$function,

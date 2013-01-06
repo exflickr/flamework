@@ -1,0 +1,12 @@
+{include file="inc_head.txt"}
+
+<div class="container">
+
+	<h1>Unable to set cookie</h1>
+
+	<p>You need to <a href="http://www.whatarecookies.com/enable.asp">enable cookies</a> to sign in.</p>
+	<p>Once you've done this, you can try to <a href="/signin">sign in again</a>.</p>
+
+</div>
+
+{include file="inc_foot.txt"}

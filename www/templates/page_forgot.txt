@@ -7,7 +7,7 @@
 	{if $error_notsent}	<p class="alert alert-error">Something went wrong :(</p>{/if}
 
 
-	<form action="/forgot/" method="post" accept-encoding="UTF-8" class="form-horizontal">
+	<form action="/forgot" method="post" accept-encoding="UTF-8" class="form-horizontal">
 		<input type="hidden" name="remind" value="1" />
 
 		<fieldset>
