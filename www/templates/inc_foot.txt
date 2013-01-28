@@ -3,7 +3,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company 2012</p>
+        <p>&copy; Company {$smarty.now|date_format:"%Y"}</p>
       </footer>
 
 {if $cfg.auth_roles.staff}
@@ -15,8 +15,8 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/javascript/jquery-1.8.2.min.js"></script>
-    <script src="/javascript/bootstrap.min.js"></script>
+    <script src="{$cfg.abs_root_url}javascript/jquery-1.8.2.min.js"></script>
+    <script src="{$cfg.abs_root_url}javascript/bootstrap.min.js"></script>
 
   </body>
 </html>
