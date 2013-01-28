@@ -5,6 +5,9 @@
 
 	include("include/init.php");
 
+	features_ensure_enabled("signin");
+	features_ensure_enabled("account_delete");
+
 	login_ensure_loggedin();
 	
 	$GLOBALS['smarty']->assign('nav_tab', 'account');
@@ -15,7 +18,7 @@
 	#
 
 	$crumb_key = 'account_delete';
-	$smarty->assign('crumb_key', $crumb_key);
+	$GLOBALS['smarty']->assign('crumb_key', $crumb_key);
 
 
 	#
@@ -31,23 +34,30 @@
 			if ($ok){
 				login_do_logout();
 
-				$smarty->display('page_account_delete_done.txt');
+				$GLOBALS['smarty']->display('page_account_delete_done.txt');
 				exit;
 			}
 
-			$smarty->assign('error_deleting', 1);
+			$GLOBALS['smarty']->assign('error_deleting', 1);
 
-			$smarty->display('page_account_delete.txt');
-			exit;
+			$GLOBALS['smarty']->display('page_account_delete.txt');
+
+			exit();
 		}
 
-		$smarty->display('page_account_delete_confirm.txt');
-		exit;
+		$GLOBALS['smarty']->display('page_account_delete_confirm.txt');
+		exit();
 	}
 
+	$GLOBALS['smarty']->display("page_account_delete.txt");
+	exit();
 
+<<<<<<< HEAD
+?>
+=======
 	#
 	# output
 	#
 
 	$smarty->display("page_account_delete.txt");
+>>>>>>> 7644b1df38b8fedecd5c03c2f0c75d2c243724fd

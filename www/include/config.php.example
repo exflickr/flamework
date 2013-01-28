@@ -34,7 +34,6 @@
 		'auto_connect' => 0,
 	);
 
-
 	$GLOBALS['cfg']['db_users'] = array(
 
 		'host' => array(
@@ -51,7 +50,6 @@
 		),
 	);
 
-
 	# hard coding this URL will ensure it works in cron mode too
 
 	$GLOBALS['cfg']['server_scheme'] = (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on')) ? 'https' : 'http';
@@ -59,7 +57,6 @@
 
 	$GLOBALS['cfg']['abs_root_url']		= "{$GLOBALS['cfg']['server_scheme']}://{$GLOBALS['cfg']['server_name']}/";
 	$GLOBALS['cfg']['safe_abs_root_url']	= $GLOBALS['cfg']['abs_root_url'];
-
 
 	# Hard-coding these paths will save some stat() ops
 
@@ -78,8 +75,18 @@
 	# Things you may need to tweak
 	#
 
+	# Caching stuff
+
+	$GLOBALS['cfg']['cache_remote_engine'] = '';
+	$GLOBALS['cfg']['cache_prefix'] = '';
+	$GLOBALS['cfg']['cache_force_refresh'] = 0;
+
+	$GLOBALS['cfg']['memcache_host'] = 'localhost';
+	$GLOBALS['cfg']['memcache_port'] = '11211';
+
 	$GLOBALS['cfg']['auth_cookie_domain'] = parse_url($GLOBALS['cfg']['abs_root_url'], 1);
-	$GLOBALS['cfg']['auth_cookie_name'] = 'a';
+	$GLOBALS['cfg']['auth_cookie_name'] = md5($GLOBALS['cfg']['auth_cookie_domain']) . '-a';
+	$GLOBALS['cfg']['auth_cookie_require_https'] = 0;
 
 	$GLOBALS['cfg']['crumb_ttl_default'] = 300;	# seconds
 

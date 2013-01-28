@@ -112,7 +112,7 @@
 
 	$cwd = '';
 
-	if ($parent_dirname = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/')){
+	if ((! $_SERVER['SHELL']) && ($parent_dirname = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'))){
 		$parts = explode("/", $parent_dirname);
 		$cwd = implode("/", array_slice($parts, 1));
 
@@ -266,6 +266,38 @@
 		return $filter->go($str);
 	}
 
+	# 'okay' and 'not_okay' are historical and need to be pruned
+	# from a handful of projects still (20121105/straup)
+	# 'ok' and 'not_ok' conflict with testmore (20111219/straup)
+
+	function okay($more=null){
+		return success($more);
+	}
+
+	function not_okay($msg='Your call could not be completed as dialed', $code=null){
+		return failure($msg, $code);
+	}
+
+	function success($more=null){
+		$out = array('ok' => 1);
+
+		if (is_array($more)){
+			$out = array_merge($more, $out);
+		}
+
+		return $out;
+	}
+
+	function failure($msg='Your call could not be completed as dialed', $code=null){
+
+		$out = array('ok' => 0,	'error' => $msg);
+
+		if ($code){
+			$out['error_code'] = $code;
+		}
+
+		return $out;
+	}
 
 	#
 	# Hey look! Running code! Note that db_init will try
