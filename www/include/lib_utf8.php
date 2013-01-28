@@ -7,7 +7,7 @@
 
 		header("Content-Type: $mimetype; charset=utf-8");
 
-		if ($GLOBALS['no_cache']){
+		if ($GLOBALS['cfg']['no_cache']){
 
 			# Date in the past
 			header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -41,4 +41,3 @@
 
 	$GLOBALS['smarty']->register_compiler_function('utf8_headers', 'utf8_headers_smarty_comp');
 
-?>

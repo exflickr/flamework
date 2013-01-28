@@ -10,6 +10,7 @@
 
 	login_ensure_loggedout();
 
+	$GLOBALS['smarty']->assign('nav_tab', 'signin');
 
 	#
 	# send the reminder?
@@ -49,6 +50,3 @@
 	}
 
 	$GLOBALS['smarty']->display('page_forgot.txt');
-	exit();
-
-?>

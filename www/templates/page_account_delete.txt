@@ -1,14 +1,17 @@
 {assign var='page_title' value="Delete your account"}
 {include file="inc_head.txt"}
 
-{if $error_deleting}<p class="error">Something went wrong. Try again later pls.</p>{/if}
+<div class="container">
+	{if $error_deleting}<p class="alert alert-error">Something went wrong. Try again later pls.</p>{/if}
 
-<p>Are you sure you want to delete your account?</p>
+	<p>Are you sure you want to delete your account?</p>
 
-<form action="{$cfg.abs_root_url}account/delete/" method="post">
-	<input type="hidden" name="delete" value="1" />
-	{$crumb_key|crumb_input}
-	<input type="SUBMIT" value="DELETE MY ACCOUNT" />
-</form>
-	
+	<form action="/account/delete" method="post" accept-encoding="UTF-8" class="form-horizontal">
+		<input type="hidden" name="delete" value="1" />
+		{$crumb_key|crumb_input}
+
+		<input type="SUBMIT" class="btn btn-danger" value="DELETE MY ACCOUNT" />
+	</form>
+</div>
+
 {include file="inc_foot.txt"}

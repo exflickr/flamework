@@ -39,10 +39,9 @@ deal. A non-exhaustive list of global variables that Flameworks assigns is:
 
 * `$GLOBALS['smarty']` -- A [Smarty](http://www.smarty.net/) templating object.
 
-* `$GLOBALS['timings']` -- A hash used to store site performance metrics.
+* `$GLOBALS['timings']` & `$GLOBALS['timing_keys']` -- Hashs used to store site performance metrics.
 
 Some libraries use their own globals internally, usually prefixed with `LIBRARYNAME_` or `_LIBRARYNAME_`.
-Some libraries define globals with other random names, which is something we should probably fix.
 
 
 ## Other documentation

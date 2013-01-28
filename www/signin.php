@@ -9,6 +9,8 @@
 
 	login_ensure_loggedout();
 
+	$GLOBALS['smarty']->assign('nav_tab', 'signin');
+
 
 	#
 	# pass through
@@ -100,4 +102,3 @@
 	#
 
 	$smarty->display('page_signin.txt');
-?>

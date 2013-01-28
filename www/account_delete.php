@@ -9,6 +9,8 @@
 	features_ensure_enabled("account_delete");
 
 	login_ensure_loggedin();
+	
+	$GLOBALS['smarty']->assign('nav_tab', 'account');
 
 
 	#
@@ -50,4 +52,12 @@
 	$GLOBALS['smarty']->display("page_account_delete.txt");
 	exit();
 
+<<<<<<< HEAD
 ?>
+=======
+	#
+	# output
+	#
+
+	$smarty->display("page_account_delete.txt");
+>>>>>>> 7644b1df38b8fedecd5c03c2f0c75d2c243724fd

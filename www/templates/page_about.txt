@@ -1,0 +1,9 @@
+{include file='inc_head.txt' nav_tab='about'}
+
+<div class="container">
+	<h1>About</h1>
+
+	<p>About page is happy now.</p>
+</div>
+
+{include file='inc_foot.txt'}

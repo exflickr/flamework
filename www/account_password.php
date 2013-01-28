@@ -8,7 +8,8 @@
 	features_ensure_enabled("signin");
 
 	login_ensure_loggedin();
-
+	
+	$GLOBALS['smarty']->assign('nav_tab', 'account');
 
 	#
 	# crumb key
@@ -71,7 +72,4 @@
 		}
 	}
 
-
 	$GLOBALS['smarty']->display("page_account_password.txt");
-	exit();
-?>

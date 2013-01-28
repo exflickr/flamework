@@ -1,0 +1,43 @@
+{include file='inc_head.txt' nav_tab='contact'}
+
+<div class="container">
+	<h1>Contact</h1>
+
+	{if $error_missing}		<p class="alert alert-error">Please fill out all the fields</p>{/if}
+	{if $smarty.get.sent}	<p class="alert alert-success">Your message has been sent. Thanks!</p>{/if}
+
+	<p>Here is a form that sends an email when it is submitted.</p>
+
+	<form action="/contact" method="post" accept-encoding="UTF-8" class="form-horizontal">
+		<input type="hidden" name="contact" value="1" />
+
+		<fieldset>
+	        <div class="control-group{if $error_missing && !$name} error{/if}">
+				<label class="control-label" for="name">your name</label>
+				<div class="controls">
+					<input type="text" name="name" size="40" value="{$name|escape}" />
+				</div>
+			</div>
+			
+	        <div class="control-group{if $error_missing && !$email} error{/if}">
+				<label class="control-label" for="email">your email</label>
+				<div class="controls">
+					<input type="email" name="email" size="40" value="{$email|escape}" /></span>
+				</div>
+			</div>
+			
+	        <div class="control-group{if $error_missing && !$message} error{/if}">
+				<label class="control-label" for="message">your message</label>
+				<div class="controls">
+					<textarea name="message" rows="6" class="input-xxlarge"></textarea>
+				</div>
+			</div>
+
+	        <div class="form-actions">
+				<input type="submit" class="btn btn-primary" value="SEND"/>
+			</div>
+		</fieldset>
+	</form>
+</div>
+
+{include file='inc_foot.txt'}

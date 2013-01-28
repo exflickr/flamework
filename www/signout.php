@@ -30,7 +30,5 @@
 		exit();
 	}
 
+	$GLOBALS['smarty']->assign('nav_tab', 'account');
 	$GLOBALS['smarty']->display("page_signout.txt");
-	exit();
-
-?>

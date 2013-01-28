@@ -325,4 +325,3 @@
 
 	$GLOBALS['timings']['init_end'] = microtime_ms();
 
-?>

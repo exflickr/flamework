@@ -1,5 +1,0 @@
-{include file="inc_head.txt"}
-
-There is a problem with your cookies. Bah.
-
-{include file="inc_foot.txt"}
