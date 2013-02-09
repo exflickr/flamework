@@ -14,11 +14,9 @@
 
 		if ($GLOBALS['cfg']['user']['id']) return;
 
-		if ($redir){
-			header("location: {$GLOBALS['cfg']['abs_root_url']}signin?redir=".urlencode($redir));
-		}else{
-			header("location: {$GLOBALS['cfg']['abs_root_url']}signin");
-		}
+		if (!$redir) $redir = $_SERVER['REQUEST_URI'];
+
+		header("location: {$GLOBALS['cfg']['abs_root_url']}signin?redir=".urlencode($redir));
 		exit;
 	}
 
