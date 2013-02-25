@@ -1,0 +1,19 @@
+{include file='inc_head.txt'}
+
+<div class="container">
+	<h1>Pagination tests</h1>
+
+{foreach from=$tests item='row'}
+	<p>{$row.name}:</p>
+	<div style="border: 1px solid black; margin: 0 0 3em 3em;">
+		{pagination pagination=$row}
+	</div>
+	<div style="border: 1px solid black; margin: 0 0 3em 3em;">
+		{pagination pagination=$row style='nextprev'}
+	</div>
+{/foreach}
+
+
+</div>
+
+{include file='inc_foot.txt'}
