@@ -115,6 +115,9 @@
 		
 		$pagination['next_url'] = paginate_make_url($pagination['page'] + 1, $params);
 		$pagination['prev_url'] = paginate_make_url($pagination['page'] - 1, $params);
+
+		$pagination['has_next'] = !!($pagination['page'] < $pagination['page_count']);
+		$pagination['has_prev'] = !!($pagination['page'] > 1);
 	}
 
 	#################################################################

@@ -1,10 +1,10 @@
 <ul class="pager">
-{if $pagination.page > 1}
+{if $pagination.has_prev}
 	<li class="previous"><a href="{$pagination.prev_url}">&larr; Prev</a></li>
 {else}
 	<li class="previous disabled"><a href="#">&larr; Prev</a></li>
 {/if}
-{if $pagination.page < $pagination.page_count}
+{if $pagination.has_next}
 	<li class="next"><a href="{$pagination.next_url}">Next &rarr;</a></li>
 {else}
 	<li class="next disabled"><a href="#">Next &rarr;</a></li>

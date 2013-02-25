@@ -8,8 +8,8 @@ $(document).ready(function(){
 {/literal}
 	var do_keys = {if $cfg.pagination_keyboard_shortcuts}true{else}false{/if};
 	var do_touch = {if $cfg.pagination_touch_shortcuts}true{else}false{/if};
-	var prev = {if $pagination.page > 1}'{$pagination.prev_url|escape:'javascript'}'{else}null{/if};
-	var next = {if $pagination.page < $pagination.page_count}'{$pagination.next_url|escape:'javascript'}'{else}null{/if};
+	var prev = {if $pagination.has_prev}'{$pagination.prev_url|escape:'javascript'}'{else}null{/if};
+	var next = {if $pagination.has_bext}'{$pagination.next_url|escape:'javascript'}'{else}null{/if};
 {literal}
 
 	var goto_next = function(){
