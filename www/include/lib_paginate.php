@@ -5,7 +5,12 @@
 	#
 	# See _db_fetch_paginated for the format of the $pagination param
 	#
-	
+
+	$GLOBALS['_paginate_done_shortcuts'] = false;
+	$GLOBALS['_paginate_shortcuts_content'] = '';
+
+	#################################################################
+
 	function smarty_pagination_function($params, &$smarty){
 		global $smarty;
 
@@ -26,6 +31,16 @@
 
 		$smarty->display("inc_pagination_{$style}.txt");
 
+		# are we adding next/prev shortcuts?
+		if ($GLOBALS['cfg']['pagination_keyboard_shortcuts'] || $GLOBALS['cfg']['pagination_touch_shortcuts']){
+
+			if (!$GLOBALS['_paginate_done_shortcuts']){
+
+				$GLOBALS['_paginate_done_shortcuts'] = true;
+				$GLOBALS['_paginate_shortcuts_content'] = $smarty->fetch("inc_pagination_shortcuts.txt");
+			}
+		}
+
 		# restore state
 		$smarty->_tpl_vars = $old_vars;
 	}
@@ -33,6 +48,19 @@
 	$GLOBALS['smarty']->register_function('pagination', 'smarty_pagination_function');
 
 
+	#################################################################
+
+	function smarty_pagination_footer_function(){
+
+		if ($GLOBALS['_paginate_done_shortcuts']){
+
+			echo $GLOBALS['_paginate_shortcuts_content'];
+		}
+	}
+
+	$GLOBALS['smarty']->register_function('pagination_footer', 'smarty_pagination_footer_function');
+
+	#################################################################
 
 	#
 	# build list of pages to show links to
@@ -89,6 +117,7 @@
 		$pagination['prev_url'] = paginate_make_url($pagination['page'] - 1, $params);
 	}
 
+	#################################################################
 
 	#
 	# build a URL to a specific page
@@ -155,3 +184,5 @@
 
 		return $path;
 	}
+
+	#################################################################

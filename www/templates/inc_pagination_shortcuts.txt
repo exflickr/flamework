@@ -1,11 +1,16 @@
-<script type="text/javascript">
-
-var prev = {if $paginate_previous}'{$paginate_previous}'{else}null{/if};
-var next = {if $paginate_next}'{$paginate_next}'{else}null{/if};
-
-{literal}
+{if $cfg.pagination_touch_shortcuts}
+<script type="text/javascript" src="/javascript/jquery.touchwipe.min.js"></script>
+{/if}
+<script type="text/javascript">{literal}
 
 $(document).ready(function(){
+
+{/literal}
+	var do_keys = {if $cfg.pagination_keyboard_shortcuts}true{else}false{/if};
+	var do_touch = {if $cfg.pagination_touch_shortcuts}true{else}false{/if};
+	var prev = {if $pagination.page > 1}'{$pagination.prev_url|escape:'javascript'}'{else}null{/if};
+	var next = {if $pagination.page < $pagination.page_count}'{$pagination.next_url|escape:'javascript'}'{else}null{/if};
+{literal}
 
 	var goto_next = function(){
 		if (next){
@@ -19,41 +24,31 @@ $(document).ready(function(){
 		}
 	};
 
-	$(document).keypress(function(e){
+	if (do_keys){
+		$(document).keydown(function(e){
+			if (e.keyCode == 37){
+				goto_previous();
+			}
+			else if (e.keyCode == 39){
+				goto_next();
+			}
+		});
+	}
 
-		if (e.keyCode == 37){
-			goto_previous();
-		}
-
-		else if (e.keyCode == 39){
-			goto_next();
-		}
-
-		else {}
-	});
-
-{/literal}
-
-{if $cfg.pagination_touch_shortcuts}
-{literal}
 	// http://www.netcu.de/jquery-touchwipe-iphone-ipad-library
 
-	$(document).touchwipe({
-		wipeLeft: goto_next,
-		wipeRight: goto_previous,
-		wipeUp: function(){},
-		wipeDown: function(){},
-		min_move_x: 100,
-		min_move_y: 100,
-		preventDefaultEvents: false,
-		allowPageScroll: 'vertical'
-	});
-{/literal}
-{/if}
-
-{literal}
+	if (do_touch){
+		$(document).touchwipe({
+			wipeLeft: goto_next,
+			wipeRight: goto_previous,
+			wipeUp: function(){},
+			wipeDown: function(){},
+			min_move_x: 100,
+			min_move_y: 100,
+			preventDefaultEvents: false,
+			allowPageScroll: 'vertical'
+		});
+	}
 });
 
-{/literal}
-
-</script>
+</script>{/literal}
