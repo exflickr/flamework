@@ -5,10 +5,10 @@
 
 {foreach from=$tests item='row'}
 	<p>{$row.name}:</p>
-	<div style="border: 1px solid black; margin: 0 0 3em 3em;">
+	<div style="border: 1px solid #ccc; margin: 0 0 1em 3em; padding: 1px 1em">
 		{pagination pagination=$row}
 	</div>
-	<div style="border: 1px solid black; margin: 0 0 3em 3em;">
+	<div style="border: 1px solid #ccc; margin: 0 0 3em 3em; padding: 1px 1em">
 		{pagination pagination=$row style='nextprev'}
 	</div>
 {/foreach}
