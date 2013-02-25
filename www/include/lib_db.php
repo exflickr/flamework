@@ -390,7 +390,6 @@
 		
 		if ($GLOBALS['cfg']['pagination_assign_smarty_variable']){
 			$GLOBALS['smarty']->assign('pagination', $ret['pagination']);
-			$GLOBALS['smarty']->register_function('pagination', 'smarty_function_pagination');
 		}
 
 		return $ret;
