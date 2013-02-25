@@ -17,7 +17,7 @@
 		# save state
 		$old_vars = $smarty->get_template_vars();
 
-		$pagination = $params['pagination'] ? $params['pagination'] : $old_pagination;
+		$pagination = $params['pagination'] ? $params['pagination'] : $old_vars['pagination'];
 		
 		if ($pagination['page_count'] < 2){ return; }
 
