@@ -226,6 +226,7 @@
 	loadlib('users');
 	#loadlib('versions');
 	loadlib('http');
+	loadlib('paginate');
 
 	if (($GLOBALS['cfg']['site_disabled']) && (! $this_is_shell)){
 
