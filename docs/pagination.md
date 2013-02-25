@@ -17,15 +17,15 @@ The `_db_fetch_paginated()` function registers a smarty variable called `$pagina
 the following contents:
 
     array(
-    	'total_count'	=> 100,	# Total number of records
-    	'page'		=> 1,	# Page we're viewing
-    	'per_page'	=> 20,	# Number of records per page
-    	'page_count'	=> 5,	# Total number of pages
+    	'total_count' => 100,  # Total number of records
+    	'page'        => 1,    # Page we're viewing
+    	'per_page'    => 20,   # Number of records per page
+    	'page_count'  => 5,    # Total number of pages
     )
 
 Note that because of spill handling, there might be more or less records on the current page
 than `per_page` specifies. If you're handling paging yourself, rather than through the DB 
-library, then you can pass your own pagintation inforamtion to the widget:
+library, then you can pass your own pagintation information to the widget:
 
     {pagination pagination=$my_data}
 
@@ -33,7 +33,7 @@ library, then you can pass your own pagintation inforamtion to the widget:
 ## URL formatting
 
 By default, the pagination uses a URL pattern of `/page#`. This means that if your base page
-URL is `/foo/bar`, that URL is kept for page one, while page 2 will be at `/foo/bar/page2`. If
+URL is `/foo/bar`, that URL is kept for page 1, while page 2 will be at `/foo/bar/page2`. If
 you supplied a pattern of `-p#` then page 2 would be `/foo/bar-p2`. If you would rather pass
 page numbers as query string parameters, then you can pass a parameter name to be used. Some 
 examples:
@@ -65,6 +65,6 @@ one (`pretty`). You can add your own paging styles by modifying those templates 
 
 If the config options `pagination_keyboard_shortcuts` or `pagination_touch_shortcuts` are set, then
 the left/right cursor keys and back and forward swipe gestures will cause the next/prev page to be
-navigated to. Beware that this will only work for the first pagination widget used on a single page.
+navigated to. Be aware that this will only work for the first pagination widget used on any page.
 
 
