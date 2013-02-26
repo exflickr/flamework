@@ -23,11 +23,11 @@ piece of the puzzle, please send a pull-request.
 
 That's it.
 
-For a longer version, read the <a href="/exflickr/flamework/blob/master/docs/install_base.md">intsallation guide</a>.
+For a longer version, read the <a href="/blob/master/docs/install_base.md">intsallation guide</a>.
 
-If you'd like to use Flamework as an external library, <a href="/exflickr/flamework/blob/master/docs/install_external.md">read this</a>.
+If you'd like to use Flamework as an external library, <a href="/blob/master/docs/install_external.md">read this</a>.
 
-To install Flamework on AppFog.com, <a href="/exflickr/flamework/blob/master/docs/install_appfog.md">read this</a>.
+To install Flamework on AppFog.com, <a href="/blob/master/docs/install_appfog.md">read this</a>.
 
 
 ##Global Variables
@@ -46,10 +46,10 @@ Some libraries use their own globals internally, usually prefixed with `LIBRARYN
 
 ## Other documentation
 
-* <a href="/exflickr/flamework/blob/master/docs/troubleshooting.md">Troubleshooting</a>
-* <a href="/exflickr/flamework/blob/master/docs/philosophy.md">Design Philosophy</a>
-* <a herf="/exflickr/flamework/blob/master/docs/database_model.md">Database Model</a>
-* <a href="/exflickr/flamework/blob/master/docs/style_guide.md">Style guide</a>
+* <a href="/blob/master/docs/troubleshooting.md">Troubleshooting</a>
+* <a href="/blob/master/docs/philosophy.md">Design Philosophy</a>
+* <a herf="/blob/master/docs/database_model.md">Database Model</a>
+* <a href="/blob/master/docs/style_guide.md">Style guide</a>
 
 
 ## Libraries & Tools
