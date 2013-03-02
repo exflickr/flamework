@@ -48,7 +48,7 @@ Some libraries use their own globals internally, usually prefixed with `LIBRARYN
 
 * <a href="/docs/troubleshooting.md">Troubleshooting</a>
 * <a href="/docs/philosophy.md">Design Philosophy</a>
-* <a herf="/docs/database_model.md">Database Model</a>
+* <a href="/docs/database_model.md">Database Model</a>
 * <a href="/docs/style_guide.md">Style guide</a>
 
 
