@@ -12,7 +12,7 @@
 	function cli_getopts($spec, $more=array()){
 
 		$defaults = array(
-			'include_help' => 1
+			'include_help' => true,
 		);
 
 		$more = array_merge($defaults, $more);
@@ -20,9 +20,9 @@
 		if ($more['include_help']){
 
 			$spec['help'] = array(
-				"flag" => "h",
-				"help" => "print this message",
-				"boolean" => 1,
+				"flag"		=> "h",
+				"help"		=> "print this message",
+				"boolean"	=> true,
 			);
 		}
 
@@ -62,7 +62,7 @@
 		$_opts = getopt($short_opts, $long_opts);
 		$opts = array();
 
-		$help = ((isset($_opts['h'])) || (isset($_opts['help']))) ? 1 : 0;
+		$help = !!((isset($_opts['h'])) || (isset($_opts['help'])));
 
 		if (($help) && ($more['include_help'])){
 			cli_help($spec);
@@ -72,13 +72,13 @@
 		foreach ($_opts as $key => $stuff){
 
 			if (isset($spec[$key])){
-				$opts[$key] = ($spec[$key]['boolean']) ? 1 : $stuff;
+				$opts[$key] = ($spec[$key]['boolean']) ? true : $stuff;
 			}
 
 			else if (isset($flags[$key])){
 
 				$name = $flags[$key];
-				$opts[$name] = ($spec[$name]['boolean']) ? 1 : $stuff;
+				$opts[$name] = ($spec[$name]['boolean']) ? true : $stuff;
 			}
 		}
 
