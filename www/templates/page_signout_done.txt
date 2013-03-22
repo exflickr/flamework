@@ -1,4 +1,4 @@
-{assign var='page_title' value='Sign out'}
+{assign var='page_title' value='Sign out' nav_tab='signout'}
 {include file='inc_head.txt'}
 
 <div class="container">
