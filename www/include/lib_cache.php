@@ -17,7 +17,9 @@
 
 	#################################################################
 
-	function cache_get($key){
+	function cache_get($key, $more=array()){
+
+		$key = _cache_prepare_key($key);
 
 		#
 		# try and fetch from local cache first
@@ -53,7 +55,9 @@
 
 	#################################################################
 
-	function cache_set($key, $data){
+	function cache_set($key, $data, $more=array()){
+
+		$key = _cache_prepare_key($key, $more);
 
 		$GLOBALS['_cache_local'][$key] = $data;
 
@@ -72,7 +76,9 @@
 
 	#################################################################
 
-	function cache_unset($key){
+	function cache_unset($key, $more=array()){
+
+		$key = _cache_prepare_key($key, $more);
 
 		unset($GLOBALS['_cache_local'][$key]);
 
@@ -87,6 +93,24 @@
 			'ok'	=> 1,
 			'local'	=> 1,
 		);
+	}
+
+	#################################################################
+
+	function _cache_prepare_key($key, $more=array()){
+
+		$defaults = array(
+			'prefix_key' => 0,
+			'prefix' => $GLOBALS['cfg']['environment'],
+		);
+
+		$more = array_merge($defaults, $more);
+
+		if ($more['prefix_key']){
+			$key = "{$more['prefix']}_{$key}";
+		}
+
+		return $key;
 	}
 
 	#################################################################
