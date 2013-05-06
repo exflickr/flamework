@@ -17,6 +17,10 @@
 
 	function db_init(){
 
+		if (!function_exists('mysql_connect')){
+			die("lib_db requires the mysql PHP extension\n");
+		}
+
 		#
 		# connect to the main cluster immediately so that we can show a
 		# downtime notice it's it's not available? you might not want to
