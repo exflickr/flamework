@@ -20,5 +20,5 @@
 		cmp_ok($idx, '===', false, "No closing tag in $file");
 
 		$idx = strpos($content, '$'.'Id$');
-		cmp_ok($idx, '===', false, "No SVN keywords");
+		cmp_ok($idx, '===', false, "No SVN keywordsin $file");
 	}
