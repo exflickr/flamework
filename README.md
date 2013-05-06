@@ -86,3 +86,12 @@ you can run the tests using:
 
 Test coverage is in great need of improving.
  
+
+## Vagrant
+
+If you don't want to mess with your local development environment, you can run the tests under Vagrant by doing:
+
+    vagrant up
+    vagrant ssh
+    cd /vagrant
+    prove -v --exec 'php --php-ini ./tests/php.ini' ./tests/*.t
