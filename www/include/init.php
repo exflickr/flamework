@@ -1,8 +1,4 @@
-<?
-	#
-	# $Id$
-	#
-
+<?php
 	#
 	# some startup tasks which come before anything else:
 	#  * set up the timezone

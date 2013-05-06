@@ -4,8 +4,6 @@
 	#
 	# A PHP HTML filtering library
 	#
-	# $Id$
-	#
 	# http://iamcal.com/publish/articles/php/processing_html/
 	# http://iamcal.com/publish/articles/php/processing_html_part_2/
 	#

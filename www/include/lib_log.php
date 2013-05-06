@@ -1,4 +1,4 @@
-<?
+<?php
 	#
 	# This module is designed to flexible, with pluggable handlers for different levels.
 	# By default, 3 levels are defined:

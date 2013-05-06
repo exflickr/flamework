@@ -1,9 +1,5 @@
 <?php
 
-	#
-	# $Id$
-	#
-
 	#################################################################
 
 	# http://code.flickr.com/blog/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/

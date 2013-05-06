@@ -1,7 +1,4 @@
-<?
-	#
-	# $Id$
-	#
+<?php
 
 	function utf8_headers($mimetype = 'text/html'){
 

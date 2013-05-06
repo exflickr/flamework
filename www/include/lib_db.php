@@ -1,7 +1,4 @@
-<?
-	#
-	# $Id$
-	#
+<?php
 
 	$GLOBALS['db_conns'] = array();
 

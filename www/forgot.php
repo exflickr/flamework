@@ -1,8 +1,4 @@
-<?
-	#
-	# $Id$
-	#
-
+<?php
 	include("include/init.php");
 
 	if (! $GLOBALS['cfg']['enable_feature_password_retrieval']){

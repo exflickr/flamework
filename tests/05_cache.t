@@ -1,4 +1,4 @@
-<?
+<?php
 	include(dirname(__FILE__).'/wrapper.php');
 
 	plan(9);
