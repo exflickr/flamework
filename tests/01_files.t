@@ -1,10 +1,10 @@
 <?php
 	include(dirname(__FILE__).'/testmore.php');
 
-	$path = dirname(__FILE__).'/../www';
+	$root_path = dirname(__FILE__).'/../www';
 
-	$libs = glob("$path/include/*.php");
-	$views = glob("$path/*.php");
+	$libs = glob("$root_path/include/*.php");
+	$views = glob("$root_path/*.php");
 
 	$all = array_merge($libs, $views);
 
@@ -12,7 +12,7 @@
 
 	foreach ($all as $path){
 		$content = implode('', file($path));
-		$file = basename($path);
+		$file = str_replace("$root_path/", '', $path);
 
 		is(substr($content, 0, 5), '<?php', "$file starts with an opening php tag");
 
