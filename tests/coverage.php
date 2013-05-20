@@ -6,16 +6,29 @@
 
 	if (!file_exists($file)) exit;
 
-	$coverage = unserialize(file_get_contents($file));
+	class MyCoverage extends PHP_CodeCoverage{
+		public function resetFilter(){
+			$this->filter = new PHP_CodeCoverage_Filter;
+		}
+		public function applyFilter(){
+			 $this->applyListsFilter($this->data);
+		}
+	}
 
-	$filter = $coverage->filter();
+	$serial = file_get_contents($file);
+
+	$old = 'O:16:"PHP_CodeCoverage"';
+	$new = 'O:10:"MyCoverage"';
+	$serial = str_replace($old, $new, $serial);
+
+	$coverage = unserialize($serial);
 
 	$root_path = dirname(__FILE__).'/..';
 
-	$filter->addFilesToWhitelist(glob("$root_path/www/include/*.php"));
-	$filter->addFilesToWhitelist(glob("$root_path/extras/*.php"));
-	$filter->addFilesToBlacklist(glob("$root_path/tests/*.t"));
-	$filter->addFilesToBlacklist(glob("$root_path/tests/*.php"));
+	$coverage->resetFilter();
+	$coverage->filter()->addFilesToWhitelist(glob("$root_path/www/include/*.php"));
+	$coverage->filter()->addFilesToWhitelist(glob("$root_path/extras/*.php"));
+	$coverage->applyFilter();
 
 	$writer = new PHP_CodeCoverage_Report_HTML;
 	$writer->process($coverage, './coverage');
