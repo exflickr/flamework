@@ -21,3 +21,12 @@ templates:
 
 secret:
 	php -q ./bin/generate_secret.php
+
+test:
+	prove -v --exec 'php --php-ini ./tests/php.ini' ./tests/*.t
+
+cover:
+	rm -f ./tests/coverage.state
+	rm -rf ./coverage
+	make test
+	php -q ./tests/coverage.php
