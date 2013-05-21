@@ -9,8 +9,8 @@
 
     <!-- Le styles -->
     <link href="{$cfg.abs_root_url}css/bootstrap.min.css" rel="stylesheet">
-    <link href="{$cfg.abs_root_url}css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="{$cfg.abs_root_url}css/main.source.css" rel="stylesheet">
+    <link href="{$cfg.abs_root_url}css/bootstrap-responsive.min.css" rel="stylesheet">
 {if $cfg.auth_roles.staff}
     <link href="{$cfg.abs_root_url}css/admin.source.css" rel="stylesheet">
 {/if}
@@ -33,7 +33,7 @@
             <span class="icon-bar"></span>
           </a>
           <a class="brand" href="{$cfg.abs_root_url}">{$cfg.site_name|escape}</a>
-          <div class="nav-collapse">
+          <div class="nav-collapse collapse">
             <ul class="nav">
               <li{if $nav_tab == 'home'} class="active"{/if}><a href="{$cfg.abs_root_url}">Home</a></li>
               <li{if $nav_tab == 'about'} class="active"{/if}><a href="{$cfg.abs_root_url}about">About</a></li>
