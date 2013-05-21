@@ -79,12 +79,15 @@ And some random odds and ends:
 
 ## Tests
 
-If you have perl's <a href="http://search.cpan.org/dist/Test-Harness/">Test::Harness</a> installed (you almost certainly do), 
-you can run the tests using:
+If you have `make` and and recent `perl` installed (you almost certainly do), you can run the tests using:
 
-    prove --exec 'php' tests/*.t
+    make test
 
-Test coverage is in great need of improving.
+If you also have `xdebug` and `PHP_CodeCoverage` installed, you can generate test coverage information:
+
+    make cover
+
+Test coverage needs some serious improvement.
  
 
 ## Vagrant
@@ -94,4 +97,4 @@ If you don't want to mess with your local development environment, you can run t
     vagrant up
     vagrant ssh
     cd /vagrant
-    prove -v --exec 'php --php-ini ./tests/php.ini' ./tests/*.t
+    make test
