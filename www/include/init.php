@@ -263,6 +263,17 @@
 		return $filter->go($str);
 	}
 
+	function exec_ok($cmd){
+		$code = 0;
+		$out = array();
+		exec($cmd, $out, $code);
+		return array(
+			'ok'	=> !$code,
+			'code'	=> $code,
+			'out'	=> implode('', $out),
+		);
+	}
+
 
 	#
 	# Hey look! Running code! Note that db_init will try
