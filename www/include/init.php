@@ -269,6 +269,7 @@
 		exec($cmd, $out, $code);
 		return array(
 			'ok'	=> !$code,
+			'cmd'	=> $cmd,
 			'code'	=> $code,
 			'out'	=> implode('', $out),
 		);
