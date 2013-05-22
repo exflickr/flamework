@@ -2,6 +2,7 @@
 	error_reporting(E_ALL | E_STRICT);
 	ini_set('display_errors', '1');
 
+	if (function_exists('xdebug_get_code_coverage')){
 	if (@include('PHP/CodeCoverage/Autoload.php')){
 
 		$dir = dirname(__FILE__);
@@ -19,6 +20,7 @@
 		$coverage->start($name);
 
 		register_shutdown_function('end_coverage');
+	}
 	}
 
 	function end_coverage(){
