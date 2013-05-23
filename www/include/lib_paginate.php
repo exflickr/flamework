@@ -137,7 +137,10 @@
 		#
 
 		if ($params['page_param']){
-			$args = $_GET;
+
+			$args = array();
+			parse_str($qs, $args);
+
 			if ($page == 1){
 				unset($args[$params['page_param']]);
 			}else{
