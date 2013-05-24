@@ -349,7 +349,12 @@
 		# (yes, this is a horrible hack)
 		#
 
-		$ret = _db_fetch(preg_replace(array('/^SELECT .* FROM/i', '/ ORDER BY .*$/'), array('SELECT COUNT(*) FROM', ''), $sql), $cluster, $k);
+		# Note the capturing ${1} so that this will still work if the query is
+		# filtering by DISTINCT mumble-mumble (20130518/straup)
+
+		$_sql = preg_replace(array('/^SELECT (.*) FROM/i', '/ ORDER BY .*$/'), array('SELECT COUNT(${1}) FROM', ''), $sql);
+		$ret = _db_fetch($_sql, $cluster, $k);
+
 		if (!$ret['ok']) return $ret;
 
 		$total_count = intval(array_pop($ret['rows'][0]));
