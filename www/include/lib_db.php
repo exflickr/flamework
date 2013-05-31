@@ -460,14 +460,19 @@
 
 	#################################################################
 
-	function _db_count_sql($sql){
+	function _db_count_sql($sql, $args){
 
 		# remove any ORDER'ing & LIMIT'ing
 		$sql = preg_replace('/ ORDER BY .*$/', '', $sql);
 		$sql = preg_replace('/ LIMIT .*$/', '', $sql);
 
 		# transform the select portion
-		$sql = preg_replace_callback('/^SELECT (.*?) FROM/i', '_db_count_sql_from', $sql);
+		if (isset($args['count_fields'])){
+
+			$sql = preg_replace('/^SELECT (.*?) FROM/i', "SELECT COUNT({$args['count_fields']}) FROM", $sql);
+		}else{
+			$sql = preg_replace_callback('/^SELECT (.*?) FROM/i', '_db_count_sql_from', $sql);
+		}
 
 		return $sql;
 	}

@@ -1,7 +1,7 @@
 <?php
 	include(dirname(__FILE__).'/wrapper.php');
 
-	plan(55);
+	plan(63);
 
 
 
@@ -259,6 +259,26 @@
 		is(count($ret['rows']), 10, "Paginated fetch distinct ({$mode_lbl}): 10 rows returned");
 		is($ret['pagination']['total_count'], 11, "Paginated fetch distinct ({$mode_lbl}): 11 rows total");
 
+
+		#
+		# Complex queries that cannot be auto-transformed
+		#
+
+
+		$args = array(
+			'page'			=> 1,
+			'per_page'		=> 10,
+			'spill'			=> 0,
+			'count_fields'		=> '*',
+			'calc_found_rows'	=> $mode,
+		);
+
+		$ret = db_fetch_paginated("SELECT data AS foo FROM {$name} ORDER BY id DESC", $args);
+
+		is($ret['ok'], true, "Paginated fetch complex ({$mode_lbl}) ok");
+		is(count($ret['rows']), 10, "Paginated fetch complex ({$mode_lbl}): 10 rows returned");
+		is($ret['pagination']['total_count'], 200, "Paginated fetch complex ({$mode_lbl}): 200 rows total");
+		is(implode('', array_keys($ret['rows'][0])), 'foo', "Paginated fetch complex ({$mode_lbl}): correct fields fetched");
 	}
 
 
