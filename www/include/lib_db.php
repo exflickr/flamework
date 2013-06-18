@@ -72,18 +72,18 @@
 
 	#################################################################
 
-	function _db_connect($cluster, $k=null){
+	function _db_connect($cluster, $shard=null){
 
-		$cluster_key = $k ? "{$cluster}-{$k}" : $cluster;
+		$cluster_key = $shard ? "{$cluster}-{$shard}" : $cluster;
 
 		$host = $GLOBALS['cfg']["db_{$cluster}"]["host"];
 		$user = $GLOBALS['cfg']["db_{$cluster}"]["user"];
 		$pass = $GLOBALS['cfg']["db_{$cluster}"]["pass"];
 		$name = $GLOBALS['cfg']["db_{$cluster}"]["name"];
 
-		if ($k){
-			$host = $host[$k];
-			$name = $name[$k];
+		if ($shard){
+			$host = $host[$shard];
+			$name = $name[$shard];
 		}
 
 		if (!$host){
@@ -133,12 +133,12 @@
 
 	#################################################################
 
-	function _db_query($sql, $cluster, $k=null){
+	function _db_query($sql, $cluster, $shard=null){
 
-		$cluster_key = $k ? "{$cluster}-{$k}" : $cluster;
+		$cluster_key = $shard ? "{$cluster}-{$shard}" : $cluster;
 
 		if (!$GLOBALS['db_conns'][$cluster_key]){
-			_db_connect($cluster, $k);
+			_db_connect($cluster, $shard);
 		}
 
 		$trace = _db_callstack();
@@ -185,7 +185,7 @@
 				'error_code'	=> $error_code,
 				'sql'		=> $sql,
 				'cluster'	=> $cluster,
-				'shard'		=> $k,
+				'shard'		=> $shard,
 			);
 		}else{
 			$ret = array(
@@ -193,7 +193,7 @@
 				'result'	=> $result,
 				'sql'		=> $sql,
 				'cluster'	=> $cluster,
-				'shard'		=> $k,
+				'shard'		=> $shard,
 			);
 		}
 
@@ -204,11 +204,11 @@
 
 	#################################################################
 
-	function _db_insert($tbl, $hash, $cluster, $k=null){
+	function _db_insert($tbl, $hash, $cluster, $shard=null){
 
 		$fields = array_keys($hash);
 
-		return _db_write("INSERT INTO $tbl (`".implode('`,`',$fields)."`) VALUES ('".implode("','",$hash)."')", $cluster, $k);
+		return _db_write("INSERT INTO $tbl (`".implode('`,`',$fields)."`) VALUES ('".implode("','",$hash)."')", $cluster, $shard);
 	}
 
 	#################################################################
@@ -305,9 +305,9 @@
 
 	#################################################################
 
-	function _db_fetch($sql, $cluster, $k=null){
+	function _db_fetch($sql, $cluster, $shard=null){
 
-		$ret = _db_query($sql, $cluster, $k);
+		$ret = _db_query($sql, $cluster, $shard);
 
 		if (!$ret['ok']) return $ret;
 
@@ -331,7 +331,7 @@
 
 	#################################################################
 
-	function _db_fetch_paginated($sql, $args, $cluster, $k=null){
+	function _db_fetch_paginated($sql, $args, $cluster, $shard=null){
 
 		#
 		# Setup some defaults
@@ -353,7 +353,7 @@
 		if (!$calc_found_rows){
 
 			$count_sql = _db_count_sql($sql, $args);
-			$ret = _db_fetch($count_sql, $cluster, $k);
+			$ret = _db_fetch($count_sql, $cluster, $shard);
 			if (!$ret['ok']) return $ret;
 
 			$total_count = intval(array_pop($ret['rows'][0]));
@@ -404,7 +404,7 @@
 			$sql = preg_replace('/^\s*SELECT\s+/', 'SELECT SQL_CALC_FOUND_ROWS ', $sql);
 		}
 
-		$ret = _db_fetch($sql, $cluster, $k);
+		$ret = _db_fetch($sql, $cluster, $shard);
 
 
 		#
@@ -413,7 +413,7 @@
 
 		if ($calc_found_rows){
 
-			$ret2 = _db_fetch("SELECT FOUND_ROWS()", $cluster, $k);
+			$ret2 = _db_fetch("SELECT FOUND_ROWS()", $cluster, $shard);
 
 			$total_count = intval(array_pop($ret2['rows'][0]));
 			$page_count = ceil($total_count / $per_page);
@@ -484,11 +484,11 @@
 
 	#################################################################
 
-	function _db_write($sql, $cluster, $k=null){
+	function _db_write($sql, $cluster, $shard=null){
 
-		$cluster_key = $k ? "{$cluster}-{$k}" : $cluster;
+		$cluster_key = $shard ? "{$cluster}-{$shard}" : $cluster;
 
-		$ret = _db_query($sql, $cluster, $k);
+		$ret = _db_query($sql, $cluster, $shard);
 
 		if (!$ret['ok']) return $ret;
 
