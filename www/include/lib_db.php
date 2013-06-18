@@ -29,7 +29,7 @@
 		#
 
 		if ($GLOBALS['cfg']['db_main']['auto_connect']){
-			_db_connect('main');
+			_db_connect('main', null);
 		}
 	}
 
@@ -46,33 +46,33 @@
 	# argument.
 	#
 
-	function db_insert($tbl, $hash){		return _db_insert($tbl, $hash, 'main'); }
-	function db_insert_users($k, $tbl, $hash){	return _db_insert($tbl, $hash, 'users', $k); }
+	function db_insert($tbl, $hash){			return _db_insert($tbl, $hash, 'main', null); }
+	function db_insert_users($k, $tbl, $hash){		return _db_insert($tbl, $hash, 'users', $k); }
 
-	function db_insert_bulk($tbl, $rows, $batch=100){	return _db_insert_bulk($tbl, $rows, $batch, 'main'); }
+	function db_insert_bulk($tbl, $rows, $batch=100){	return _db_insert_bulk($tbl, $rows, $batch, 'main', null); }
 	function db_insert_bulk_users($tbl, $rows, $batch=100){	return _db_insert_bulk($tbl, $rows, $batch, 'users', $k); }
 
-	function db_insert_dupe($tbl, $hash, $hash2){		return _db_insert_dupe($tbl, $hash, $hash2, 'main'); }
+	function db_insert_dupe($tbl, $hash, $hash2){		return _db_insert_dupe($tbl, $hash, $hash2, 'main', null); }
 	function db_insert_dupe_users($k, $tbl, $hash, $hash2){	return _db_insert_dupe($tbl, $hash, $hash2, 'users', $k); }
 
-	function db_update($tbl, $hash, $where){		return _db_update($tbl, $hash, $where, 'main'); }
+	function db_update($tbl, $hash, $where){		return _db_update($tbl, $hash, $where, 'main', null); }
 	function db_update_users($k, $tbl, $hash, $where){	return _db_update($tbl, $hash, $where, 'users', $k); }
 
-	function db_fetch($sql){		return _db_fetch($sql, 'main'); }
-	function db_fetch_slave($sql){		return _db_fetch_slave($sql, 'main_slaves'); }
-	function db_fetch_users($k, $sql){	return _db_fetch($sql, 'users', $k); }
+	function db_fetch($sql){				return _db_fetch($sql, 'main', null); }
+	function db_fetch_slave($sql){				return _db_fetch_slave($sql, 'main_slaves'); }
+	function db_fetch_users($k, $sql){			return _db_fetch($sql, 'users', $k); }
 
-	function db_fetch_paginated($sql, $args){		return _db_fetch_paginated($sql, $args, 'main'); }
+	function db_fetch_paginated($sql, $args){		return _db_fetch_paginated($sql, $args, 'main', null); }
 	function db_fetch_paginated_users($k, $sql, $args){	return _db_fetch_paginated($sql, $args, 'users', $k); }
 
-	function db_write($sql){		return _db_write($sql, 'main'); }
-	function db_write_users($k, $sql){	return _db_write($sql, 'users', $k); }
+	function db_write($sql){				return _db_write($sql, 'main', null); }
+	function db_write_users($k, $sql){			return _db_write($sql, 'users', $k); }
 
-	function db_tickets_write($sql){		return _db_write($sql, 'tickets'); }
+	function db_tickets_write($sql){			return _db_write($sql, 'tickets', null); }
 
 	#################################################################
 
-	function _db_connect($cluster, $shard=null){
+	function _db_connect($cluster, $shard){
 
 		$cluster_key = $shard ? "{$cluster}-{$shard}" : $cluster;
 
@@ -133,7 +133,7 @@
 
 	#################################################################
 
-	function _db_query($sql, $cluster, $shard=null){
+	function _db_query($sql, $cluster, $shard){
 
 		$cluster_key = $shard ? "{$cluster}-{$shard}" : $cluster;
 
@@ -204,7 +204,7 @@
 
 	#################################################################
 
-	function _db_insert($tbl, $hash, $cluster, $shard=null){
+	function _db_insert($tbl, $hash, $cluster, $shard){
 
 		$fields = array_keys($hash);
 
@@ -213,7 +213,7 @@
 
 	#################################################################
 
-	function _db_insert_dupe($tbl, $hash, $hash2, $cluster, $shard=null){
+	function _db_insert_dupe($tbl, $hash, $hash2, $cluster, $shard){
 
 		$fields = array_keys($hash);
 
@@ -227,7 +227,7 @@
 
 	#################################################################
 
-	function _db_insert_bulk($tbl, $hashes, $batch_size, $cluster, $shard=null){
+	function _db_insert_bulk($tbl, $hashes, $batch_size, $cluster, $shard){
 
 		$a = array_keys($hashes);
 		$a = array_shift($a);
@@ -269,7 +269,7 @@
 
 	#################################################################
 
-	function _db_update($tbl, $hash, $where, $cluster, $shard=null){
+	function _db_update($tbl, $hash, $where, $cluster, $shard){
 
 		$bits = array();
 		foreach(array_keys($hash) as $k){
@@ -305,7 +305,7 @@
 
 	#################################################################
 
-	function _db_fetch($sql, $cluster, $shard=null){
+	function _db_fetch($sql, $cluster, $shard){
 
 		$ret = _db_query($sql, $cluster, $shard);
 
@@ -331,7 +331,7 @@
 
 	#################################################################
 
-	function _db_fetch_paginated($sql, $args, $cluster, $shard=null){
+	function _db_fetch_paginated($sql, $args, $cluster, $shard){
 
 		#
 		# Setup some defaults
@@ -484,7 +484,7 @@
 
 	#################################################################
 
-	function _db_write($sql, $cluster, $shard=null){
+	function _db_write($sql, $cluster, $shard){
 
 		$cluster_key = $shard ? "{$cluster}-{$shard}" : $cluster;
 
