@@ -1,4 +1,4 @@
-<?
+<?php
 	#
 	# Generates the bits of the apache configuration needed for production
 	# assumes that you don't allow .htaccess files and have everything

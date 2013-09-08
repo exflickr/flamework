@@ -1,8 +1,4 @@
-<?
-	#
-	# $Id$
-	#
-
+<?php
 	#
 	# some startup tasks which come before anything else:
 	#  * set up the timezone
@@ -265,6 +261,18 @@
 		$filter = new lib_filter();
 		$filter->allowed = array();
 		return $filter->go($str);
+	}
+
+	function exec_ok($cmd){
+		$code = 0;
+		$out = array();
+		exec($cmd, $out, $code);
+		return array(
+			'ok'	=> !$code,
+			'cmd'	=> $cmd,
+			'code'	=> $code,
+			'out'	=> implode('', $out),
+		);
 	}
 
 

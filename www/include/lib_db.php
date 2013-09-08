@@ -1,7 +1,4 @@
-<?
-	#
-	# $Id$
-	#
+<?php
 
 	$GLOBALS['db_conns'] = array();
 
@@ -19,6 +16,10 @@
 	#################################################################
 
 	function db_init(){
+
+		if (!function_exists('mysql_connect')){
+			die("lib_db requires the mysql PHP extension\n");
+		}
 
 		#
 		# connect to the main cluster immediately so that we can show a
@@ -344,20 +345,20 @@
 
 
 		#
-		# figure out what we're dealing with
-		# (yes, this is a horrible hack)
+		# If we're using the 2-query method, get the count first
 		#
 
-		# Note the capturing ${1} so that this will still work if the query is
-		# filtering by DISTINCT mumble-mumble (20130518/straup)
+		$calc_found_rows = !!$args['calc_found_rows'];
 
-		$_sql = preg_replace(array('/^SELECT (.*) FROM/i', '/ ORDER BY .*$/'), array('SELECT COUNT(${1}) FROM', ''), $sql);
-		$ret = _db_fetch($_sql, $cluster, $k);
+		if (!$calc_found_rows){
 
-		if (!$ret['ok']) return $ret;
+			$count_sql = _db_count_sql($sql, $args);
+			$ret = _db_fetch($count_sql, $cluster, $k);
+			if (!$ret['ok']) return $ret;
 
-		$total_count = intval(array_pop($ret['rows'][0]));
-		$page_count = ceil($total_count / $per_page);
+			$total_count = intval(array_pop($ret['rows'][0]));
+			$page_count = ceil($total_count / $per_page);
+		}
 
 
 		#
@@ -367,14 +368,28 @@
 		$start = ($page - 1) * $per_page;
 		$limit = $per_page;
 
-		$last_page_count = $total_count - (($page_count - 1) * $per_page);
+		if ($calc_found_rows){
 
-		if ($last_page_count <= $spill && $page_count > 1){
-			$page_count--;
-		}
-
-		if ($page == $page_count){
 			$limit += $spill;
+
+		}else{
+
+			$last_page_count = $total_count - (($page_count - 1) * $per_page);
+
+			if ($last_page_count <= $spill && $page_count > 1){
+				$page_count--;
+			}
+
+			if ($page == $page_count){
+				$limit += $spill;
+			}
+
+			if ($page > $page_count){
+				# we do this to ensure we fetch no rows if we're asking for the
+				# page after the last one, else we might end up with some spill
+				# being returned.
+				$start = $total_count + 1;
+			}
 		}
 
 
@@ -384,7 +399,43 @@
 
 		$sql .= " LIMIT $start, $limit";
 
+		if ($calc_found_rows){
+
+			$sql = preg_replace('/^\s*SELECT\s+/', 'SELECT SQL_CALC_FOUND_ROWS ', $sql);
+		}
+
 		$ret = _db_fetch($sql, $cluster, $k);
+
+
+		#
+		# figure out paging if we're using CALC_FOUND_ROWS
+		#
+
+		if ($calc_found_rows){
+
+			$ret2 = _db_fetch("SELECT FOUND_ROWS()", $cluster, $k);
+
+			$total_count = intval(array_pop($ret2['rows'][0]));
+			$page_count = ceil($total_count / $per_page);
+
+			$last_page_count = $total_count - (($page_count - 1) * $per_page);
+
+			if ($last_page_count <= $spill && $page_count > 1){
+				$page_count--;
+			}
+
+			if ($page > $page_count){
+				$ret['rows'] = array();
+			}
+			if ($page < $page_count){
+				$ret['rows'] = array_slice($ret['rows'], 0, $per_page);
+			}
+		}
+
+
+		#
+		# add pagination info to result
+		#
 
 		$ret['pagination'] = array(
 			'total_count'	=> $total_count,
@@ -394,12 +445,41 @@
 			'first'		=> $start+1,
 			'last'		=> $start+count($ret['rows']),
 		);
+
+		if (!count($ret['rows'])){
+			$ret['pagination']['first'] = 0;
+			$ret['pagination']['last'] = 0;
+		}
 		
 		if ($GLOBALS['cfg']['pagination_assign_smarty_variable']){
 			$GLOBALS['smarty']->assign('pagination', $ret['pagination']);
 		}
 
 		return $ret;
+	}
+
+	#################################################################
+
+	function _db_count_sql($sql, $args){
+
+		# remove any ORDER'ing & LIMIT'ing
+		$sql = preg_replace('/ ORDER BY .*$/', '', $sql);
+		$sql = preg_replace('/ LIMIT .*$/', '', $sql);
+
+		# transform the select portion
+		if (isset($args['count_fields'])){
+
+			$sql = preg_replace('/^SELECT (.*?) FROM/i', "SELECT COUNT({$args['count_fields']}) FROM", $sql);
+		}else{
+			$sql = preg_replace_callback('/^SELECT (.*?) FROM/i', '_db_count_sql_from', $sql);
+		}
+
+		return $sql;
+	}
+
+	function _db_count_sql_from($m){
+
+		return "SELECT COUNT($m[1]) FROM";
 	}
 
 	#################################################################

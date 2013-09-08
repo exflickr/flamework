@@ -1,8 +1,4 @@
-<?
-	#
-	# $Id$
-	#
-
+<?php
 	include("include/init.php");
 
 

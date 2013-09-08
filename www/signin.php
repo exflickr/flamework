@@ -1,8 +1,4 @@
-<?
-	#
-	# $Id$
-	#
-
+<?php
 	include("include/init.php");
 
 	features_ensure_enabled("signin");

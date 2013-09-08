@@ -1,4 +1,4 @@
-<?
+<?php
 	include(dirname(__FILE__).'/wrapper.php');
 
 	include(dirname(__FILE__).'/../extras/lib_cache_memcache.php');

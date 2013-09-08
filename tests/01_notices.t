@@ -1,4 +1,4 @@
-<?
+<?php
 	#
 	# this test turns on notice processing *before* loading init, so that we can see
 	# if there are any unquoted keys in init itself.

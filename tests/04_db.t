@@ -1,7 +1,7 @@
-<?
+<?php
 	include(dirname(__FILE__).'/wrapper.php');
 
-	plan(25);
+	plan(63);
 
 
 
@@ -124,13 +124,172 @@
 
 
 	#
+	# setup for testing paginated reads
+	#
+
+	db_write("TRUNCATE TABLE $name");
+	$rows = array();
+	for ($i=1; $i<=200; $i++) $rows[] = array( 'data' => $i%11 );
+	db_insert_bulk($name, $rows);
+
+
+	#
+	# paginated fetching.
+	# test everything in both counting modes
+	#
+
+	foreach (array(false, true) as $mode){
+
+		$mode_lbl = $mode ? 'calc rows' : '2 queries';
+
+		#
+		# simple fetching
+		#
+
+		$args = array(
+			'page'			=> 1,
+			'per_page'		=> 10,
+			'spill'			=> 0,
+			'calc_found_rows'	=> $mode,
+		);
+
+		$ret = db_fetch_paginated("SELECT * FROM {$name}", $args);
+
+		is($ret['ok'], true, "Paginated fetch ({$mode_lbl}) ok");
+		is(count($ret['rows']), 10, "Paginated fetch ({$mode_lbl}): 10 rows returned");
+		is_deeply($ret['pagination'],	array(
+			'total_count'	=> 200,
+			'page'		=> 1,
+			'per_page'	=> 10,
+			'page_count'	=> 20,
+			'first'		=> 1,
+			'last'		=> 10,
+		), "Returned pagination struct ({$mode_lbl})");
+
+
+		#
+		# spilling (off)
+		#
+
+		$args = array(
+			'page'			=> 5,
+			'per_page'		=> 30,
+			'spill'			=> 25,
+			'calc_found_rows'	=> $mode,
+		);
+
+		$ret = db_fetch_paginated("SELECT * FROM {$name}", $args);
+
+		is($ret['ok'], true, "Paginated fetch spill-off ({$mode_lbl}) ok");
+		is(count($ret['rows']), 30, "Paginated fetch spill-off ({$mode_lbl}): 30 rows returned");
+		is_deeply($ret['pagination'],	array(
+			'total_count'	=> 200,
+			'page'		=> 5,
+			'per_page'	=> 30,
+			'page_count'	=> 6,
+			'first'		=> 121,
+			'last'		=> 150,
+		), "Returned pagination spill-off struct ({$mode_lbl})");
+
+
+		#
+		# spilling (on)
+		#
+
+		$args = array(
+			'page'			=> 6,
+			'per_page'		=> 30,
+			'spill'			=> 25,
+			'calc_found_rows'	=> $mode,
+		);
+
+		$ret = db_fetch_paginated("SELECT * FROM {$name}", $args);
+
+		is($ret['ok'], true, "Paginated fetch spill-on ({$mode_lbl}) ok");
+		is(count($ret['rows']), 50, "Paginated fetch spill-on ({$mode_lbl}): 50 rows returned");
+		is_deeply($ret['pagination'],	array(
+			'total_count'	=> 200,
+			'page'		=> 6,
+			'per_page'	=> 30,
+			'page_count'	=> 6,
+			'first'		=> 151,
+			'last'		=> 200,
+		), "Returned pagination spill-on struct ({$mode_lbl})");
+
+
+		#
+		# fetch part end
+		#
+
+		$args = array(
+			'page'			=> 7,
+			'per_page'		=> 30,
+			'spill'			=> 25,
+			'calc_found_rows'	=> $mode,
+		);
+
+		$ret = db_fetch_paginated("SELECT * FROM {$name}", $args);
+
+		is($ret['ok'], true, "Paginated fetch spill-past ({$mode_lbl}) ok");
+		is(count($ret['rows']), 0, "Paginated fetch spill-past ({$mode_lbl}): 0 rows returned");
+		is_deeply($ret['pagination'],	array(
+			'total_count'	=> 200,
+			'page'		=> 7,
+			'per_page'	=> 30,
+			'page_count'	=> 6,
+			'first'		=> 0,
+			'last'		=> 0,
+		), "Returned pagination spill-past struct ({$mode_lbl})");
+
+
+		#
+		# more complex queries, which can still be auto-transformed
+		#
+
+		$args = array(
+			'page'			=> 1,
+			'per_page'		=> 10,
+			'spill'			=> 0,
+			'calc_found_rows'	=> $mode,
+		);
+
+		$ret = db_fetch_paginated("SELECT DISTINCT data FROM {$name} ORDER BY id ASC", $args);
+
+		is($ret['ok'], true, "Paginated fetch distinct ({$mode_lbl}) ok");
+		is(count($ret['rows']), 10, "Paginated fetch distinct ({$mode_lbl}): 10 rows returned");
+		is($ret['pagination']['total_count'], 11, "Paginated fetch distinct ({$mode_lbl}): 11 rows total");
+
+
+		#
+		# Complex queries that cannot be auto-transformed
+		#
+
+
+		$args = array(
+			'page'			=> 1,
+			'per_page'		=> 10,
+			'spill'			=> 0,
+			'count_fields'		=> '*',
+			'calc_found_rows'	=> $mode,
+		);
+
+		$ret = db_fetch_paginated("SELECT data AS foo FROM {$name} ORDER BY id DESC", $args);
+
+		is($ret['ok'], true, "Paginated fetch complex ({$mode_lbl}) ok");
+		is(count($ret['rows']), 10, "Paginated fetch complex ({$mode_lbl}): 10 rows returned");
+		is($ret['pagination']['total_count'], 200, "Paginated fetch complex ({$mode_lbl}): 200 rows total");
+		is(implode('', array_keys($ret['rows'][0])), 'foo', "Paginated fetch complex ({$mode_lbl}): correct fields fetched");
+	}
+
+
+	#
 	# cleanup
 	#
 
 	$ret = db_write("DROP TABLE {$name}");
 	is($ret['ok'], 1, "Dropped test table");
 
-	
+
 
 
 # TO BE ADDED:
@@ -140,4 +299,5 @@
 # fetch paginated
 # logging stuff (counters, timers, actual log lines?)
 # _db_comment_query
-# things that really sohuld fail
+# things that really should fail
+# profiling
