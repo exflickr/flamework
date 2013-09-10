@@ -9,7 +9,7 @@ apt-get install -y mysql-server php5-mysql
 apt-get install -y memcached php5-memcache
 
 rm -rf /var/www
-ln -fs /vagrant /var/www
+ln -fs /vagrant/www /var/www
 
 cd /vagrant
 chmod 755 www/templates_c
@@ -25,3 +25,5 @@ pear install phpunit/PHP_CodeCoverage
 apt-get install -y make
 pecl install xdebug
 echo "zend_extension=/usr/lib/php5/20090626+lfs/xdebug.so" > /etc/php5/conf.d/xdebug.ini
+
+/etc/init.d/apache2 start
