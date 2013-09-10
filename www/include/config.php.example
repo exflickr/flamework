@@ -75,12 +75,11 @@
 
 	# Caching stuff
 
-	$GLOBALS['cfg']['cache_remote_engine'] = '';
-	$GLOBALS['cfg']['cache_prefix'] = '';
-	$GLOBALS['cfg']['cache_force_refresh'] = 0;
+        $GLOBALS['cfg']['enable_feature_cache_prefixes'] = 1;
+        $GLOBALS['cfg']['cache_prefix'] = $GLOBALS['cfg']['environment'];
 
-	$GLOBALS['cfg']['memcache_host'] = 'localhost';
-	$GLOBALS['cfg']['memcache_port'] = '11211';
+	# Note: memcache stuff is not enabled by default but is 
+	# available in the 'extras' directory
 
 	$GLOBALS['cfg']['auth_cookie_domain'] = parse_url($GLOBALS['cfg']['abs_root_url'], 1);
 	$GLOBALS['cfg']['auth_cookie_name'] = 'a';
