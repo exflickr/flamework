@@ -194,3 +194,13 @@
 	$GLOBALS['cfg']['db_full_callstack'] = 0;
 
 	$GLOBALS['cfg']['allow_prefetch'] = 0;
+
+
+	#
+	# load these libraries on every page
+	#
+
+	$GLOBALS['cfg']['autoload_libs'] = array(
+		#'cache_memcache',
+	);
+

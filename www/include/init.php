@@ -224,6 +224,13 @@
 	loadlib('http');
 	loadlib('paginate');
 
+	if (isset($GLOBALS['cfg']['autoload_libs']) && is_array($GLOBALS['cfg']['autoload_libs'])){
+		foreach ($GLOBALS['cfg']['autoload_libs'] as $lib){
+			loadlib($lib);
+		}
+	}
+
+
 	if (($GLOBALS['cfg']['site_disabled']) && (! $this_is_shell)){
 
 		header("HTTP/1.1 503 Service Temporarily Unavailable");

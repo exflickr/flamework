@@ -28,5 +28,5 @@ test:
 cover:
 	rm -f ./tests/coverage.state
 	rm -rf ./coverage
-	make test
+	-make test
 	php -q ./tests/coverage.php
