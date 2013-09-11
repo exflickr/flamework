@@ -30,14 +30,8 @@
 
 	function features_ensure_enabled($flags){
 
-		if (! is_array($flags)){
-			$flags = array($flags);
-		}
-
-		foreach ($flags as $flag){
-			if (! features_is_enabled($flag)){
-				error_disabled();
-			}
+		if (! features_is_enabled($flag)){
+			error_disabled();
 		}
 
 		# Happy sauce!

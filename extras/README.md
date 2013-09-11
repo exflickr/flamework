@@ -14,17 +14,9 @@ of lists. For example:
                 array('host' => 'localhost', 'port' => 11211)
 	);
 
-You will need to explicitly load the `cache_memcache` library in your code.
+You will need to explicitly load the `cache_memcache` library in your code or
+enabled it using the `autoload_lib` array in your config file. Like this:
 
-Because I find that sort of tiresome this is what I do (note: this is _not_
-enabled by default in Flamework). In my `config.php` I add the following:
-
-	$GLOBALS['cfg']['enable_feature_memcache'] = 1;
-
-And then in `init.php` I do this:
-
-	loadlib("cache");	
-
-	if (features_is_enabled("memcache")){
-		loadlib("cache_memcache");
-	}
+	$GLOBALS['cfg']['autoload_libs'] = array(
+		'cache_memcache',
+	);

@@ -27,8 +27,10 @@
 	# connection failures
 	#
 
-	$GLOBALS['cfg']['memcache_host'] = 'localhost';
-	$GLOBALS['cfg']['memcache_port'] = 123456;
+
+	$GLOBALS['cfg']['memcache_pool'] = array(
+                array('host' => 'localhost', 'port' => 99999)
+	);
 
 	$a = array('a' => 4);
 
@@ -53,8 +55,9 @@
 	# connection success!
 	#
 
-	$GLOBALS['cfg']['memcache_host'] = 'localhost';
-	$GLOBALS['cfg']['memcache_port'] = 11211;
+	$GLOBALS['cfg']['memcache_pool'] = array(
+                array('host' => 'localhost', 'port' => 11211)
+	);
 
 	$conn = cache_memcache_connect();
 
