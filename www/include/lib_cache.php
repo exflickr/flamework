@@ -42,14 +42,15 @@
 		#
 
 		if ($GLOBALS['_cache_hooks']['get']){
-
-			return call_user_func($GLOBALS['_cache_hooks']['get'], $key);
+			$rsp = call_user_func($GLOBALS['_cache_hooks']['get'], $key);
+			return $rsp;
 		}
 
 		log_notice("cache", "get {$key} - local miss");
 
 		return array(
-			'ok' => 1,
+			'error' => 'cache hook not defined',
+			'ok' => 0,
 		);
 	}
 
@@ -99,15 +100,11 @@
 
 	function _cache_prepare_key($key, $more=array()){
 
-		$defaults = array(
-			'prefix_key' => 0,
-			'prefix' => $GLOBALS['cfg']['environment'],
-		);
+		if (features_is_enabled("cache_prefixes")){
 
-		$more = array_merge($defaults, $more);
-
-		if ($more['prefix_key']){
-			$key = "{$more['prefix']}_{$key}";
+			if ($prefix = $GLOBALS['cfg']['cache_prefix']){
+				$key = "{$prefix}_{$key}";
+			}
 		}
 
 		return $key;
