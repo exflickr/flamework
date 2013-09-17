@@ -74,7 +74,7 @@
 
 	function _db_connect($cluster, $shard){
 
-		$cluster_key = $shard ? "{$cluster}-{$shard}" : $cluster;
+		$cluster_key = _db_cluster_key($cluster, $shard);
 
 		$host = $GLOBALS['cfg']["db_{$cluster}"]["host"];
 		$user = $GLOBALS['cfg']["db_{$cluster}"]["user"];
@@ -135,7 +135,7 @@
 
 	function _db_query($sql, $cluster, $shard){
 
-		$cluster_key = $shard ? "{$cluster}-{$shard}" : $cluster;
+		$cluster_key = _db_cluster_key($cluster, $shard);
 
 		if (!$GLOBALS['db_conns'][$cluster_key]){
 			_db_connect($cluster, $shard);
@@ -293,7 +293,7 @@
 
 	function _db_fetch_slave($sql, $cluster){
 
-		$cluster_key = 'db_' . $cluster;
+		$cluster_key = _db_cluster_key($cluster, null);
 
 		$slaves = array_keys($GLOBALS['cfg'][$cluster_key]['host']);
 
@@ -486,7 +486,7 @@
 
 	function _db_write($sql, $cluster, $shard){
 
-		$cluster_key = $shard ? "{$cluster}-{$shard}" : $cluster;
+		$cluster_key = _db_cluster_key($cluster, $shard);
 
 		$ret = _db_query($sql, $cluster, $shard);
 
@@ -563,7 +563,7 @@
 
 	function _db_disconnect($cluster, $shard=null){
 
-		$cluster_key = $shard ? "{$cluster}-{$shard}" : $cluster;
+		$cluster_key = _db_cluster_key($cluster, $shard);
 
 		if (is_resource($GLOBALS['db_conns'][$cluster_key])){
 			@mysql_close($GLOBALS['db_conns'][$cluster_key]);
@@ -583,6 +583,13 @@
 
 			unset($GLOBALS['db_conns'][$cluster_key]);
 		}
+	}
+
+	#################################################################
+
+	function _db_cluster_key($cluster, $shard){
+
+		return $shard ? "{$cluster}-{$shard}" : $cluster;
 	}
 
 	#################################################################
