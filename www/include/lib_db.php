@@ -593,3 +593,23 @@
 	}
 
 	#################################################################
+
+	function db_ping($cluster, $shard=null){
+
+		$cluster_key = _db_cluster_key($cluster, $shard);
+
+		if (is_resource($GLOBALS['db_conns'][$cluster_key])){
+
+			$start = microtime_ms();
+			$ret = @mysql_ping($GLOBALS['db_conns'][$cluster_key]);
+			$end = microtime_ms();
+
+			log_notice('db', "DB-$cluster_key: Ping", $end-$start);
+
+			return $ret;
+		}
+
+		return FALSE;
+	}
+
+	#################################################################
