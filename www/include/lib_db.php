@@ -560,3 +560,29 @@
 	}
 
 	#################################################################
+
+	function _db_disconnect($cluster, $shard=null){
+
+		$cluster_key = $shard ? "{$cluster}-{$shard}" : $cluster;
+
+		if (is_resource($GLOBALS['db_conns'][$cluster_key])){
+			@mysql_close($GLOBALS['db_conns'][$cluster_key]);
+		}
+
+		unset($GLOBALS['db_conns'][$cluster_key]);
+	}
+
+
+	function db_disconnect_all(){
+
+		foreach ($GLOBALS['db_conns'] as $cluster_key => $conn){
+
+			if (is_resource($conn)){
+				@mysql_close($conn);
+			}
+
+			unset($GLOBALS['db_conns'][$cluster_key]);
+		}
+	}
+
+	#################################################################
