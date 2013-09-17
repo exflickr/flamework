@@ -28,19 +28,6 @@
 		# set up a new one
 		#
 
-		$host = $GLOBALS['cfg']['memcache_host'];
-		$port = $GLOBALS['cfg']['memcache_port'];
-
-		if (!$host){
-			log_error("No host for memcache server");
-			return null;
-		}
-
-		if (!$port){
-			log_error("No port for memcache server");
-			return null;
-		}
-
 		$start = microtime_ms();
 
 		$memcache = new Memcache();
@@ -50,17 +37,31 @@
 			return null;
 		}
 
-		if (!@$memcache->connect($host, $port)){
-			log_error("Connection to memcache server {$host}:{$port} failed - $php_errormsg");
-			return null;
+		foreach ($GLOBALS['cfg']['memcache_pool'] as $bucket){
+			@$memcache->addServer($bucket['host'], $bucket['port']);
 		}
 
+		$stats = $memcache->getExtendedStats();
+
+		foreach ($GLOBALS['cfg']['memcache_pool'] as $bucket){
+
+			$key = implode(":", array_values($bucket));
+
+			if (! isset($stats[$key])){
+				log_error("Failed to connect to {$key}");
+				return null;
+			}
+
+			if (! $stats[$key]['accepting_conns']){
+				log_error("{$key} is not accepting connections");
+				return null;
+			}
+		}
 
 		$end = microtime_ms();
 		$time = $end - $start;
 
 		log_notice("cache", "connect to memcache {$host}:{$port} ({$time}ms)");
-
 
 		$GLOBALS['timings']['memcache_conns_count']++;
 		$GLOBALS['timings']['memcache_conns_time'] += $time;
