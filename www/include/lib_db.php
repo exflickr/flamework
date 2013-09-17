@@ -536,6 +536,8 @@
 				$items[] = $t['function'].'()';
 			}
 
+			if (!count($items)) return '_global_';
+
 			return implode(' -> ', array_reverse($items));
 		}
 
