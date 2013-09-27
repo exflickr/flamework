@@ -30,7 +30,7 @@
 
 	function features_ensure_enabled($flags){
 
-		if (! features_is_enabled($flag)){
+		if (! features_is_enabled($flags)){
 			error_disabled();
 		}
 
