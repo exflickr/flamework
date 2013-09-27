@@ -70,6 +70,15 @@
 
 
 	#
+	# These should be left as-is, unless you have an existing password database not using bcrypt and
+	# you need to do auto-promotion on login.
+	#
+
+	$GLOBALS['cfg']['passwords_use_bcrypt'] = true;
+	$GLOBALS['cfg']['passwords_allow_promotion'] = false;
+
+
+	#
 	# Things you may need to tweak
 	#
 

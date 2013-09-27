@@ -1,23 +1,33 @@
 <?php
+	#
+	# if we're using bcrypt, ensure we have it installed
+	#
 
-	$GLOBALS['passwords_canhas_bcrypt'] = 0;
+	if ($GLOBALS['cfg']['passwords_use_bcrypt']){
 
-	if (CRYPT_BLOWFISH){
-		$GLOBALS['passwords_canhas_bcrypt'] = 1;
+		if (!CRYPT_BLOWFISH) die("CRYPT_BLOWFISH is required for using bcrypt");
 		loadlib("bcrypt");
+	}
+
+
+	#
+	# if we're not using bcrypt, *or* we allow hamc promotion, when we have a secret set
+	#
+
+	if (!$GLOBALS['cfg']['passwords_use_bcrypt'] || $GLOBALS['cfg']['passwords_allow_promotion']){
+
+		if (!strlen($GLOBALS['cfg']['crypto_password_secret'])){
+
+			die("You must set cfg.crypto_password_secret unless you use bcrypt (without auto-promotion)");
+		}
 	}
 
 	#################################################################
 
-	function passwords_encrypt_password($password, $more=array()){
+	function passwords_encrypt_password($password){
 
-		$defaults = array(
-			'use_bcrypt' => 1
-		);
+		if ($GLOBALS['cfg']['passwords_use_bcrypt']){
 
-		$more = array_merge($defaults, $more);
-
-		if (($GLOBALS['passwords_canhas_bcrypt']) && ($more['use_bcrypt'])){
 			$h = new BCryptHasher();
 			return $h->HashPassword($password);
 		}
@@ -27,72 +37,56 @@
 
 	#################################################################
 
-	function passwords_validate_password($password, $enc_password, $more=array()){
+	function passwords_validate_password($password, $enc_password){
 
-		$defaults = array(
-			'use_bcrypt' => 1
-		);
+		if ($GLOBALS['cfg']['passwords_use_bcrypt']){
 
-		$more = array_merge($defaults, $more);
-
-		if (($GLOBALS['passwords_canhas_bcrypt']) && ($more['use_bcrypt'])){
 			$h = new BCryptHasher();
 			return $h->CheckPassword($password, $enc_password);
 		}
 
-		$test = passwords_encrypt_password($password, $more);
+		$test = passwords_encrypt_password($password);
 
-		$len_test = strlen($test);
-		$len_pswd = strlen($enc_password);
-
-		if ($len_test != $len_pswd){
-			return 0;
-		}
-
-		for ($i=0; $i < $len_test; $i++){
-
-			if ($test[$i] != $enc_password[$i]){
-				return 0;
-			}
-		}
-
-		return 1;
+		return $test == $enc_password;
 	}
 
 	#################################################################
 
-	# Basically a helper function to save a tiny amount of typing but
-	# mostly to make it easier to ensure that user passwords are encrypted
-	# using the "safe thing", which is currently bcrypt (20120611/straup)
+	# a helper function which performs password hash promotion when a hash
+	# is not yet bcrypt and we're configured to allow it.
 
-	function passwords_validate_password_for_user($password, &$user, $more=array()){
+	function passwords_validate_password_for_user($password, &$user){
 
-		$defaults = array(
-			'ensure_bcrypt' => 1,
-		);
+		#
+		# is this is *not* a bcrypt hash, but we allow promotion,
+		# then verify & promote it.
+		#
 
-		$more = array_merge($defaults, $more);
+		$is_bcrypt = substr($user['password'], 0, 4) == '$2a$';
 
-		$enc_password = $user['password'];
+		if ($GLOBALS['cfg']['passwords_use_bcrypt'] && $GLOBALS['cfg']['passwords_allow_promotion'] && !$is_bcrypt){
 
-		$is_bcrypt = (substr($enc_password, 0, 4) == '$2a$') ? 1 : 0;
+			$test = hash_hmac("sha256", $password, $GLOBALS['cfg']['crypto_password_secret']);
 
-		$validate_more = array(
-			'use_bcrypt' => $is_bcrypt,
-		);
+			$is_ok = $test == $user['password'];
 
-		$is_ok = passwords_validate_password($password, $enc_password, $validate_more);
+			if ($is_ok){
 
-		if (($is_ok) && (! $is_bcrypt) && ($more['ensure_bcrypt']) && ($GLOBALS['passwords_canhas_bcrypt'])){
+				if (users_update_password($user, $password)){
 
-			# note the pass-by-ref above
-
-			if (users_update_password($user, $password)){
-				$user = users_get_by_id($user['id']);
+					$user = users_get_by_id($user['id']);
+				}
 			}
+
+			return $is_ok;
 		}
 
-		return $is_ok;
+
+		#
+		# simple case
+		#
+
+		return passwords_validate_password($password, $user['password']);
 	}
 
 	#################################################################
