@@ -1,5 +1,7 @@
 #!/bin/sh
 
+env
+
 chmod 755 www/templates_c
 cp www/include/config.php.example www/include/config.php
 
