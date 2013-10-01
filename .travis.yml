@@ -6,6 +6,6 @@ php:
 services:
   - memcached
 before_script:
-  - /bin/sh tests/travis/setup.sh
+  - /bin/bash tests/travis/setup.sh
 script:
   - "prove -v --exec 'php --php-ini ./tests/php.ini' ./tests/*.t"
