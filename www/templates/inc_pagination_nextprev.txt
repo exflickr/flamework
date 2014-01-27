@@ -1,4 +1,4 @@
-<ul class="pager">
+<ul class="pagination">
 {if $pagination.has_prev}
 	<li class="previous"><a href="{$pagination.prev_url}">&larr; Prev</a></li>
 {else}

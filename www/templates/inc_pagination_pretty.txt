@@ -1,26 +1,98 @@
+{if $pagination.page_count > 1}
+<ul class="pagination">
 
-<div class="pagination pagination-centered">
-	<ul>
+    {* previous button *}
+    {if $pagination.page > 1}
+		<li>{if $pagination_page_as_queryarg}</li>
+		<li><a href="{$pagination_url}&page={$pagination.page-1}">Previous page</a></li>
+		{else}
+		<li><a href="{$pagination_url}page{$pagination.page-1}">Previous page</a></li>
+		{/if}
+	{else}
+	     <li class="disabled"><a href="#">This is the first page</a></li>
+	{/if}
 
-{if $pagination.has_prev}
-		<li><a href="{$pagination.prev_url}">Prev</a></li>
-{else}
-		<li class="disabled"><a href="#">Prev</a></li>
-{/if}
-{foreach from=$pagination.page_links item='row'}
-{if $row.is_current}
-		<li class="active"><a href="{$row.url}">{$row.page}</a></li>
-{elseif $row.is_dots}
-		<li class="disabled"><a href="#">&hellip;</a></li>
-{else}
-		<li><a href="{$row.url}">{$row.page}</a></li>
-{/if}
-{/foreach}
-{if $pagination.has_next}
-		<li><a href="{$pagination.next_url}">Next</a></li>
-{else}
-		<li class="disabled"><a href="#">Next</a></li>
-{/if}
-	</ul>
-</div>
+	{* middle *}
+
+	{if $pagination.page_count > 10}
+	    {assign var=range_mid value=7}
+	    {assign var=rfloor value=$range_mid/2|@floor}
+	    
+	    {assign var=range_min value=$pagination.page-$rfloor}
+	    {assign var=range_max value=$pagination.page+$rfloor}
+    	    	
+    	{if $range_min <= 0}
+    	    {assign var=adjmin value=$range_min|@abs}
+    	    {assign var=range_max value=$range_max+$adjmin+1}
+    	    {assign var=range_min value=1}
+    	{/if}
+    	
+    	{if $range_max > $pagination.page_count}
+    	    {assign var=adjmax value=$range_max-$pagination.page_count}
+    	    {assign var=range_min value=$range_min-$adjmax}
+    	    {assign var=range_max value=$pagination.page_count}
+    	{/if}
+    	
+    	{assign var=range value=$range_min|range:$range_max}
+        {assign var=rlen value=$range|@count}
+        {assign var=rlen value=$rlen-1}
+
+    	{section name=paglp start=1 loop=$pagination.page_count+1}
+    	    {assign var=i value=$smarty.section.paglp.index}
+   
+    	    {if $range.0 > 2 && $i == $range.0}
+    	        <li class="disabled pag-middle"><a href="#">...</a></li>
+    	    {/if}
+    	    
+    	    {if $i == 1 || $i == $pagination.page_count || $i|in_array:$range}
+   	        {if $i == $pagination.page}
+    	                <li class="active pag-middle"><a href="#">{$i}</a></li>
+    	        {elseif $pagination_page_as_queryarg}
+        		<li class="pag-middle"><a href="{$pagination_url}&page={$i}">{$i}</a></li>
+       		{else}
+        		<li class="pag-middle"><a href="{$pagination_url}page{$i}">{$i}</a></li>
+       		{/if}
+    	    {/if}
+    	    
+    	    {if $range.$rlen < $pagination.page_count-1 && $i == $range.$rlen}
+    	    <li class="disabled pag-middle"><a href="#">...</a></li>
+    	    {/if}
+    	    
+    	{/section}
+
+	{else}
 	
+    	{section name=paglp start=1 loop=$pagination.page_count+1}
+    	    {assign var=i value=$smarty.section.paglp.index}
+
+    	    {if $i == $pagination.page}
+    	        <li class="active pag-middle"><a href="#">{$i}</a></li>
+    	    {else}
+    	        {if $pagination_page_as_queryarg}
+        		<li class="pag-middle"><a href="{$pagination_url}&page={$i}">{$i}</a></li>
+        		{else}
+        		<li class="pag-middle"><a href="{$pagination_url}page{$i}">{$i}</a></li>
+        		{/if}
+    	    {/if}
+    	    
+    	{/section}
+	
+	{/if}
+
+    {* next button *}
+    {if $pagination.page < $pagination.page_count}
+		{if $pagination_page_as_queryarg}
+		<li><a href="{$pagination_url}&page={$pagination.page+1}">Next page</a></li>
+		{else}
+		<li><a href="{$pagination_url}page{$pagination.page+1}">Next page</a></li>
+		{/if}
+	{else}
+	    <li class="disabled"><a href="#">This is the last page</a></li>
+	{/if}
+    
+</ul>
+
+{if 0}<p class="lead"><small>Page {$pagination.page|number_format|escape} of {$pagination.page_count|number_format|escape}</small></p>{/if}
+
+{/if}
+
