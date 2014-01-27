@@ -4,17 +4,22 @@
 <div class="container">
 	<p>Are you <strong>really sure</strong> you want to delete your account?</p>
 
-	<form action="/account/delete" method="post" accept-encoding="UTF-8" class="form-horizontal">
+	<form action="{$cfg.abs_root_url}account/delete/" method="post" accept-encoding="UTF-8" class="form-horizontal">
 		<input type="hidden" name="delete" value="1" />
 		{$crumb_key|crumb_input}
 	    
-		<fieldset>
-			<label class="checkbox" for="confirm">
-				<input type="checkbox" name="confirm" id="confirm"> Yes, I want to delete my account.
-			</label>
+		<div class="form-group">
+		  <div class="checkbox">
+		    <label>
+			<input type="checkbox" name="confirm" id="confirm"> Yes, I want to delete my account.
+		    </label>
+		   </div>
+		 </div>
+		 
+		 <div class="form-group">
+			<button type="submit" class="btn btn-danger">Delete my account</button>
+		</div>
 
-			<input type="SUBMIT" class="btn btn-danger" value="DELETE MY ACCOUNT" />
-		</fieldset>
 	</form>
 </div>
 

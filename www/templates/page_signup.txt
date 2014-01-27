@@ -2,42 +2,43 @@
 {include file='inc_head.txt'}
 
 <div class="container">
-	{if $error_missing}		<p class="alert alert-error">Please fill out all the fields</p>{/if}
-	{if $error_email_taken}		<p class="alert alert-error">Email address already registered.</p>{/if}
-	{if $error_username_taken}	<p class="alert alert-error">Username is taken.</p>{/if}
-	{if $error_failed}		<p class="alert alert-error">Failed for an unknown reason :(</p>{/if}
+	{if $error_missing}		<p class="alert alert-danger">Please fill out all the fields</p>{/if}
+	{if $error_email_taken}		<p class="alert alert-danger">Email address already registered.</p>{/if}
+	{if $error_username_taken}	<p class="alert alert-danger">Username is taken.</p>{/if}
+	{if $error_failed}		<p class="alert alert-danger">Failed for an unknown reason :(</p>{/if}
 
-	<form action="/signup" method="post" accept-encoding="UTF-8" class="form-horizontal">
+<div class="row">
+
+	<form action="{$cfg.abs_root_url}signup/" method="post" accept-encoding="UTF-8" class="form-horizontal">
 		<input type="hidden" name="signup" value="1" />
 		<input type="hidden" name="redir" value="{$redir|escape}" />
 
 		<fieldset>
-	        <div class="control-group{if $error_missing && !$username} error{/if}">
-				<label class="control-label" for="username">username</label>
-				<div class="controls">
-					<input type="text" name="username" size="40" value="{$username|escape}" />
-				</div>
-			</div>
+	        <div class="form-group{if $error_missing && !$username} error{/if}">
+			<label for="username">Username</label>
+			<input type="text" name="username" size="40" value="{$username|escape}" class="form-control" />
+		</div>
 			
-	        <div class="control-group{if $error_missing && !$email} error{/if}">
-				<label class="control-label" for="email">email address</label>
-				<div class="controls">
-					<input type="email" name="email" size="40" value="{$email|escape}" />
-				</div>
-			</div>
+	        <div class="form-group{if $error_missing && !$email} error{/if}">
+			<label for="email">Email address</label>
+				<input type="email" name="email" size="40" value="{$email|escape}" class="form-control" />
+		</div>
 
-	        <div class="control-group{if $error_missing && !$password} error{/if}">
-				<label class="control-label" for="password">password</label>
-				<div class="controls">
-					<input type="password" name="password" size="40" value="{$password|escape}" />
-				</div>
-			</div>
+	        <div class="form-group{if $error_missing && !$password} error{/if}">
+			<label for="password">Password</label>
+			<input type="password" name="password" size="40" value="{$password|escape}" class="form-control" />
+		</div>
 
-	        <div class="form-actions">
-				<input type="submit" class="btn btn-primary" value="CREATE YOUR ACCOUNT"/>
-			</div>
-		</fieldset>
+		<div class="form-group">
+		<button type="submit" class="btn btn-primary">Create your account</button>
+		</div>
 	</form>
+</div>
+
+<div class="row">
+<p class="pull-right">Already have an account? <a href="{$cfg.abs_root_url}signin/">Sign-in here.</a></p>
+</div>
+
 </div>
 
 {include file='inc_foot.txt'}

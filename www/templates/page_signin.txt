@@ -2,38 +2,37 @@
 {include file='inc_head.txt'}
 
 <div class="container">
-	{if $error_missing}	<p class="alert alert-error">Please enter your email address and password.</p>{/if}
-	{if $error_nouser}	<p class="alert alert-error">Sorry, we can't find an account with that email address.</p>{/if}
-	{if $error_deleted}	<p class="alert alert-error">Account has been deleted.</p>{/if}
-	{if $error_password}	<p class="alert alert-error">Incorrect password.</p>{/if}
+<div class="row">
 
-	<form action="/signin" method="post" accept-encoding="UTF-8" class="form-horizontal">
+	{if $error_missing}	<p class="alert alert-danger">Please enter your email address and password.</p>{/if}
+	{if $error_nouser}	<p class="alert alert-danger">Sorry, we can't find an account with that email address.</p>{/if}
+	{if $error_deleted}	<p class="alert alert-danger">Account has been deleted.</p>{/if}
+	{if $error_password}	<p class="alert alert-danger">Incorrect password.</p>{/if}
+
+	<form action="{$cfg.abs_root_url}signin/" method="post" accept-encoding="UTF-8" class="form-horizontal">
 		<input type="hidden" name="signin" value="1" />
 		<input type="hidden" name="redir" value="{$redir|escape}" />
 
-		<fieldset>
-	        <div class="control-group{if $error_missing && !$email} error{/if}">
-				<label class="control-label" for="email">email address</label>
-				<div class="controls">
-					<input type="email" name="email" size="40" value="{$email|escape}" />
-				</div>
-			</div>
+	        <div class="form-group{if $error_missing && !$email} error{/if}">
+			<label for="email">Email address</label>
+			<input type="email" name="email" size="40" value="{$email|escape}" class="form-control"/>
+		</div>
 
-	        <div class="control-group{if $error_missing && !$password} error{/if}">
-				<label class="control-label" for="password">password</label>
-				<div class="controls">
-					<input type="password" name="password" size="40" />
-				</div>
-			</div>
+	        <div class="form-group{if $error_missing && !$password} error{/if}">
+			<label for="password">Password</label>
+			<input type="password" name="password" size="40" class="form-control" />
+		</div>
 
-	        <div class="form-actions">
-				<input type="submit" class="btn btn-primary" value="SIGN IN" />
-			</div>
-		</fieldset>
+	        <div class="form-group">
+			<button type="submit" class="btn btn-primary">Sign-in</button>
+		</div>
 	</form>
+</div>
 
-	{if $cfg.enable_feature_password_retrieval}
-	<p><a href="/forgot">Forgotten your password?</a></p>
+	{if "password_retrieval"|@features_is_enabled}
+<div class="row">
+	<p class="pull-right"><a href="{$cfg.abs_root_url}forgot/">Forgotten your password?</a></p>
+</div>
 	{/if}
 </div>
 
