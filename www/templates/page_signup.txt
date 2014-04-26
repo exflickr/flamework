@@ -1,44 +1,68 @@
 {assign var='page_title' value='Sign up for a new account' nav_tab='signup'}
 {include file='inc_head.txt'}
 
-<div class="container">
-	{if $error_missing}		<p class="alert alert-danger">Please fill out all the fields</p>{/if}
-	{if $error_email_taken}		<p class="alert alert-danger">Email address already registered.</p>{/if}
-	{if $error_username_taken}	<p class="alert alert-danger">Username is taken.</p>{/if}
-	{if $error_failed}		<p class="alert alert-danger">Failed for an unknown reason :(</p>{/if}
+<div class="col-md-8 col-md-offset-2 blah-blah-blah">
 
-<div class="row">
+	{if $error_missing}		<p class="alert alert-error">Please fill out all the fields</p>{/if}
+	{if $error_email_taken}		<p class="alert alert-error">Email address already registered.</p>{/if}
+	{if $error_username_taken}	<p class="alert alert-error">Username is taken.</p>{/if}
+	{if $error_failed}		<p class="alert alert-error">Failed for an unknown reason :(</p>{/if}
 
-	<form action="{$cfg.abs_root_url}signup/" method="post" accept-encoding="UTF-8" class="form-horizontal">
+	<form action="{$cfg.abs_root_url}signup/" method="POST" accept-encoding="UTF-8" class="form" role="form" id="signup">
+		{$crumb_key|crumb_input}
 		<input type="hidden" name="signup" value="1" />
 		<input type="hidden" name="redir" value="{$redir|escape}" />
 
-		<fieldset>
 	        <div class="form-group{if $error_missing && !$username} error{/if}">
-			<label for="username">Username</label>
+			<label class="control-label" for="username">username</label>
 			<input type="text" name="username" size="40" value="{$username|escape}" class="form-control" />
 		</div>
 			
 	        <div class="form-group{if $error_missing && !$email} error{/if}">
-			<label for="email">Email address</label>
-				<input type="email" name="email" size="40" value="{$email|escape}" class="form-control" />
+			<label class="control-label" for="email">email address</label>
+			<input type="email" name="email" size="40" value="{if $email}{$email|escape}{elseif $invite}{$invite.email|escape}{else}{/if}" class="form-control" />
 		</div>
 
 	        <div class="form-group{if $error_missing && !$password} error{/if}">
-			<label for="password">Password</label>
+			<label class="control-label" for="password">password</label>
 			<input type="password" name="password" size="40" value="{$password|escape}" class="form-control" />
 		</div>
 
 		<div class="form-group">
-		<button type="submit" class="btn btn-primary">Create your account</button>
+			<input type="checkbox" id="tos" name="tos" />
+			<label for="tos">By signing up you are agreeing to the <a href="{$cfg.abs_root_url}" target="_tos"><span class="hey-look">{$cfg.site_name|escape}</span> terms of service</a>.
+			</label>
 		</div>
+
+	        <div class="form-group text-center" style="margin-top:2em; margin-bottom:4em;">
+			<input type="submit" class="btn btn-primary" value="CREATE YOUR ACCOUNT"/>
+		</div>
+
 	</form>
+
+<div class="text-center">
+			<p><small>	     
+			Do you already have an account? <a href="{$cfg.abs_root_url}signin/">Sign in here</a>. 
+			</small></p>
 </div>
 
-<div class="row">
-<p class="pull-right">Already have an account? <a href="{$cfg.abs_root_url}signin/">Sign-in here.</a></p>
 </div>
 
-</div>
+<script type="text/javascript">
+{literal}
+$(document).ready(function(){
+
+	$("#signup").submit(function(){
+
+		var tos = $("#tos");
+
+		if (! tos.attr("checked")){
+			alert("You forgot to agree to the terms of service!");
+			return false;
+		}
+	});
+});
+{/literal}
+</script>
 
 {include file='inc_foot.txt'}

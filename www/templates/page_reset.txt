@@ -1,7 +1,7 @@
 {assign var="page_title" value="Reset your password"}
 {include file="inc_head.txt"}
 
-<h1 class="alert alert-info">This doesn't work very well yet</h1>
+<div class="col-md-8 col-md-offset-2 blah-blah-blah">
 
 {* very bad errors *}
 
@@ -25,25 +25,25 @@ INVISIBLE ERROR CAT HISSES AT YOU!
 {/if}
 {/if}
 
-<p>Please enter your new password</p>
-
 <form action="{$cfg.abs_root_url}reset/{$reset_code|escape}" method="post" accept-encoding="UTF-8">
-	<input type="hidden" name="done" value="1" />
+      <input type="hidden" name="done" value="1" />
 
-	        <div class="form-group">
-		     <label for="new_password1">Your new password</label>
-		     <input type="password" name="new_password1" size="40" value="" class="form-control" />
-		</div>
+              <div class="form-group">
+      	        <label for="new_password1">Your new password</label>
+	            <input type="password" name="new_password1" size="40" value="" class="form-control" />
+    	   </div>
 
-	        <div class="form-group">
-		     <label for="new_password2">Your new password (again)</label>
-		     <input type="password" name="new_password2" size="40" value="" class="form-control" />
-		</div>
+           <div class="form-group">
+   	     <label for="new_password2">Your new password (again)</label>
+   	         <input type="password" name="new_password2" size="40" value="" class="form-control" />
+	</div>
 
-		<div class="form-group">
-		<button type="submit" class="btn btn-primary">Reset your password</button>
-		</div>
+											<div class="form-group text-center">
+											     <button type="submit" class="btn btn-primary">Reset your password</button>
+											     	     </div>
 </form>
 {/if}
+
+</div>
 
 {include file="inc_foot.txt"}

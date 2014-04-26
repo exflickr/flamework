@@ -1,39 +1,42 @@
 {assign var='page_title' value='Sign in' nav_tab='signin'}
 {include file='inc_head.txt'}
 
-<div class="container">
-<div class="row">
+<div class="col-md-8 col-md-offset-2">
 
 	{if $error_missing}	<p class="alert alert-danger">Please enter your email address and password.</p>{/if}
 	{if $error_nouser}	<p class="alert alert-danger">Sorry, we can't find an account with that email address.</p>{/if}
 	{if $error_deleted}	<p class="alert alert-danger">Account has been deleted.</p>{/if}
 	{if $error_password}	<p class="alert alert-danger">Incorrect password.</p>{/if}
 
-	<form action="{$cfg.abs_root_url}signin/" method="post" accept-encoding="UTF-8" class="form-horizontal">
+	<form action="{$cfg.abs_root_url}signin/" method="post" accept-encoding="UTF-8" class="form" role="form">
+		{$crumb_key|crumb_input}
 		<input type="hidden" name="signin" value="1" />
 		<input type="hidden" name="redir" value="{$redir|escape}" />
 
 	        <div class="form-group{if $error_missing && !$email} error{/if}">
-			<label for="email">Email address</label>
-			<input type="email" name="email" size="40" value="{$email|escape}" class="form-control"/>
+			<label class="control-label" for="email">email address</label>
+			<input type="email" name="email" size="40" value="{$email|escape}" class="form-control" placeholder="your email address" />
 		</div>
 
 	        <div class="form-group{if $error_missing && !$password} error{/if}">
-			<label for="password">Password</label>
-			<input type="password" name="password" size="40" class="form-control" />
+			<label class="control-label" for="password">password</label>
+			<input type="password" name="password" size="40" class="form-control" placeholder="your password" />
 		</div>
 
-	        <div class="form-group">
-			<button type="submit" class="btn btn-primary">Sign-in</button>
+	        <div class="form-group text-center">
+			<input type="submit" class="btn btn-primary" value="SIGN IN" />
 		</div>
 	</form>
+
+<div class="text-center" style="margin-top:5em;">
+			<p><small>	     
+			{if $cfg.enable_feature_password_retrieval}
+			<a href="{$cfg.abs_root_url}forgot">Forgotten your password?</a>
+			{/if}
+			Don't have an account? <a href="{$cfg.abs_root_url}signup/">Sign up here</a>. 
+			</small></p>
 </div>
 
-	{if "password_retrieval"|@features_is_enabled}
-<div class="row">
-	<p class="pull-right"><a href="{$cfg.abs_root_url}forgot/">Forgotten your password?</a></p>
-</div>
-	{/if}
 </div>
 
 {include file='inc_foot.txt'}
