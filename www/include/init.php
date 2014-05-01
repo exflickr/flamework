@@ -230,6 +230,21 @@
 		}
 	}
 
+	if (isset($GLOBALS['cfg']['autoload_libs_if_enabled']) && is_array($GLOBALS['cfg']['autoload_libs_if_enabled'])){
+		foreach ($GLOBALS['cfg']['autoload_libs_if_enabled'] as $feature => $libs){
+
+			if (features_is_enabled($feature)){
+
+				if (! is_array($libs)){
+					$libs = array($libs);
+				}
+
+				foreach($libs as $lib){
+					loadlib($lib);
+				}
+			}
+		}
+	}
 
 	if (($GLOBALS['cfg']['site_disabled']) && (! $this_is_shell)){
 
