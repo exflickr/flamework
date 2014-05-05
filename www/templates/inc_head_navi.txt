@@ -1,3 +1,5 @@
+<div class="container">
+
 <nav class="navbar" role="navigation" id="header">
 
 	  <div class="navbar-header">
@@ -10,9 +12,8 @@
     	      <a class="navbar-brand" href="{$cfg.abs_root_url}">{$cfg.site_name|escape}</a>
           </div>
 	
-
+        {if !$cfg.site_disabled}
 	<div class="collapse navbar-collapse navbar-head-collapse">
-
 
 	     <ul class="nav navbar-nav pull-right">
 
@@ -50,7 +51,9 @@
 
 
 	      </ul>
-
 	</div>
+      {/if}
 
 </nav>
+
+</div>
