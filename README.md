@@ -24,7 +24,7 @@ piece of the puzzle, please send a pull-request.
 
 That's it.
 
-For a longer version, read the <a href="/docs/install_base.md">intsallation guide</a>.
+For a longer version, read the <a href="/docs/install_base.md">installation guide</a>.
 
 If you'd like to use Flamework as an external library, <a href="/docs/install_external.md">read this</a>.
 
