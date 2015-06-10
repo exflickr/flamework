@@ -106,6 +106,65 @@
 		return FLAMEWORK_INCLUDE_DIR . $lib;		
 	}
 
+	#
+	# general utility functions
+	#
+
+	# This is necessary to account for traffic being load-balanced by nginx. See also:
+	# https://github.com/cooperhewitt/turbo-happiness/blob/master/nginx/sites-available/collection.cooperhewitt.net
+	# (20130903/straup)
+
+	function remote_addr(){
+
+		if (isset($_SERVER['HTTP_X_REAL_IP'])){
+			return $_SERVER['HTTP_X_REAL_IP'];
+		}
+
+		return $_SERVER['REMOTE_ADDR'];
+	}
+
+	function remote_addr_as_int(){
+		$addr = remote_addr();
+		return ip2long($addr);
+	}
+
+	function dumper($foo){
+		echo "<pre style=\"text-align: left;\">";
+		echo HtmlSpecialChars(var_export($foo, 1));
+		echo "</pre>\n";
+	}
+
+	function caller(){
+		$trace = debug_backtrace();
+		$caller = $trace[2];	# the thing calling the thing that is invoking caller()
+		$func = $caller['function'];
+		return $func;
+	}
+
+	function intval_range($in, $lo, $hi){
+		return min(max(intval($in), $lo), $hi);
+	}
+
+	function microtime_ms(){
+		list($usec, $sec) = explode(" ", microtime());
+		return intval(1000 * ((float)$usec + (float)$sec));
+	}
+
+	function filter_strict($str){
+
+		$filter = new lib_filter();
+		$filter->allowed = array();
+		return $filter->go($str);
+	}
+
+	function filter_strict_quot($str){
+
+		$str = filter_strict($str);
+
+		$str = str_replace("&quot;", "\"", $str);
+		return $str;
+	}
+
 	# load config file(s)
 
 	$host = gethostname();
