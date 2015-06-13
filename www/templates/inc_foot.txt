@@ -6,7 +6,7 @@
         <p>&copy; Company {$smarty.now|date_format:"%Y"}</p>
       </footer>
 
-{if $cfg.auth_roles.staff}
+{if "staff"|@auth_has_role}
       	{timings}
 {/if}
 
