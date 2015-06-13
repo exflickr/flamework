@@ -52,8 +52,8 @@
 	function db_insert_bulk($tbl, $rows, $batch=100){	return _db_insert_bulk($tbl, $rows, $batch, 'main', null); }
 	function db_insert_bulk_users($tbl, $rows, $batch=100){	return _db_insert_bulk($tbl, $rows, $batch, 'users', $k); }
 
-	function db_insert_dupe($tbl, $hash, $hash2){		return _db_insert_dupe($tbl, $hash, $hash2, 'main', null); }
-	function db_insert_dupe_users($k, $tbl, $hash, $hash2){	return _db_insert_dupe($tbl, $hash, $hash2, 'users', $k); }
+	function db_insert_dupe($tbl, $hash, $hash2, $more=array()){		return _db_insert_dupe($tbl, $hash, $hash2, 'main', null, $more); }
+	function db_insert_dupe_users($k, $tbl, $hash, $hash2, $more=array()){	return _db_insert_dupe($tbl, $hash, $hash2, 'users', $k, $more); }
 
 	function db_update($tbl, $hash, $where){		return _db_update($tbl, $hash, $where, 'main', null); }
 	function db_update_users($k, $tbl, $hash, $where){	return _db_update($tbl, $hash, $where, 'users', $k); }
@@ -213,11 +213,48 @@
 
 	#################################################################
 
-	function _db_insert_dupe($tbl, $hash, $hash2, $cluster, $shard){
+	function _db_insert_dupe($tbl, $hash, $hash2, $cluster, $shard, $more=array()){
 
 		$fields = array_keys($hash);
 
 		$bits = array();
+
+		# This bit ensures that the correct value gets stuck in to
+		# MySQL's 'insert_id' slot. This might be important if you
+		# are using a ticket server to generate an ID before you've
+		# tried to stick anything in the database. It is left as an
+		# exercise to the calling function to check/update the row's
+		# ID by reading $rsp['insert_id']. For example:
+		# 
+		# $widget = ...
+		# $insert == ...
+		# $dupe == ...
+		#		
+		# $more = array(
+		# 	'ensure_insert_id' => 'id'
+		# );
+		# 
+		# $rsp = db_insert_dupe("Widgets", $insert, $dupe, $more);
+		# 
+		# if ($rsp['ok']){
+		# 
+		# 	if ($id = $rsp['insert_id']){
+		# 		$widget['id'] = $id;
+		# 	}
+		# 
+		# 	$rsp['widget'] = $widget;
+		# }
+		# 
+		# (20140618/straup)
+		#
+		# See also:
+		# http://mikefenwick.com/blog/insert-into-database-or-return-id-of-duplicate-row-in-mysql/
+
+		if (isset($more['ensure_insert_id'])){
+			$id = $more['ensure_insert_id'];
+			$bits[] = "`{$id}`=LAST_INSERT_ID(`{$id}`)";
+		}
+
 		foreach(array_keys($hash2) as $k){
 			$bits[] = "`$k`='$hash2[$k]'";
 		}
