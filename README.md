@@ -17,13 +17,14 @@ piece of the puzzle, please send a pull-request.
 
 * Copy everything in <code>www</code> to a web server running Apache with <code>mod_php</code> and <code>php5-mcrypt</code>.
 * Enable <code>AllowOverrides all</code> for the root.
+* If some of your rewrite rules like <code>^account/password$</code> aren't working, try <code>Options -MultiViews</code>.
 * Copy <code>include/config.php.example</code> to <code>include/config.php</code> and edit it.
 * Ensure that the <code>templates_c</code> directory can be written to by your webserver.
 * Load the schema into mysql: <code>mysql -uwww -Dflamework -p < schema/db_main.schema</code>
 
 That's it.
 
-For a longer version, read the <a href="/docs/install_base.md">intsallation guide</a>.
+For a longer version, read the <a href="/docs/install_base.md">installation guide</a>.
 
 If you'd like to use Flamework as an external library, <a href="/docs/install_external.md">read this</a>.
 
