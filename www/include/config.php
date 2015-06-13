@@ -61,6 +61,12 @@
 
 	# Things you may need to tweak
 
+	# Auth roles
+
+	$GLOBALS['cfg']['enable_feature_auth_roles_autopromote_staff'] = 0;
+	$GLOBALS['cfg']['enable_feature_auth_roles_autopromote_staff_dev'] = 0;
+	$GLOBALS['cfg']['enable_feature_auth_roles_autopromote_staff_shell'] = 0;
+
 	# Caching stuff
 
         $GLOBALS['cfg']['enable_feature_cache_prefixes'] = 1;
