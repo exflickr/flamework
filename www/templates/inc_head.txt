@@ -15,7 +15,7 @@
     <link href="{$cfg.abs_root_url}css/admin.source.css" rel="stylesheet">
 {/if}
 
-    <script src="{$cfg.abs_root_url}javascript/jquery-1.8.2.min.js"></script>
+    <script src="{$cfg.abs_root_url}javascript/jquery-2.1.0.min.js"></script>
     <script src="{$cfg.abs_root_url}javascript/bootstrap.min.js"></script>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
