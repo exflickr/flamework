@@ -461,6 +461,10 @@
 
 	$GLOBALS['timings']['db_init_time'] = $time;
 
+	if ($this_is_webpage){
+		login_check_login();
+	}
+
 	if (StrToLower($_SERVER['HTTP_X_MOZ']) == 'prefetch'){
 
 		if (! $GLOBALS['cfg']['allow_precache']){
