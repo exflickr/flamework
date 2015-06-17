@@ -224,6 +224,10 @@
 		curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 		curl_setopt($ch, CURLOPT_HEADER, true);
 
+		if($more['http_proxy']){
+			curl_setopt($ch, CURLOPT_PROXY, $more['http_proxy']);
+		}
+
 		if ($more['http_port']){
 			curl_setopt($ch, CURLOPT_PORT, $more['http_port']);
 		}
