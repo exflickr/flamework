@@ -1,12 +1,19 @@
 <?php
-	if (!defined('MCRYPT_RIJNDAEL_256')) log_fatal("[lib_crypto] Flamework requires MCRYPT_RIJNDAEL_256");
-	if (!defined('MCRYPT_MODE_ECB')) log_fatal("[lib_crypto] Flamework requires MCRYPT_MODE_ECB");
+	if (!defined('MCRYPT_RIJNDAEL_256')){
+		 die("[lib_crypto] Flamework requires MCRYPT_RIJNDAEL_256");
+	}
+
+	if (!defined('MCRYPT_MODE_ECB')){
+		die("[lib_crypto] Flamework requires MCRYPT_MODE_ECB");
+	}
 
 	#################################################################
 
 	function crypto_encrypt($data, $key){
 
-		if (!strlen($key)) log_fatal("[lib_crypto] Trying to encrypt with a blank key");
+		if (!strlen($key)){
+			die("[lib_crypto] Trying to encrypt with a blank key");
+		}
 
 		$key = hash('sha256', $key, true);
 

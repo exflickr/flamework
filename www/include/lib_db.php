@@ -18,7 +18,7 @@
 	function db_init(){
 
 		if (!function_exists('mysql_connect')){
-			die("lib_db requires the mysql PHP extension\n");
+			die("[lib_db] requires the mysql PHP extension\n");
 		}
 
 		#
