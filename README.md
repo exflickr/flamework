@@ -75,7 +75,7 @@ There are several drop-in external libraries for common tasks:
 
 And some random odds and ends:
 
-* <a href="https://github.com/straup/flamework">flamework-tools</a> - Automation scripts
+* <a href="https://github.com/straup/flamework-tools">flamework-tools</a> - Automation scripts
 
 
 ## Tests
