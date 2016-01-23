@@ -3,7 +3,7 @@
 <div class="container">
   <div class="hero-unit">
     <h1>Flamework</h1>
-    <p>OK, looks like you got it installed. You win one (1) Internets.</p>
+    <p>looks like you got it installed. You win one (1) Internets.</p>
     <ul>
       <li><a href="https://github.com/exflickr/flamework">Flamework on GitHub</a></li>
       <li><a href="http://twitter.github.com/bootstrap/">Bootstrap docs</a></li>
