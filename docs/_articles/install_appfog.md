@@ -1,3 +1,8 @@
+---
+title: "Installation - Appfog.com"
+layout: default
+---
+
 # Installation - AppFog.com
 
 Installation on AppFog.com is pretty simple and offers the advantage of being able to easily scale your app and move between infrastructures and data centers. 

@@ -1,3 +1,8 @@
+---
+title: "Installation - base"
+layout: default
+---
+
 # Installation - As a base for a new project
 
 Get the [code from GitHub](https://github.com/exflickr/flamework).

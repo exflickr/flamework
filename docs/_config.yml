@@ -1,0 +1,10 @@
+title: flamework docs
+
+# Build settings
+markdown: kramdown
+
+# collections
+collections:
+  articles:
+      output: true
+      

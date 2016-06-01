@@ -1,3 +1,8 @@
+---
+title: "Style guide"
+layout: default
+---
+
 # Flamework Style guide
 
 The coding style is idiosyncratic and will stay that way. There are no

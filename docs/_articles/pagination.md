@@ -1,3 +1,8 @@
+---
+title: "Pagination"
+layout: default
+---
+
 # Pagination
 
 Flamework provides helper functions for creating simple or complex pagaing widgets.

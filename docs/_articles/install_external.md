@@ -1,3 +1,8 @@
+---
+title: "Installation - external"
+layout: default
+---
+
 # Installation - As an external library
 
 Another way to use flamework is to clone it into a subfolder and build

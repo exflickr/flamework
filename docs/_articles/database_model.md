@@ -1,3 +1,8 @@
+---
+title: "The flamework database model"
+layout: default
+---
+
 # The Flamework database model
 
 Flamework assumes a federated model with all the various user data spread across a series of databases, 

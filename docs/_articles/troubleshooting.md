@@ -1,3 +1,8 @@
+---
+title: "Troubleshooting"
+layout: default
+---
+
 Troubleshooting
 ===============
 

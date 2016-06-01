@@ -1,3 +1,8 @@
+---
+title: "Philosophy"
+layout: default
+---
+
 # Flamework Design Philosophy - Statement(s) of Bias
 
 *"Working on the crumbly edge of future-proofing." -- [Heather Champ](http://www.hchamp.com/)*
