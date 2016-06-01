@@ -1,5 +1,7 @@
 title: flamework docs
 
+baseurl: /flamework
+
 # Build settings
 markdown: kramdown
 
