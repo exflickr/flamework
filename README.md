@@ -24,11 +24,11 @@ piece of the puzzle, please send a pull-request.
 
 That's it.
 
-For a longer version, read the <a href="/docs/install_base.md">installation guide</a>.
+For a longer version, read the <a href="http://cooperhewitt.github.io/flamework/articles/install_base">installation guide</a>.
 
-If you'd like to use Flamework as an external library, <a href="/docs/install_external.md">read this</a>.
+If you'd like to use Flamework as an external library, <a href="http://cooperhewitt.github.io/flamework/articles/install_external">read this</a>.
 
-To install Flamework on AppFog.com, <a href="/docs/install_appfog.md">read this</a>.
+To install Flamework on AppFog.com, <a href="http://cooperhewitt.github.io/flamework/articles/install_appfog">read this</a>.
 
 
 ##Global Variables
@@ -47,10 +47,10 @@ Some libraries use their own globals internally, usually prefixed with `LIBRARYN
 
 ## Other documentation
 
-* <a href="/docs/troubleshooting.md">Troubleshooting</a>
-* <a href="/docs/philosophy.md">Design Philosophy</a>
-* <a href="/docs/database_model.md">Database Model</a>
-* <a href="/docs/style_guide.md">Style guide</a>
+* <a href="http://cooperhewitt.github.io/flamework/articles/troubleshooting">Troubleshooting</a>
+* <a href="http://cooperhewitt.github.io/flamework/articles/philosophy">Design Philosophy</a>
+* <a href="http://cooperhewitt.github.io/flamework/articles/database_model">Database Model</a>
+* <a href="http://cooperhewitt.github.io/flamework/articles/style_guide">Style guide</a>
 
 
 ## Libraries & Tools
