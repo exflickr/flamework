@@ -7,6 +7,6 @@ markdown: kramdown
 
 # collections
 collections:
-  articles:
+  docs:
       output: true
       
