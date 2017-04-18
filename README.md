@@ -31,7 +31,7 @@ If you'd like to use Flamework as an external library, <a href="/docs/install_ex
 To install Flamework on AppFog.com, <a href="/docs/install_appfog.md">read this</a>.
 
 
-##Global Variables
+## Global Variables
 
 Flamework uses and assigns global PHP variables on the grounds that it's really just not that big a 
 deal. A non-exhaustive list of global variables that Flameworks assigns is:
