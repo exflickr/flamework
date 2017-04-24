@@ -7,21 +7,18 @@
 	{if $error_notsent}	<p class="alert alert-error">Something went wrong :(</p>{/if}
 
 
-	<form action="/forgot" method="post" accept-encoding="UTF-8" class="form-horizontal">
+	<form action="{$cfg.abs_root_url}forgot/" method="post" accept-encoding="UTF-8" class="form-horizontal">
 		<input type="hidden" name="remind" value="1" />
 
 		<fieldset>
-	        <div class="control-group">
-	        	<label class="control-label" for="email">Email:</label>
-	        	<div class="controls">
-	        		<input type="email" name="email" size="40" value="" />
-				</div>
-			</div>
+	        <div class="form-group">
+	        	<label for="email">Email</label>
+        		<input type="email" name="email" size="40" value="" class="form-control" />
+		</div>
 
-	        <div class="form-actions">
-	        	<input type="submit" class="btn btn-primary" value="SEND PASSWORD REMINDER" />
-			</div>
-		</fieldset>
+	        <div class="form-group">
+	        	<button type="submit" class="btn btn-primary">Send password reminder</button>
+		</div>
 	</form>
 </div>
 

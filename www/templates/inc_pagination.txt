@@ -1,0 +1,105 @@
+{if $pagination.page_count > 1}
+
+<div class="container" style="text-align:center;">
+
+<ul class="pagination">
+
+    {* previous button *}
+    {if $pagination.page > 1}
+		<li>{if $pagination_page_as_queryarg}</li>
+		<li><a href="{$pagination_url}&page={$pagination.page-1}">previous page</a></li>
+		{else}
+		<li><a href="{$pagination_url}page{$pagination.page-1}">previous page</a></li>
+		{/if}
+	{else}
+	     <li class="disabled"><a href="#">you are here</a></li>
+	{/if}
+
+	{* middle *}
+
+	{if $pagination.page_count > 10}
+	    {assign var=range_mid value=7}
+	    {assign var=rfloor value=$range_mid/2|@floor}
+	    
+	    {assign var=range_min value=$pagination.page-$rfloor}
+	    {assign var=range_max value=$pagination.page+$rfloor}
+    	    	
+    	{if $range_min <= 0}
+    	    {assign var=adjmin value=$range_min|@abs}
+    	    {assign var=range_max value=$range_max+$adjmin+1}
+    	    {assign var=range_min value=1}
+    	{/if}
+    	
+    	{if $range_max > $pagination.page_count}
+    	    {assign var=adjmax value=$range_max-$pagination.page_count}
+    	    {assign var=range_min value=$range_min-$adjmax}
+    	    {assign var=range_max value=$pagination.page_count}
+    	{/if}
+    	
+    	{assign var=range value=$range_min|range:$range_max}
+        {assign var=rlen value=$range|@count}
+        {assign var=rlen value=$rlen-1}
+
+    	{section name=paglp start=1 loop=$pagination.page_count+1}
+    	    {assign var=i value=$smarty.section.paglp.index}
+   
+    	    {if $range.0 > 2 && $i == $range.0}
+    	        <li class="disabled pagination-numbered"><a href="#">...</a></li>
+    	    {/if}
+    	    
+    	    {if $i == 1 || $i == $pagination.page_count || $i|in_array:$range}
+   	        {if $i == $pagination.page}
+    	                <li class="active pagination-numbered"><a href="#">{$i}</a></li>
+    	        {elseif $pagination_page_as_queryarg}
+        		<li class="pagination-numbered"><a href="{$pagination_url}&page={$i}">{$i}</a></li>
+       		{else}
+        		<li class="pagination-numbered"><a href="{$pagination_url}page{$i}">{$i}</a></li>
+       		{/if}
+    	    {/if}
+    	    
+    	    {if $range.$rlen < $pagination.page_count-1 && $i == $range.$rlen}
+    	    <li class="disabled pagination-numbered"><a href="#">...</a></li>
+    	    {/if}
+    	    
+    	{/section}
+
+	{else}
+	
+    	{section name=paglp start=1 loop=$pagination.page_count+1}
+    	    {assign var=i value=$smarty.section.paglp.index}
+
+    	    {if $i == $pagination.page}
+    	        <li class="active pagination-numbered"><a href="#">{$i}</a></li>
+    	    {else}
+    	        {if $pagination_page_as_queryarg}
+        		<li class="pagination-numbered"><a href="{$pagination_url}&page={$i}">{$i}</a></li>
+        		{else}
+        		<li class="pagination-numbered"><a href="{$pagination_url}page{$i}">{$i}</a></li>
+        		{/if}
+    	    {/if}
+    	    
+    	{/section}
+	
+	{/if}
+
+    {* next button *}
+    {if $pagination.page < $pagination.page_count}
+		{if $pagination_page_as_queryarg}
+		<li><a href="{$pagination_url}&page={$pagination.page+1}">next page</a></li>
+		{else}
+		<li><a href="{$pagination_url}page{$pagination.page+1}">next page</a></li>
+		{/if}
+	{else}
+	    <li class="disabled"><a href="#">you are here</a></li>
+	{/if}
+    
+</ul>
+
+{if 0}<p class="lead"><small>Page {$pagination.page|number_format|escape} of {$pagination.page_count|number_format|escape}</small></p>{/if}
+
+{include file="inc_pagination_shortcuts.txt"}
+
+</div>
+
+{/if}
+

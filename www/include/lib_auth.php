@@ -1,41 +1,76 @@
 <?php
-	#
-	# This library handles administrative authentication for the application,
-	# which is separated from user-authentication.
-	#
-	# By default, we simply treat all users as admins when the environment is
-	# set to dev, or calls are being made from the command line.
-	#
-	# This is an apporpriate place to plug in something like GodAuth
-	# to handle actual role-based authentication.
-	# https://github.com/exflickr/GodAuth/
- 	#
 
-	auth_init();
 
 	########################################################################
 
-	function auth_init(){
+	function auth_has_role($role, $who=0){
 
-		$GLOBALS['cfg']['auth_roles'] = array();
+		$who = ($who) ? $who : $GLOBALS['cfg']['user']['id'];
 
-		if ($GLOBALS['cfg']['environment'] == 'dev'){
+		# This still needs better documentation but is here to account
+		# for glue-code that Cal added for dev environments (20150613/straup)
 
-			$GLOBALS['cfg']['auth_roles']['staff'] = 1;
+		if ((! $who) && ($role == "staff") && (features_is_enabled("auth_roles_autopromote_staff"))){
+			
+			if (($GLOBALS['cfg']['environment'] == 'dev') && (features_is_enabled("auth_roles_autopromote_staff_dev"))){
+				return 1;
+			}
+
+			if (($GLOBALS['this_is_shell']) && (features_is_enabled("auth_roles_autopromote_staff_shell"))){
+				return 1;
+			}
 		}
 
-		if ($GLOBALS['this_is_shell']){
-
-			$GLOBALS['cfg']['auth_roles']['staff'] = 1;
+		if (! $who){
+			return 0;
 		}
 
+		if (! isset($GLOBALS['cfg']['auth_users'][$who])){
+			return 0;
+		}
+
+		$details = $GLOBALS['cfg']['auth_users'][$who];
+		$roles = $details['roles'];
+
+		return (in_array($role, $roles)) ? 1 : 0;
 	}
 
 	########################################################################
 
-	function auth_has_role($role){
+	function auth_has_role_any($roles, $who=0){
 
-		return !!$GLOBALS['cfg']['auth_roles'][$role];
+		if (! is_array($roles)){
+			return 0;
+		}
+
+		foreach ($roles as $role){
+
+			if (auth_has_role($role, $who)){
+				return 1;
+			}
+		}
+
+		return 0;
 	}
 
 	########################################################################
+
+	function auth_has_role_all($roles, $who=0){
+
+		if (! is_array($roles)){
+			return 0;
+		}
+
+		foreach ($roles as $role){
+
+			if (! auth_has_role($role, $who)){
+				return 0;
+			}
+		}
+
+		return 1;
+	}
+
+	########################################################################
+
+	# the end

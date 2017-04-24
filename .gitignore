@@ -1,5 +1,6 @@
 *~
-www/include/config.php
+.DS_Store
 .vagrant
+www/include/secrets*.php
 tests/coverage.state
 coverage/

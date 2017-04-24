@@ -1,0 +1,12 @@
+title: flamework docs
+
+baseurl: /flamework
+
+# Build settings
+markdown: kramdown
+
+# collections
+collections:
+  docs:
+      output: true
+      

@@ -1,0 +1,11 @@
+{capture assign="email_subject"}Confirm your {$cfg.site_name} account{/capture}
+
+Hi {$user.username},
+
+Welcome! Thanks for signing up with "{$cfg.site_name}". We just need you to complete one more step and confirm your account by following the link below:
+
+{$cfg.abs_root_url}confirm/{$user.conf_code}/
+
+Once you do you'll be all set to start uploading photos.
+
+If you didn't sign up for "{$cfg.site_name}" then you can just ignore this email and we apologize for the inconvenience.

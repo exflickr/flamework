@@ -4,6 +4,8 @@
 	#
 	# A PHP HTML filtering library
 	#
+	# $Id$
+	#
 	# http://iamcal.com/publish/articles/php/processing_html/
 	# http://iamcal.com/publish/articles/php/processing_html_part_2/
 	#
@@ -14,6 +16,9 @@
 	# Thanks to Jang Kim for adding support for single quoted attributes
 	# Thanks to Dan Bogan for dealing with entity decoding outside attributes
 	#
+
+
+	$filter = new lib_filter();
 
 	class lib_filter {
 
@@ -65,6 +70,7 @@
 
 		var $allowed_protocols = array(
 			'http',
+			'https',
 			'ftp',
 			'mailto',
 		);
@@ -159,9 +165,13 @@
 
 		function escape_comments($data){
 
-			$data = preg_replace("/<!--(.*?)-->/se", "'<!--'.HtmlSpecialChars(\$this->StripSingle('\\1')).'-->'", $data);
+			$data = preg_replace_callback("/<!--(.*?)-->/s", array($this, 'escape_comments_inner'), $data);
 
 			return $data;
+		}
+
+		function escape_comments_inner($m){
+			return '<!--'.HtmlSpecialChars($this->StripSingle($m[1])).'-->';
 		}
 
 
@@ -209,7 +219,7 @@
 
 		function check_tags($data){
 
-			$data = preg_replace("/<(.*?)>/se", "\$this->process_tag(\$this->StripSingle('\\1'))",	$data);
+			$data = preg_replace_callback("/<(.*?)>/s", array($this, 'check_tags_inner'), $data);
 
 			foreach(array_keys($this->tag_counts) as $tag){
 				for($i=0; $i<$this->tag_counts[$tag]; $i++){
@@ -220,6 +230,10 @@
 			return $data;
 		}
 
+		function check_tags_inner($m){
+
+			return $this->process_tag($this->StripSingle($m[1]));
+		}
 
 		#####################################################################################
 
@@ -230,7 +244,7 @@
 				$name = StrToLower($matches[1]);
 				if (in_array($name, array_keys($this->allowed))){
 					if (!in_array($name, $this->no_close)){
-						if ($this->tag_counts[$name]){
+						if (isset($this->tag_counts[$name])){
 							$this->tag_counts[$name]--;
 							return '</'.$name.'>';
 						}
@@ -325,11 +339,16 @@
 
 		function process_remove_blanks($data){
 
-			foreach($this->remove_blanks as $tag){
+			if (count($this->remove_blanks)){
 
-				$data = preg_replace("/<{$tag}(\s[^>]*)?"."><\\/{$tag}>/", '', $data);
-				$data = preg_replace("/<{$tag}(\s[^>]*)?\\/>/", '', $data);
+				$tags = implode('|', $this->remove_blanks);
+				while (1){
+					$len = strlen($data);
+					$data = preg_replace("/<({$tags})(\s[^>]*)?(><\\/\\1>|\\/>)/", '', $data);
+					if ($len == strlen($data)) break;
+				}
 			}
+
 			return $data;
 		}
 
@@ -437,13 +456,17 @@
 			# it).
 			#
 
-			$data = preg_replace(
-				'!&([^&;]*)(?=(;|&|$))!e',
-				"\$this->check_entity(\$this->StripSingle('\\1'), \$this->StripSingle('\\2'))",
+			$data = preg_replace_callback(
+				'!&([^&;]*)(?=(;|&|$))!',
+				array($this, 'validate_entities_inner'),
 				$data
 			);
 
 			return $data;
+		}
+
+		function validate_entities_inner($m){
+			return $this->check_entity($this->StripSingle($m[1]), $this->StripSingle($m[2]));
 		}
 
 
@@ -637,3 +660,4 @@
 
 	}
 
+?>
