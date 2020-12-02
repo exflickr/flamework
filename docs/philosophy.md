@@ -1,6 +1,6 @@
 # Flamework Design Philosophy - Statement(s) of Bias
 
-*"Working on the crumbly edge of future-proofing." -- [Heather Champ](http://www.hchamp.com/)*
+*"Working on the crumbly edge of future-proofing." -- [Heather Champ](https://www.instagram.com/haitchchamp/)*
 
 If you've never watched [Cal Henderson's](http://www.iamcal.com) "Why I Hate Django" presentation now is probably 
 as good a time as any. It will help you understand a lot about why things were done they were at Flickr and why 
