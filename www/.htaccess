@@ -26,7 +26,6 @@ FileETag none
 php_value magic_quotes_gpc 0
 php_value register_globals 0
 php_value magic_quotes_runtime 0
-php_value track_errors 1
 php_value last_modified off
 php_value short_open_tag on
 
