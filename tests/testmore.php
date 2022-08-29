@@ -74,7 +74,7 @@ function plan($plan)
                 exit;
             }
 
-            echo "1..$plan\n";
+            echo "1..{$plan}\n";
             break;
     }
 }
@@ -93,13 +93,13 @@ function ok($pass, $test_name = '')
     }
 
     if (!empty($test_name) && $test_name[0] != '#') {
-        $test_name = "- $test_name";
+        $test_name = "- {$test_name}";
     }
 
     if ($pass) {
-        echo "ok $_test_num $test_name\n";
+        echo "ok {$_test_num} {$test_name}\n";
     } else {
-        echo "not ok $_test_num $test_name\n";
+        echo "not ok {$_test_num} {$test_name}\n";
 
         $_num_failures++;
         $caller = debug_backtrace();
@@ -116,36 +116,36 @@ function ok($pass, $test_name = '')
             $file = str_replace($_SERVER['SERVER_ROOT'], 't', $file);
         }
 
-        diag("    Failed test ($file at line $line)");
+        diag("    Failed test ({$file} at line {$line})");
     }
 
     return $pass;
 }
 
-function is($this, $that, $test_name = '')
+function is($got, $expected, $test_name = '')
 {
-    $pass = ($this == $that);
+    $pass = ($got == $expected);
 
     ok($pass, $test_name);
 
     if (!$pass) {
-        diag("         got: '$this'");
-        diag("    expected: '$that'");
+        diag("         got: '{$got}'");
+        diag("    expected: '${expected}'");
     }
 
     return $pass;
 }
 
-function isnt($this, $that, $test_name = '')
+function isnt($got, $expected, $test_name = '')
 {
-    $pass = ($this != $that);
+    $pass = ($got != $expected);
 
     ok($pass, $test_name);
 
     if (!$pass) {
-        diag("    '$this'");
+        diag("    '{$got}'");
         diag('        !=');
-        diag("    '$that'");
+        diag("    '{$expected}'");
     }
 
     return $pass;
@@ -158,8 +158,8 @@ function like($string, $pattern, $test_name = '')
     ok($pass, $test_name);
 
     if (!$pass) {
-        diag("                  '$string'");
-        diag("    doesn't match '$pattern'");
+        diag("                  '{$string}'");
+        diag("    doesn't match '{$pattern}'");
     }
 
     return $pass;
@@ -172,30 +172,30 @@ function unlike($string, $pattern, $test_name = '')
     ok($pass, $test_name);
 
     if (!$pass) {
-        diag("                  '$string'");
-        diag("          matches '$pattern'");
+        diag("                  '{$string}'");
+        diag("          matches '{$pattern}'");
     }
 
     return $pass;
 }
 
-function cmp_ok($this, $operator, $that, $test_name = '')
+function cmp_ok($got, $operator, $expected, $test_name = '')
 {
-    eval("\$pass = (\$this $operator \$that);");
+    eval("\$pass = (\$got {$operator} \$expected);");
 
     ob_start();
-    var_dump($this);
-    $_this = trim(ob_get_clean());
+    var_dump($got);
+    $_got = trim(ob_get_clean());
 
     ob_start();
-    var_dump($that);
-    $_that = trim(ob_get_clean());
+    var_dump($expected);
+    $_expected = trim(ob_get_clean());
 
     ok($pass, $test_name);
 
     if (!$pass) {
-        diag("         got: $_this");
-        diag("    expected: $_that");
+        diag("         got: {$_got}");
+        diag("    expected: {$_expected}");
     }
 
     return $pass;
@@ -209,7 +209,7 @@ function can_ok($object, $methods)
     foreach ($methods as $method) {
         if (!method_exists($object, $method)) {
             $pass = FALSE;
-            $errors[] = "    method_exists(\$object, $method) failed";
+            $errors[] = "    method_exists(\$object, {$method}) failed";
         }
     }
 
@@ -234,9 +234,9 @@ function isa_ok($object, $expected_class, $object_name = 'The object')
     }
 
     if ($pass) {
-        ok(TRUE, "$object_name isa $expected_class");
+        ok(TRUE, "{$object_name} isa {$expected_class}");
     } else {
-        ok(FALSE, "$object_name isn't a '$expected_class' it's a '$got_class'");
+        ok(FALSE, "{$object_name} isn't a '{$expected_class}' it's a '{$got_class}'");
     }
 
     return $pass;
@@ -256,10 +256,10 @@ function diag($message)
 {
     if (is_array($message)) {
         foreach($message as $current) {
-            echo "# $current\n";
+            echo "# {$current}\n";
         }
     } else {
-        echo "# $message\n";
+        echo "# {$message}\n";
     }
 }
 
@@ -284,7 +284,7 @@ function skip($message, $num)
     }
 
     for ($i = 0; $i < $num; $i++) {
-        pass("# SKIP $message");
+        pass("# SKIP {$message}");
     }
 
     $_num_skips = $num;
@@ -332,11 +332,11 @@ function _test_end()
     global $_test_num;
 
     if ($_no_plan) {
-        echo "1..$_test_num\n";
+        echo "1..{$_test_num}\n";
     }
 
     if ($_num_failures) {
-        diag("Looks like you failed $_num_failures tests of $_test_num.");
+        diag("Looks like you failed {$_num_failures} tests of {$_test_num}.");
     }
 }
 
