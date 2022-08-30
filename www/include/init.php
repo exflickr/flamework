@@ -40,7 +40,7 @@
 
 	function loadlib($name){
 
-		if ($GLOBALS['loaded_libs'][$name]){
+		if (!empty($GLOBALS['loaded_libs'][$name])){
 			return;
 		}
 
@@ -52,7 +52,7 @@
 
 	function loadpear($name){
 
-		if ($GLOBALS['loaded_libs']['PEAR:'.$name]){
+		if (!empty($GLOBALS['loaded_libs']['PEAR:'.$name])){
 			return;
 		}
 
@@ -189,13 +189,13 @@
 	# figure out some global flags
 	#
 
-	$this_is_apache		= strlen($_SERVER['REQUEST_URI']) ? 1 : 0;
+	$this_is_apache		= strlen($_SERVER['REQUEST_URI'] ?? '') ? 1 : 0;
 	$this_is_shell		= $_SERVER['SHELL'] ? 1 : 0;
 	$this_is_webpage	= $this_is_apache && !$this_is_api ? 1 : 0;
 	$this_is_test		= 0; # Overridden in wrapper.php
 
-	$cfg['admin_flags_no_db']		= $_GET['no_db'] ? 1 : 0;
-	$cfg['admin_flags_show_notices']	= $_GET['debug'] ? 1 : 0;
+	$cfg['admin_flags_no_db']		= ($_GET['no_db'] ?? '') ? 1 : 0;
+	$cfg['admin_flags_show_notices']	= ($_GET['debug'] ?? '') ? 1 : 0;
 
 
 	#

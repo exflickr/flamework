@@ -145,8 +145,8 @@
 
 		$debug_block .= "Args:\n";
 		$args = array(
-			'SERVER_REQUEST_URI'	=> $_SERVER['REQUEST_URI'],
-			'SERVER_REDIRECT_URL'	=> $_SERVER['REDIRECT_URL'],
+			'SERVER_REQUEST_URI'	=> $_SERVER['REQUEST_URI'] ?? '',
+			'SERVER_REDIRECT_URL'	=> $_SERVER['REDIRECT_URL'] ?? '',
 		);
 		$debug_block .= error_format_hash($args)."\n\n";
 
