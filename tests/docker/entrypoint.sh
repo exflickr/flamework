@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -eux
+
 /etc/init.d/memcached start
 
 /etc/init.d/mysql start
