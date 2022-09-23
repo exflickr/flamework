@@ -99,3 +99,20 @@ If you don't want to mess with your local development environment, you can run t
     vagrant ssh
     cd /vagrant
     make test
+
+## Docker
+
+Similarly, Docker is an option for both local development and test running, but is not suitable for production use (really, REALLY don't use it that way). To build and run:
+
+    docker build -t flamework .
+    docker run -ti -p80:8081 -p443:4331 --name=flamework --rm flamework
+
+Your local flamework copy should now be listening on ports `8081` and `4331` Docker randomly chose. Use `docker ps` to see them. To run tests, you can do:
+
+    docker exec -ti flamework make test
+
+And to tail the error logs:
+
+    docker exec -ti flamework tail -F /var/log/apache2/error.log
+
+When killing the container using either `CTRL+C` or `docker stop flamework`, the container will be removed and all data will be reset next run. This is useful for running tests.
