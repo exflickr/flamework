@@ -30,3 +30,7 @@ cover:
 	rm -rf ./coverage
 	-make test
 	php -q ./tests/coverage.php
+
+docker:
+	docker build -t flamework .
+	docker run -ti -p80\:8081 -p443\:4331 --name=flamework --rm flamework
