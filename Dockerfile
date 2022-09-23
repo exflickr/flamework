@@ -20,10 +20,6 @@ RUN chmod 755 www/templates_c
 RUN cp www/include/config.php.example www/include/config.php
 RUN cat tests/travis/config.php >> www/include/config.php
 
-RUN /etc/init.d/mysql start && \
-    mysql -e 'CREATE DATABASE flamework;' && \
-    mysql -Dflamework < schema/db_main.schema
-
 #RUN apt-get install -y php-pear
 #RUN pear channel-discover pear.phpunit.de
 #RUN pear install phpunit/PHP_CodeCoverage
