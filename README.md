@@ -80,7 +80,7 @@ And some random odds and ends:
 
 ## Tests
 
-If you have `make` and and recent `perl` installed (you almost certainly do), you can run the tests using:
+If you have `make` and and recent `perl` installed (you almost certainly do, or if not see [Vagrant](#vagrant) and [Docker](#docker) sections below), you can run the tests using:
 
     make test
 
