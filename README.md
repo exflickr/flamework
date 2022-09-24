@@ -102,12 +102,14 @@ If you don't want to mess with your local development environment, you can run t
 
 ## Docker
 
-Similarly, Docker is an option for both local development and test running, but is not suitable for production use (really, REALLY don't use it that way). To build and run:
+Similarly, Docker is an option for both local development and test running, but is not suitable for production use (really, REALLY don't use it for prod -- we (intentionally) do not have this configured securely). To build and run:
 
     docker build -t flamework .
     docker run -ti -p80:8081 -p443:4331 --name=flamework --rm flamework
 
-Your local flamework copy should now be listening on ports `8081` and `4331`. Use `docker ps` to verify them. Once the container is running, to run tests you can do:
+Your local flamework copy should now be listening on ports `8081` and `4331`. Use `docker ps` to verify them. You'll need to edit <code>include/config.php</code> as usual.
+
+Once the container is running, to run tests you can do:
 
     docker exec -ti flamework make test
 
