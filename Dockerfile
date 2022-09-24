@@ -14,11 +14,12 @@ RUN php5enmod mcrypt && \
 # This needs to be a volume mount so code can be edited and loaded live
 # but we also need to be able to set up a default config
 # TODO: Different config when docker vs travis?
-# TODO: Looks like we need a new VirtualHost apache config that sets the
-# right Directory AllowOverride and other configs. Or how to do another
-# approach for that?
 COPY . /mnt/flamework
 WORKDIR /mnt/flamework
+
+RUN ln -fs /mnt/flamework/tests/docker/001-flamework.conf /etc/apache2/sites-available/
+RUN a2ensite 001-flamework
+RUN a2dissite 000-default
 
 RUN rm -rf /var/www/html
 RUN ln -fs /mnt/flamework/www /var/www/html
