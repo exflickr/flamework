@@ -7,8 +7,16 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get autoremove && \
     apt-get clean && apt-get autoclean
 
-RUN php5enmod mcrypt
+RUN php5enmod mcrypt && \
+    a2enmod rewrite
 
+# TODO: This whole section needs we-work. For example:
+# This needs to be a volume mount so code can be edited and loaded live
+# but we also need to be able to set up a default config
+# TODO: Different config when docker vs travis?
+# TODO: Looks like we need a new VirtualHost apache config that sets the
+# right Directory AllowOverride and other configs. Or how to do another
+# approach for that?
 COPY . /mnt/flamework
 WORKDIR /mnt/flamework
 
@@ -20,11 +28,13 @@ RUN chmod 755 www/templates_c
 RUN cp www/include/config.php.example www/include/config.php
 RUN cat tests/travis/config.php >> www/include/config.php
 
+# TODO: PHPUnit via Pear is dead. Also, conditionally install only when running tests?
 #RUN apt-get install -y php-pear
 #RUN pear channel-discover pear.phpunit.de
 #RUN pear install phpunit/PHP_CodeCoverage
 
 RUN apt-get install -y make
+# TODO: Only install when running tests?
 #RUN pecl install xdebug
 #RUN echo "zend_extension=/usr/lib/php5/20090626+lfs/xdebug.so" > /etc/php5/conf.d/xdebug.ini
 
