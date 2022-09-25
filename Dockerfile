@@ -39,6 +39,8 @@ RUN apt-get install -y make
 #RUN pecl install xdebug
 #RUN echo "zend_extension=/usr/lib/php5/20090626+lfs/xdebug.so" > /etc/php5/conf.d/xdebug.ini
 
+VOLUME ["/mnt/flamework"]
+
 EXPOSE 80
 EXPOSE 443
 
