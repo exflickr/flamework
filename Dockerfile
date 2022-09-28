@@ -8,9 +8,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get autoremove && \
     apt-get clean && apt-get autoclean
 
-# Turn on the mcrypt php module and the rewrite apache module
+# Turn on the mcrypt php module and the rewrite\ssl apache modules
 RUN php5enmod mcrypt && \
-    a2enmod rewrite
+    a2enmod rewrite && \
+    a2enmod ssl
+
+# TODO: Proper ssl certs via letsencrypt or something
 
 # Configure our path for where we'll serve source-code from
 WORKDIR /mnt/flamework
