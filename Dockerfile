@@ -37,6 +37,9 @@ RUN ln -fs /mnt/flamework/www /var/www/html
 # Allow mounting of source code from external to the container
 VOLUME ["/mnt/flamework"]
 
+# Optional persistence of the mysql data
+VOLUME ["/var/lib/mysql"]
+
 # Listen on the HTTP and HTTPS ports
 EXPOSE 80
 EXPOSE 443
