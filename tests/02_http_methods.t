@@ -25,17 +25,17 @@
 	}
 
 
-	$ret = http_get("http://www.iamcal.com/misc/test/method.php");
+	$ret = http_get("https://www.iamcal.com/misc/test/method.php");
 	test_http_method($ret, 'GET', 0, 0);
 
-	$ret = http_get("http://www.iamcal.com/misc/test/method.php?a=1&b=2");
+	$ret = http_get("https://www.iamcal.com/misc/test/method.php?a=1&b=2");
 	test_http_method($ret, 'GET', 2, 0);
 
-	$ret = http_head("http://www.iamcal.com/misc/test/method.php");
+	$ret = http_head("https://www.iamcal.com/misc/test/method.php");
 	test_http_method($ret, 'HEAD', 0, 0);
 
-	$ret = http_post("http://www.iamcal.com/misc/test/method.php", array());
+	$ret = http_post("https://www.iamcal.com/misc/test/method.php", array());
 	test_http_method($ret, 'POST', 0, 0);
 
-	$ret = http_post("http://www.iamcal.com/misc/test/method.php?a=1", array('b' => 2, 'c' => 3));
+	$ret = http_post("https://www.iamcal.com/misc/test/method.php?a=1", array('b' => 2, 'c' => 3));
 	test_http_method($ret, 'POST', 1, 2);

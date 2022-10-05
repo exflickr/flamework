@@ -80,7 +80,7 @@ And some random odds and ends:
 
 ## Tests
 
-If you have `make` and and recent `perl` installed (you almost certainly do), you can run the tests using:
+If you have `make` and and recent `perl` installed (you almost certainly do, or if not see [Vagrant](#vagrant) and [Docker](#docker) sections below), you can run the tests using:
 
     make test
 
@@ -99,3 +99,22 @@ If you don't want to mess with your local development environment, you can run t
     vagrant ssh
     cd /vagrant
     make test
+
+## Docker
+
+Similarly, Docker is an option for both local development and test running, but is not suitable for production use (really, REALLY don't use it for prod -- we (intentionally) do not have this configured securely). To build and run:
+
+    docker build -t flamework .
+    docker run -ti -p80:8081 -p443:4331 -v ~/dev/flamework:/mnt/flamework --name=flamework --rm flamework
+
+Your local flamework copy should now be listening on ports `8081` and `4331`. Use `docker ps` to verify them. You'll need to edit <code>include/config.php</code> as usual. Since you mounted your local dev flamework directory into the container, any code changes you make should be reflected immediately.
+
+Once the container is running, to run tests you can do:
+
+    docker exec -ti flamework make test
+
+And to tail the error logs:
+
+    docker exec -ti flamework tail -F /var/log/apache2/error.log
+
+When killing the container using either `CTRL+C` or `docker stop flamework`, the container will be removed and all data will be reset next run. This is useful for running tests.

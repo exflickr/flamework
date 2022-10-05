@@ -91,7 +91,7 @@
 
 	foreach ($codes as $row){
 
-		$ret = http_get("http://www.iamcal.com/misc/test/code.php?code={$row[0]}&msg=".urlencode($row[1]));
+		$ret = http_get("https://www.iamcal.com/misc/test/code.php?code={$row[0]}&msg=".urlencode($row[1]));
 
 		$test = "{$row[0]}: {$row[1]}";
 		if (isset($row[2])) $test .= " {$row[2]}";
