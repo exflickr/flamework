@@ -34,3 +34,7 @@ cover:
 docker:
 	docker build -t flamework .
 	docker run -ti -p80\:8081 -p443\:4331 -v ~/dev/flamework\:/mnt/flamework --name=flamework --rm flamework
+
+docker-tests:
+	docker exec -ti flamework apt-get install -y make
+	docker exec -ti flamework make test
