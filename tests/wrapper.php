@@ -38,6 +38,7 @@
 
 	$GLOBALS['log_handlers']['error'] = array('test_wrapper');
 	$GLOBALS['log_handlers']['fatal'] = array('test_wrapper');
+	$GLOBALS['this_is_test'] = 1;
 
 	function _log_handler_test_wrapper($level, $msg, $more = array()){
 
