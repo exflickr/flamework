@@ -36,6 +36,8 @@
 	include($dir.'/testmore.php');
 	include($dir.'/../www/include/init.php');
 
+	include($dir.'/helpers/users.php');
+
 	$GLOBALS['log_handlers']['error'] = array('test_wrapper');
 	$GLOBALS['log_handlers']['fatal'] = array('test_wrapper');
 	$GLOBALS['this_is_test'] = 1;
