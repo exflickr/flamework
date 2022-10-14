@@ -1,7 +1,5 @@
 <?php
 
-	loadlib('random');
-
 	#################################################################
 
 	#
@@ -10,6 +8,8 @@
 	#
 
 	function tests_helpers_create_user(){
+		loadlib('random');
+	
 		$username = 'testuser-'.rand(0, 999);
 		$data = array(
 			'username'	=> $username,
