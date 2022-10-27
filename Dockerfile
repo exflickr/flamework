@@ -1,16 +1,15 @@
-FROM ubuntu:14.04
+FROM ubuntu:latest
 
 # Install the packages we need
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y php5-cli git php5-mcrypt php5-curl apache2 libapache2-mod-php5 mysql-server php5-mysql memcached php5-memcache php5-mcrypt && \
+    apt-get install -y git php-cli php-curl php-mbstring apache2 libapache2-mod-php mysql-server php-mysql memcached php-memcache && \
     apt-get autoremove && \
     apt-get clean && apt-get autoclean
 
-# Turn on the mcrypt php module and the rewrite\ssl apache modules
-RUN php5enmod mcrypt && \
-    a2enmod rewrite && \
+# Turn on the rewrite\ssl apache modules
+RUN a2enmod rewrite && \
     a2enmod ssl
 
 # TODO: Proper ssl certs via letsencrypt or something
