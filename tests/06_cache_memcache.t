@@ -29,7 +29,7 @@
 
 
 	$GLOBALS['cfg']['memcache_pool'] = array(
-                array('host' => 'localhost', 'port' => 99999)
+		array('host' => 'localhost', 'port' => 99999)
 	);
 
 	$a = array('a' => 4);
@@ -56,7 +56,7 @@
 	#
 
 	$GLOBALS['cfg']['memcache_pool'] = array(
-                array('host' => 'localhost', 'port' => 11211)
+		array('host' => 'localhost', 'port' => 11211)
 	);
 
 	$conn = cache_memcache_connect();

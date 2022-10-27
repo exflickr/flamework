@@ -46,7 +46,7 @@
 
 	function log_fatal($msg){
 		_log_dispatch('fatal', $msg);
-		error_500();		
+		if ($GLOBALS['this_is_webpage']) error_500();
 		exit;
 	}
 
