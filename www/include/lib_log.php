@@ -86,9 +86,9 @@
 
 		if ($GLOBALS['this_is_shell']) return;
 
-		$page = $_SERVER['REQUEST_URI'];
+		$page = $_SERVER['REQUEST_URI'] ?? '';
 
-		if ($more['type']){
+		if ($more['type'] ?? false){
 			$msg = "[$more[type]] $msg";
 		}
 

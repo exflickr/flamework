@@ -189,8 +189,9 @@
 	# figure out some global flags
 	#
 
+	$this_is_api		= 0;
 	$this_is_apache		= strlen($_SERVER['REQUEST_URI'] ?? '') ? 1 : 0;
-	$this_is_shell		= strlen($_SERVER['SHELL'] ?? '') ? 1 : 0;
+	$this_is_shell		= (strlen($_SERVER['SHELL'] ?? '') || strlen($_SERVER['argc'] ?? '')) ? 1 : 0;
 	$this_is_webpage	= $this_is_apache && !$this_is_api ? 1 : 0;
 	$this_is_test		= 0; # Overridden in wrapper.php
 
