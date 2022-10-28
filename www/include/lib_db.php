@@ -148,7 +148,7 @@
 
 		$cluster_key = _db_cluster_key($cluster, $shard);
 
-		if (!$GLOBALS['db_conns'][$cluster_key]){
+		if (!isset($GLOBALS['db_conns'][$cluster_key])){
 			_db_connect($cluster, $shard);
 		}
 

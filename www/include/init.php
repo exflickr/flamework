@@ -298,7 +298,7 @@
 		login_check_login();
 	}
 
-	if (StrToLower($_SERVER['HTTP_X_MOZ']) == 'prefetch'){
+	if (StrToLower($_SERVER['HTTP_X_MOZ'] ?? '') == 'prefetch'){
 
 		if (! $GLOBALS['cfg']['allow_precache']){
 			error_403();
