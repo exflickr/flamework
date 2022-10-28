@@ -452,7 +452,7 @@
 			'total_count'	=> $total_count,
 			'page'		=> $page,
 			'per_page'	=> $per_page,
-			'page_count'	=> $page_count,
+			'page_count'	=> intval($page_count),
 			'first'		=> $start+1,
 			'last'		=> $start+count($ret['rows']),
 		);
