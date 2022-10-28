@@ -56,8 +56,8 @@ class BCryptHasher {
 		$itoa64 = './ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 		$output = '$2a$';
-		$output .= chr(ord('0') + $work_factor / 10);
-		$output .= chr(ord('0') + $work_factor % 10);
+		$output .= chr(ord('0') + intval($work_factor / 10));
+		$output .= chr(ord('0') + intval($work_factor % 10));
 		$output .= '$';
 
 		$i = 0;
