@@ -44,7 +44,7 @@
 
 	function _log_handler_test_wrapper($level, $msg, $more = array()){
 
-		$type = $more['type'] ? $more['type'] : $level;
+		$type = ($more['type'] ?? false) ? $more['type'] : $level;
 
 		$out = '';
 
@@ -52,7 +52,7 @@
 
 		$out .= $msg;
 
-		if ($more['time'] > -1) $out .= " ($more[time] ms)";
+		if (($more['time'] ?? -1) > -1) $out .= " ($more[time] ms)";
 
 		diag($out);
 	}

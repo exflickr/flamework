@@ -72,6 +72,7 @@
 		return array(
 			'ok'	=> 1,
 			'local'	=> 1,
+			'remote'=> 0,
 		);
 	}
 
@@ -93,6 +94,7 @@
 		return array(
 			'ok'	=> 1,
 			'local'	=> 1,
+			'remote'=> 0,
 		);
 	}
 

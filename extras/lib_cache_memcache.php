@@ -10,6 +10,9 @@
 
 	$GLOBALS['_cache_memcache_conn'] = null;
 
+	$GLOBALS['timings']['memcache_conns_count'] = 0;
+	$GLOBALS['timings']['memcache_conns_time'] = 0;
+
 	#################################################################
 
 	function cache_memcache_connect(){
@@ -41,8 +44,10 @@
 			@$memcache->addServer($bucket['host'], $bucket['port']);
 		}
 
-		$stats = $memcache->getExtendedStats();
+		$stats = @$memcache->getExtendedStats();
 
+		$host = '';
+		$port = 0;
 		foreach ($GLOBALS['cfg']['memcache_pool'] as $bucket){
 
 			$key = implode(":", array_values($bucket));
@@ -56,6 +61,9 @@
 				log_error("{$key} is not accepting connections");
 				return null;
 			}
+
+			$host = $bucket['host'];
+			$port = $bucket['port'];
 		}
 
 		$end = microtime_ms();
