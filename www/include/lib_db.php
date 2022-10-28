@@ -120,6 +120,9 @@
 		# This command allows the queries through, but we should make sure that we don't need that support anywhere else and remove it
 		@mysqli_query($GLOBALS['db_conns'][$cluster_key], "SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
 
+		# TODO: Similar as above, our schema currently doesn't define DEFAULT values for all columns, and modern mysql doesn't like that
+		@mysqli_query($GLOBALS['db_conns'][$cluster_key], "SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'STRICT_TRANS_TABLES',''));");
+
 		$end = microtime_ms();
 
 
