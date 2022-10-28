@@ -18,7 +18,7 @@
 		curl_setopt($ch, CURLOPT_NOBODY, true);
 		curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 
-		if ($more['return_curl_handle']){
+		if ($more['return_curl_handle'] ?? false){
 			return $ch;
 		}
 
@@ -31,7 +31,7 @@
 
 		$ch = _http_curl_handle($url, $headers, $more);
 
-		if ($more['return_curl_handle']){
+		if ($more['return_curl_handle'] ?? false){
 			return $ch;
 		}
 
@@ -47,7 +47,7 @@
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
 
-		if ($more['return_curl_handle']){
+		if ($more['return_curl_handle'] ?? false){
 			return $ch;
 		}
 
@@ -70,7 +70,7 @@
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields);
 		}
 
-		if ($more['return_curl_handle']){
+		if ($more['return_curl_handle'] ?? false){
 			return $ch;
 		}
 
@@ -100,7 +100,7 @@
 		# curl_setopt($ch, CURLOPT_INFILE, $bytes);
 		# curl_setopt($ch, CURLOPT_INFILESIZE, strlen($bytes));
 
-		if ($more['return_curl_handle']){
+		if ($more['return_curl_handle'] ?? false){
 			return $ch;
 		}
 
@@ -224,11 +224,11 @@
 		curl_setopt($ch, CURLINFO_HEADER_OUT, true);
 		curl_setopt($ch, CURLOPT_HEADER, true);
 
-		if ($more['http_port']){
+		if ($more['http_port'] ?? false){
 			curl_setopt($ch, CURLOPT_PORT, $more['http_port']);
 		}
 
-		if ($more['follow_redirects']){
+		if ($more['follow_redirects'] ?? false){
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 			curl_setopt($ch, CURLOPT_MAXREDIRS, intval($more['follow_redirects']));
 		}

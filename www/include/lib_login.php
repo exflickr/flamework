@@ -42,7 +42,7 @@
 			return 0;
 		}
 
-		if ($GLOBALS['cfg']['user']['id']){
+		if (isset($GLOBALS['cfg']['user']['id'])){
 			return 1;
 		}
 
@@ -113,7 +113,7 @@
 	#################################################################
 
 	function login_get_cookie($name){
-		return $_COOKIE[$name];
+		return $_COOKIE[$name] ?? '';
 	}
 
 	#################################################################
