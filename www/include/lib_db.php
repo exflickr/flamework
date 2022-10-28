@@ -113,8 +113,12 @@
 		$GLOBALS['db_conns'][$cluster_key] = $conn;
 
 		if (!mysqli_set_charset($GLOBALS['db_conns'][$cluster_key], 'utf8mb4')){
-			log_fatal("DB-{$cluster_key}: Could not set character set to 'utf8mb4' - ".mysqli_error()." - ".error_smart_trace());
+			log_fatal("DB-{$cluster_key}: Could not set character set to 'utf8mb4' - " . mysqli_error($GLOBALS['db_conns'][$cluster_key]) . " - ".error_smart_trace());
 		}
+
+		# TODO: Some of our tests expect that you can do an ORDER BY on a column not in the SELECT, which modern mysql doesn't support
+		# This command allows the queries through, but we should make sure that we don't need that support anywhere else and remove it
+		@mysqli_query($GLOBALS['db_conns'][$cluster_key], "SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
 
 		$end = microtime_ms();
 
@@ -246,7 +250,7 @@
 		$first_row = $hashes[$a];
 		$fields = array_keys($first_row);
 
-		$flags = $GLOBALS['db_flags']['insert_ignore'] ? ' IGNORE' : '';
+		$flags = ($GLOBALS['db_flags']['insert_ignore'] ?? false) ? ' IGNORE' : '';
 
 		$acc_rows = 0;
 
@@ -530,7 +534,7 @@
 
 		$trace = debug_backtrace();
 
-		while (substr($trace[0]['function'], 0, 3) == 'db_' || substr($trace[0]['function'], 0, 4) == '_db_'){
+		while (isset($trace[0]) && (substr($trace[0]['function'], 0, 3) == 'db_' || substr($trace[0]['function'], 0, 4) == '_db_')){
 			array_shift($trace);
 		}
 
@@ -557,7 +561,7 @@
 		# single
 		#
 
-		return $trace[0]['function'] ? $trace[0]['function'].'()' : '_global_';
+		return (isset($trace[0]) && $trace[0]['function']) ? $trace[0]['function'].'()' : '_global_';
 	}
 
 	#################################################################
