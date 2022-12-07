@@ -64,9 +64,11 @@
 
 	# No, seriously. Change these...
 
-	$GLOBALS['cfg']['crypto_cookie_secret'] = '';
+	$GLOBALS['cfg']['crypto_cookie_secret'] = '';	# sodium_crypto_secretbox_keygen()
 	$GLOBALS['cfg']['crypto_password_secret'] = '';
 	$GLOBALS['cfg']['crypto_crumb_secret'] = '';
+
+	$GLOBALS['cfg']['crypto_libsodium_nonce'] = ''; # random_bytes(SODIUM_CRYPTO_SECRETBOX_NONCEBYTES)
 
 
 	#

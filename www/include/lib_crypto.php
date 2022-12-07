@@ -4,99 +4,59 @@
 	# Welcome to our encryption/decryption library. It has some history.
 	#
 	# mcrypt_encrypt/decrypt were deprecated in PHP 7.1.0 and removed in 7.2.0
-	# They, and the functions calling them, have been replaced with the 
-	# polyfill'd versions from https://github.com/phpseclib/mcrypt_compat
-	# They are now crypto_encrypt/decrypt_old
+	# They, and the functions calling them, have been replaced with modern (and correct)
+	# encryption functions powered by Sodium: https://www.php.net/manual/en/intro.sodium.php
 	#
-	# Use crypto_encrypt/decrypt for new code -- it attempts to detect use of the
-	# old (and it turns out incorrect!) use of mcrypt when decrypting, and handles
-	# it. So, in theory, your cookies and logins won't break. But you should upgrade them.
+	# Flamework uses these functions for encrypting/decrypting login cookies, preventing tampering
+	# and easy user impersonation.
 	#
-
-	const CIPHER_METHOD = 'aes-256-gcm';
+	# This also means that if you ran Flamework prior to the PHP 7+ upgrade, your cookies won't work,
+	# and all users will be logged-out on next visit until they login again. This might not be so bad.
+	# If it is, or if you used these functions for other uses that don't have easy recovery, you'll
+	# probably want to explore re-implementing them using `openssl_encrypt()` etc, which can be done
+	# but isn't recommended. It should be possible to detect and upgrade these over time or in batch.
+	#
+	# Thanks to @thisisaaronland for the research behind this.
+	#
+	# To use this library you will need to set `crypto_libsodium_nonce` in `config.php` to a 24-byte
+	# random value (and never lose it)
+	# TODO: I think this is supposed to be chosen per-encrypted value and stored for decryption. Like
+	# in a session row
+	#
 
 	#################################################################
 
-	function crypto_encrypt($data, $key){
-		if (mb_strlen($key)) {
-			$key = hash('sha256', $key, true);
-		} else {
-			log_fatal('[lib_crypto] Trying to encrypt with a blank key');
-		}
+	#
+	# At runtime, ensure we have crypto configured correctly
+	#
 
-		$iv = openssl_random_pseudo_bytes(24);
-		if (!$iv) log_fatal('[lib_crypto] Error generating IV');
+	if (strlen($GLOBALS['cfg']['crypto_libsodium_nonce']) != SODIUM_CRYPTO_SECRETBOX_NONCEBYTES){
+		log_fatal("Invalid libsodium nonce");
+	}
 
-		$tag = null;
-		$ciphertext = openssl_encrypt($data, CIPHER_METHOD, $key, 0, $iv, $tag);
-		if (!$ciphertext) log_fatal('[lib_crypto] Encryption error');
+	#################################################################
 
-		$out = $iv . $ciphertext . $tag;
+	#
+	# Given a plaintext and key, encrypt it. You'll need the key to decrypt it
+	# Returns the encrypted data as base64-encoded
+	#
+
+	function crypto_encrypt($plaintext, $key){
+		$out = sodium_crypto_secretbox($plaintext, $GLOBALS['cfg']['crypto_libsodium_nonce'], $key);
+
 		return base64_encode($out);
 	}
 
 	#################################################################
 
+	#
+	# Given base64-encoded encrypted data and a key, decrypt it.
+	#
+
 	function crypto_decrypt($enc_b64, $key){
-		if (strlen($key)) $key = hash('sha256', $key, true);
-
 		$enc = base64_decode($enc_b64);
 
-		$enc_text = substr($enc, 24, -16); # Ciphertext is between the iv and tag
-		$tag = substr($enc, -16); # Last 16 bits (tag length is 16 by default)
-		$iv = substr($enc, 0, 24); # First 24 bits
-
-		if (strlen($iv) !== 24) {
-			log_error('[lib_crypto] Invalid IV length');
-			return '';
-		}
-
-		$dec = openssl_decrypt($enc_text, CIPHER_METHOD, $key, 0, $iv, $tag);
-		if (!$dec) {
-			log_error('[lib_crypto] Decryption error');
-			return '';
-		}
-
-		return trim($dec);
-	}
-
-	#################################################################
-
-	function crypto_encrypt_old($data, $key){
-
-		# TODO: Catch key size greater than... 32?
-		if (!strlen($key)) log_fatal("[lib_crypto] Trying to encrypt with a blank key");
-
-		$key = hash('sha256', $key, true);
-
-		$enc = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB);
-		return base64_encode($enc);
-
-
-				$td = new Rijndael('ecb');
-				$td->setBlockLength(256);
-				$td->disablePadding();
-
-
-				$iv = null;
-				$td->setKey($key);
-
-				$td->enableContinuousBuffer();
-				$td->mcrypt_polyfill_init = true;
-
-				return $td->encrypt($data);
-	}
-
-	#################################################################
-
-	function crypto_decrypt_old($enc_b64, $key){
-
-		if (strlen($key)) $key = hash('sha256', $key, true);
-
-		$enc = base64_decode($enc_b64);
-		$dec = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, $enc, MCRYPT_MODE_ECB);
-
-		return trim($dec);
+		return sodium_crypto_secretbox_open($enc, $GLOBALS['cfg']['crypto_libsodium_nonce'], $key);
 	}
 
 	#################################################################
