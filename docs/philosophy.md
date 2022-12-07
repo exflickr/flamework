@@ -57,7 +57,7 @@ Here is a simple bare-bones example of how it all fits together:
 
 		$foo = example_foo($GLOBALS['cfg']['user']);
 
-		$GLOBALS['smarty']->assign_by_ref("foo", $foo);
+		$GLOBALS['smarty']->assignByRef("foo", $foo);
 		$GLOBALS['smarty']->display("page_example.txt");
 		exit();
 	?>

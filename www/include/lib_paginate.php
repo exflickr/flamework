@@ -15,7 +15,7 @@
 		global $smarty;
 
 		# save state
-		$old_vars = $smarty->get_template_vars();
+		$old_vars = $smarty->getTemplateVars();
 
 		$pagination = $params['pagination'] ? $params['pagination'] : $old_vars['pagination'];
 		
@@ -45,7 +45,7 @@
 		$smarty->_tpl_vars = $old_vars;
 	}
 
-	$GLOBALS['smarty']->register_function('pagination', 'smarty_pagination_function');
+	$GLOBALS['smarty']->registerPlugin('function', 'pagination', 'smarty_pagination_function');
 
 
 	#################################################################
@@ -58,7 +58,7 @@
 		}
 	}
 
-	$GLOBALS['smarty']->register_function('pagination_footer', 'smarty_pagination_footer_function');
+	$GLOBALS['smarty']->registerPlugin('function', 'pagination_footer', 'smarty_pagination_footer_function');
 
 	#################################################################
 
