@@ -52,7 +52,7 @@
 			return 0;
 		}
 
-		$auth_cookie = crypto_decrypt($auth_cookie, $GLOBALS['cfg']['crypto_cookie_secret']);
+		$auth_cookie = crypto_decrypt_old($auth_cookie, $GLOBALS['cfg']['crypto_cookie_secret']);
 
 		list($user_id, $password) = explode(':', $auth_cookie, 2);
 
@@ -107,7 +107,7 @@
 	function login_generate_auth_cookie(&$user){
 
 		$cookie = implode(":", array($user['id'], $user['password']));
-		return crypto_encrypt($cookie, $GLOBALS['cfg']['crypto_cookie_secret']);
+		return crypto_encrypt_old($cookie, $GLOBALS['cfg']['crypto_cookie_secret']);
 	}
 
 	#################################################################
