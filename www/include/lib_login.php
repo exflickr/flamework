@@ -1,5 +1,7 @@
 <?php
 
+	$GLOBALS['cfg']['user'] = array();
+
 	#################################################################
 
 	#
@@ -9,7 +11,7 @@
 
 	function login_ensure_loggedin($redir=null){
 
-		if ($GLOBALS['cfg']['user']['id']) return;
+		if (login_user_is_logged_in()) return;
 
 		if (!$redir) $redir = $_SERVER['REQUEST_URI'];
 
@@ -26,7 +28,7 @@
 
 	function login_ensure_loggedout($redir="", $force_logout=false){
 
-		if (!$GLOBALS['cfg']['user']['id']) return;
+		if (!login_user_is_logged_in()) return;
 
 		if ($force_logout) login_do_logout();
 
@@ -128,6 +130,19 @@
 
 	function login_unset_cookie($name){
 		login_set_cookie($name, "", time() - 3600);
+	}
+
+	#################################################################
+
+	#
+	# Similar to login_check_login(), but more lightweight and only works
+	# (properly) after the former has been called.
+	# Does not validate cookies, etc, only checks if the `user` GLOBAL has 
+	# been setup. 
+	#
+
+	function login_user_is_logged_in() {
+		return isset($GLOBALS['cfg']['user']['id']);
 	}
 
 	#################################################################
