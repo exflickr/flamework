@@ -259,7 +259,7 @@
 
 	function _http_parse_response($raw, $info){
 
-		list($head, $body) = explode("\r\n\r\n", $raw, 2);
+		@list($head, $body) = explode("\r\n\r\n", $raw, 2);
 		list($head_out, $body_out) = explode("\r\n\r\n", $info['request_header'], 2);
 		unset($info['request_header']);
 
