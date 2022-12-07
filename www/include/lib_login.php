@@ -54,7 +54,7 @@
 
 		$auth_cookie = crypto_decrypt($auth_cookie, $GLOBALS['cfg']['crypto_cookie_secret']);
 
-		list($user_id, $password) = explode(':', $auth_cookie, 2);
+		@list($user_id, $password) = explode(':', $auth_cookie, 2);
 
 		if (!$user_id){
 			return 0;
