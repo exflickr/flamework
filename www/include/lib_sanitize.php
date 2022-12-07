@@ -35,42 +35,42 @@
 
 	##############################################################################
 
-	function get_isset(		$key, $default=null, $more=null){ return sanitize($_GET[$key], 'isset'		, $default, $more);  }
-	function get_str(		$key, $default=null, $more=null){ return sanitize($_GET[$key], 'str'		, $default, $more);  }
-	function get_str_multi(	$key, $default=null, $more=null){ return sanitize($_GET[$key], 'str_multi'	, $default, $more);  }
-	function get_int32(		$key, $default=null, $more=null){ return sanitize($_GET[$key], 'int32'		, $default, $more);  }
-	function get_int64(		$key, $default=null, $more=null){ return sanitize($_GET[$key], 'int64'		, $default, $more);  }
-	function get_float(		$key, $default=null, $more=null){ return sanitize($_GET[$key], 'float'		, $default, $more);  }
-	function get_html(		$key, $default=null, $more=null){ return sanitize($_GET[$key], 'html'		, $default, $more);  }
-	function get_bool(		$key, $default=null, $more=null){ return sanitize($_GET[$key], 'bool'		, $default, $more);  }
-	function get_rx(		$key, $default=null, $more=null){ return sanitize($_GET[$key], 'rx'		, $default, $more);  }
-	function get_in(		$key, $default=null, $more=null){ return sanitize($_GET[$key], 'in'		, $default, $more);  }
+	function get_isset(		$key, $default=null, $more=null){ return sanitize($_GET[$key] ?? '', 'isset'		, $default, $more);  }
+	function get_str(		$key, $default=null, $more=null){ return sanitize($_GET[$key] ?? '', 'str'		, $default, $more);  }
+	function get_str_multi(	$key, $default=null, $more=null){ return sanitize($_GET[$key] ?? '', 'str_multi'	, $default, $more);  }
+	function get_int32(		$key, $default=null, $more=null){ return sanitize($_GET[$key] ?? '', 'int32'		, $default, $more);  }
+	function get_int64(		$key, $default=null, $more=null){ return sanitize($_GET[$key] ?? '', 'int64'		, $default, $more);  }
+	function get_float(		$key, $default=null, $more=null){ return sanitize($_GET[$key] ?? '', 'float'		, $default, $more);  }
+	function get_html(		$key, $default=null, $more=null){ return sanitize($_GET[$key] ?? '', 'html'		, $default, $more);  }
+	function get_bool(		$key, $default=null, $more=null){ return sanitize($_GET[$key] ?? '', 'bool'		, $default, $more);  }
+	function get_rx(		$key, $default=null, $more=null){ return sanitize($_GET[$key] ?? '', 'rx'		, $default, $more);  }
+	function get_in(		$key, $default=null, $more=null){ return sanitize($_GET[$key] ?? '', 'in'		, $default, $more);  }
 
 	##############################################################################
 
-	function post_isset(		$key, $default=null, $more=null){ return sanitize($_POST[$key], 'isset'	, $default, $more);  }
-	function post_str(		$key, $default=null, $more=null){ return sanitize($_POST[$key], 'str'		, $default, $more);  }
-	function post_str_multi(	$key, $default=null, $more=null){ return sanitize($_POST[$key], 'str_multi'	, $default, $more);  }
-	function post_int32(		$key, $default=null, $more=null){ return sanitize($_POST[$key], 'int32'	, $default, $more);  }
-	function post_int64(		$key, $default=null, $more=null){ return sanitize($_POST[$key], 'int64'	, $default, $more);  }
-	function post_float(		$key, $default=null, $more=null){ return sanitize($_POST[$key], 'float'	, $default, $more);  }
-	function post_html(		$key, $default=null, $more=null){ return sanitize($_POST[$key], 'html'		, $default, $more);  }
-	function post_bool(		$key, $default=null, $more=null){ return sanitize($_POST[$key], 'bool'		, $default, $more);  }
-	function post_rx(		$key, $default=null, $more=null){ return sanitize($_POST[$key], 'rx'		, $default, $more);  }
-	function post_in(		$key, $default=null, $more=null){ return sanitize($_POST[$key], 'in'		, $default, $more);  }
+	function post_isset(		$key, $default=null, $more=null){ return sanitize($_POST[$key] ?? '', 'isset'	, $default, $more);  }
+	function post_str(		$key, $default=null, $more=null){ return sanitize($_POST[$key] ?? '', 'str'		, $default, $more);  }
+	function post_str_multi(	$key, $default=null, $more=null){ return sanitize($_POST[$key] ?? '', 'str_multi'	, $default, $more);  }
+	function post_int32(		$key, $default=null, $more=null){ return sanitize($_POST[$key] ?? '', 'int32'	, $default, $more);  }
+	function post_int64(		$key, $default=null, $more=null){ return sanitize($_POST[$key] ?? '', 'int64'	, $default, $more);  }
+	function post_float(		$key, $default=null, $more=null){ return sanitize($_POST[$key] ?? '', 'float'	, $default, $more);  }
+	function post_html(		$key, $default=null, $more=null){ return sanitize($_POST[$key] ?? '', 'html'		, $default, $more);  }
+	function post_bool(		$key, $default=null, $more=null){ return sanitize($_POST[$key] ?? '', 'bool'		, $default, $more);  }
+	function post_rx(		$key, $default=null, $more=null){ return sanitize($_POST[$key] ?? '', 'rx'		, $default, $more);  }
+	function post_in(		$key, $default=null, $more=null){ return sanitize($_POST[$key] ?? '', 'in'		, $default, $more);  }
 
 	##############################################################################
 
-	function request_isset(	$key, $default=null, $more=null){ return sanitize($_REQUEST[$key], 'isset'	, $default, $more);  }
-	function request_str(		$key, $default=null, $more=null){ return sanitize($_REQUEST[$key], 'str'	, $default, $more);  }
-	function request_str_multi(	$key, $default=null, $more=null){ return sanitize($_REQUEST[$key], 'str_multi'	, $default, $more);  }
-	function request_int32(	$key, $default=null, $more=null){ return sanitize($_REQUEST[$key], 'int32'	, $default, $more);  }
-	function request_int64(	$key, $default=null, $more=null){ return sanitize($_REQUEST[$key], 'int64'	, $default, $more);  }
-	function request_float(	$key, $default=null, $more=null){ return sanitize($_REQUEST[$key], 'float'	, $default, $more);  }
-	function request_html(		$key, $default=null, $more=null){ return sanitize($_REQUEST[$key], 'html'	, $default, $more);  }
-	function request_bool(		$key, $default=null, $more=null){ return sanitize($_REQUEST[$key], 'bool'	, $default, $more);  }
-	function request_rx(		$key, $default=null, $more=null){ return sanitize($_REQUEST[$key], 'rx'	, $default, $more);  }
-	function request_in(		$key, $default=null, $more=null){ return sanitize($_REQUEST[$key], 'in'	, $default, $more);  }
+	function request_isset(	$key, $default=null, $more=null){ return sanitize($_REQUEST[$key] ?? '', 'isset'	, $default, $more);  }
+	function request_str(		$key, $default=null, $more=null){ return sanitize($_REQUEST[$key] ?? '', 'str'	, $default, $more);  }
+	function request_str_multi(	$key, $default=null, $more=null){ return sanitize($_REQUEST[$key] ?? '', 'str_multi'	, $default, $more);  }
+	function request_int32(	$key, $default=null, $more=null){ return sanitize($_REQUEST[$key] ?? '', 'int32'	, $default, $more);  }
+	function request_int64(	$key, $default=null, $more=null){ return sanitize($_REQUEST[$key] ?? '', 'int64'	, $default, $more);  }
+	function request_float(	$key, $default=null, $more=null){ return sanitize($_REQUEST[$key] ?? '', 'float'	, $default, $more);  }
+	function request_html(		$key, $default=null, $more=null){ return sanitize($_REQUEST[$key] ?? '', 'html'	, $default, $more);  }
+	function request_bool(		$key, $default=null, $more=null){ return sanitize($_REQUEST[$key] ?? '', 'bool'	, $default, $more);  }
+	function request_rx(		$key, $default=null, $more=null){ return sanitize($_REQUEST[$key] ?? '', 'rx'	, $default, $more);  }
+	function request_in(		$key, $default=null, $more=null){ return sanitize($_REQUEST[$key] ?? '', 'in'	, $default, $more);  }
 
 	##############################################################################
 
