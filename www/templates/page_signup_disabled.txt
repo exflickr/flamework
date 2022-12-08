@@ -1,5 +1,5 @@
-{assign var='page_title' value='Sign up for a new account' nav_tab='signup'}
-{include file='inc_head.txt'}
+{assign var='page_title' value='Sign up for a new account'}
+{include file='inc_head.txt' nav_tab='signup'}
 
 <div class="container">
 	<p class="error">Signups are currently disabled</p>

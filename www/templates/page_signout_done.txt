@@ -1,5 +1,5 @@
-{assign var='page_title' value='Sign out' nav_tab='signout'}
-{include file='inc_head.txt'}
+{assign var='page_title' value='Sign out'}
+{include file='inc_head.txt' nav_tab='signout'}
 
 <div class="container">
 	<p>You are signed out!</p>

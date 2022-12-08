@@ -1,5 +1,5 @@
-{assign var='page_title' value='Sign in' nav_tab='signin'}
-{include file='inc_head.txt'}
+{assign var='page_title' value='Sign in'}
+{include file='inc_head.txt' nav_tab='signin'}
 
 <div class="container">
 	{if $error_missing}	<p class="alert alert-error">Please enter your email address and password.</p>{/if}

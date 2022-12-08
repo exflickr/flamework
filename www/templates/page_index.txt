@@ -1,3 +1,4 @@
+{assign var='page_title' value="Flamework"}
 {include file='inc_head.txt' nav_tab='home'}
 
 <div class="container">

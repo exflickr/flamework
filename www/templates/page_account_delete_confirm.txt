@@ -1,5 +1,5 @@
-{assign var='page_title' value="Delete your account" nav_tab='account'}
-{include file="inc_head.txt"}
+{assign var='page_title' value="Delete your account"}
+{include file="inc_head.txt" nav_tab='account'}
 
 <div class="container">
 	<p>Are you <strong>really sure</strong> you want to delete your account?</p>

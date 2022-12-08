@@ -1,5 +1,5 @@
-{assign var='page_title' value='Sign up for a new account' nav_tab='signup'}
-{include file='inc_head.txt'}
+{assign var='page_title' value='Sign up for a new account'}
+{include file='inc_head.txt' nav_tab='signup'}
 
 <div class="container">
 	{if $error_missing}		<p class="alert alert-error">Please fill out all the fields</p>{/if}

@@ -1,5 +1,5 @@
-{assign var="page_title" value="Forgot your password?" nav_tab='signin'}
-{include file="inc_head.txt"}
+{assign var="page_title" value="Forgot your password?"}
+{include file="inc_head.txt" nav_tab='signin'}
 
 <div class="container">
 	{if $error_nouser}	<p class="alert alert-error">We can't find an account registered with that address.</p>{/if}

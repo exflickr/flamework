@@ -1,5 +1,5 @@
-{assign var='page_title' value='Sign out' nav_tab='account'}
-{include file='inc_head.txt'}
+{assign var='page_title' value='Sign out'}
+{include file='inc_head.txt' nav_tab='account'}
 
 <div class="container">
 	<p>This is an intermediate page so that we can generate and check a crumb. We will inline this into the URL shortly.</p>
