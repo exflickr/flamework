@@ -1,7 +1,8 @@
 <?php
 
 	$GLOBALS['timings']['smarty_comp_count']	= 0;
-	$GLOBALS['timings']['smarty_comp_time']	= 0;
+	$GLOBALS['timings']['smarty_comp_time']		= 0;
+	$GLOBALS['timings']['smarty_start_output']	= microtime_ms(); # TODO: This needs to be set at every $smarty->display() call
 
 	define('FLAMEWORK_SMARTY_DIR', FLAMEWORK_INCLUDE_DIR.'/smarty-4.2.1/');
 	require(FLAMEWORK_SMARTY_DIR . 'Smarty.class.php');
@@ -49,19 +50,5 @@
 	}
 
 	$GLOBALS['smarty']->registerPlugin('function', 'timings', 'smarty_timings');
-
-	#######################################################################################
-
-	#
-	# Attempt to capture the start of Smarty template logic. This currently doesn't work,
-	# since it is only run right at compilation time and can't inject more logic into the page
-	#
-
-	function smarty_timings_start_output($tpl_output, Smarty_Internal_Template $_template){
-		$GLOBALS['timings']['smarty_start_output'] = microtime_ms();
-		return $tpl_output;
-	}
-
-	$GLOBALS['smarty']->registerFilter('pre', 'smarty_timings_start_output');
 
 	#######################################################################################
