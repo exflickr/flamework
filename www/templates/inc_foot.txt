@@ -3,7 +3,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company {$smarty.now|date_format:"%Y"}</p>
+        <p>&copy; Company {$smarty.now|date_format:"Y"}</p>
       </footer>
 
 {if $cfg.auth_roles.staff}
