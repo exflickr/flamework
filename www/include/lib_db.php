@@ -106,8 +106,12 @@
 			log_fatal("DB-{$cluster_key}: MYSQLI_OPT_CONNECT_TIMEOUT failed");
 		}
 
-		if (!@mysqli_real_connect($conn, $host, $user, $pass, $name)){
-			log_fatal("Connection to database cluster '{$cluster_key}' failed ({$user}@{$host}/{$name}) - ".mysqli_connect_error()." - ".error_smart_trace());
+		try{
+			if (!@mysqli_real_connect($conn, $host, $user, $pass, $name)){
+				log_fatal("Connection to database cluster '{$cluster_key}' failed ({$user}@{$host}/{$name}) - ".mysqli_connect_error()." - ".error_smart_trace());
+			}
+		}catch (mysqli_sql_exception $e){
+			log_fatal("Connection to database cluster '{$cluster_key}' failed ({$user}@{$host}/{$name}) - ".$e->getMessage()." - ".error_smart_trace());
 		}
 
 		$GLOBALS['db_conns'][$cluster_key] = $conn;
