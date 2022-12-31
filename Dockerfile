@@ -9,8 +9,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get clean && apt-get autoclean
 
 # Turn on the rewrite\ssl apache modules
-RUN a2enmod rewrite && \
-    a2enmod ssl
+RUN a2enmod rewrite ssl
 
 # TODO: Proper ssl certs via letsencrypt or something
 
@@ -38,6 +37,9 @@ VOLUME ["/mnt/flamework"]
 
 # Optional persistence of the mysql data
 VOLUME ["/var/lib/mysql"]
+
+# Fix mysql perms
+RUN service mysql stop && usermod -d /var/lib/mysql/ mysql
 
 # Listen on the HTTP and HTTPS ports
 EXPOSE 80

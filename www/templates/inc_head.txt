@@ -41,7 +41,7 @@
             </ul>
 
             <ul class="nav pull-right">
-{if $cfg.user.id}
+{if login_user_is_logged_in()}
             <li class="dropdown{if $nav_tab == 'account'} active{/if}">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hello {$cfg.user.username|escape} <b class="caret"></b></a>
               <ul class="dropdown-menu">

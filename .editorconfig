@@ -7,7 +7,7 @@ insert_final_newline = false
 charset = utf-8
 trim_trailing_whitespace = true
 
-# Indent is 4 tabs almost everywhere
+# Indent is 8 tabs almost everywhere
 [*.{js,jsx,ts,tsx,json,php,txt,html,md,less,css,t}]
 indent_style = tab
 indent_size = 8
